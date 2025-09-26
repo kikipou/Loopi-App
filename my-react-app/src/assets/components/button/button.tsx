@@ -1,7 +1,8 @@
 import "./button.css"
+import type { ButtonProps }  from "../../types/buttonType.tsx";
 
-const Button = () => {
-  return <button id="my-button">Click me</button>;
-}    
+const Button = ({ buttonplaceholder }: ButtonProps) => {
+  return <button className="my-button">{buttonplaceholder}</button>;
+};
 
 export default Button;

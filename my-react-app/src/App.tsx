@@ -20,8 +20,8 @@ function App() {
     
     <Router>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/welcome" element={<Welcome />} />
+       <Route path="/" element={<Welcome />} />
+        <Route path="/home" element={<HomePage />} />
         <Route path="/register" element={<Register />} />
         <Route path="/post/:id" element={<PostDetail />} />
         <Route path="/upload" element={<UploadPost />} />

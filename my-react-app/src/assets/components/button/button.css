@@ -1,0 +1,20 @@
+#my-button {
+  width: 300px;
+  height: 60px;
+  background: #5a00ff;
+  color: #fff;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.5rem;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  margin: 0 auto;
+}
+
+#my-button:hover {
+  background: #3a0099;
+}

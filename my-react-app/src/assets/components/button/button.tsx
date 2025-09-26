@@ -1,6 +1,7 @@
+import "./button.css"
 
 const Button = () => {
-  return <button>Click me</button>;
+  return <button id="my-button">Click me</button>;
 }    
 
 export default Button;

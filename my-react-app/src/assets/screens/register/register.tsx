@@ -1,5 +1,7 @@
 const Register = () => {
-  return <button>Click me</button>;
+  return <>
+    <h1>Register</h1>
+  </>;
 }    
 
 export default Register;

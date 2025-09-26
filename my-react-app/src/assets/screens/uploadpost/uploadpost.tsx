@@ -1,5 +1,7 @@
 const UploadPost = () => {
-  return <button>Click me</button>;
+   return <>
+    <h1>Upload Post</h1>
+  </>;
 }    
 
 export default UploadPost;

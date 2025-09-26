@@ -1,5 +1,8 @@
 const ChatPage1 = () => {
-  return <button>Click me</button>;
+  return <>
+  <h1>Chat</h1>
+  <p>Welcome to the chat page!</p>
+  </>;
 }    
 
 export default ChatPage1;

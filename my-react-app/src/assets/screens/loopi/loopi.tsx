@@ -1,5 +1,7 @@
 const Loopi = () => {
-  return <button>Click me</button>;
+  return <>
+    <h1>Loopi</h1>
+  </>;
 }    
 
 export default Loopi;

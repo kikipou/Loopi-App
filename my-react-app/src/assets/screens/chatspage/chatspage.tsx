@@ -1,5 +1,7 @@
 const ChatsPage = () => {
-  return <button>Click me</button>;
+  return <>
+  <h1>Cjats</h1>
+  </>;
 }    
 
 export default ChatsPage;

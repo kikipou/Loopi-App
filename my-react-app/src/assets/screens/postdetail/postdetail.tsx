@@ -1,5 +1,7 @@
 const PostDetail = () => {
-  return <button>Click me</button>;
+  return <>
+    <h1>Post Detail</h1>
+  </>;
 }    
 
 export default PostDetail;

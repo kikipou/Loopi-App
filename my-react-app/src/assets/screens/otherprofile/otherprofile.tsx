@@ -1,5 +1,7 @@
 const OtherProfile = () => {
-  return <button>Click me</button>;
+  return <>
+    <h1>Other Profile</h1>
+  </>;
 }    
 
 export default OtherProfile;

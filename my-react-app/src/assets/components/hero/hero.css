@@ -18,6 +18,17 @@
   height: 100%;
   background: linear-gradient(90deg, rgba(90, 0, 255, 0.3) 0%, transparent 100%);
   z-index: 2;
+
+  /* 👇 Desvanecer hacia abajo */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: top;
+  -webkit-mask-size: 100% 100%;
+
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+  mask-repeat: no-repeat;
+  mask-position: top;
+  mask-size: 100% 100%;
 }
 
 .hero-gradient-right {
@@ -27,7 +38,18 @@
   width: 100px;
   height: 100%;
   background: linear-gradient(270deg, rgba(90, 0, 255, 0.3) 0%, transparent 100%);
-  z-index: 2;
+  z-index: 3;
+
+  /* 👇 Desvanecer hacia abajo */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: top;
+  -webkit-mask-size: 100% 100%;
+
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+  mask-repeat: no-repeat;
+  mask-position: top;
+  mask-size: 100% 100%;
 }
 
 /* Contenedor de imagen */
@@ -35,13 +57,24 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;          /* antes estaba 1000% */
+  width: 100%;
   height: 100%;
   background-image: url('../../imgs/people-working-as-team.jpg');
   background-size: cover; 
   background-repeat: no-repeat;
   background-position: center;
-  z-index: 1;           /* queda detrás del contenido */
+  z-index: 1;
+
+  /* 👇 Desvanecer hacia abajo */
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: top;
+  -webkit-mask-size: 100% 100%;
+
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1) 80%, rgba(0,0,0,0) 100%);
+  mask-repeat: no-repeat;
+  mask-position: top;
+  mask-size: 100% 100%;
 }
 
 .hero-image-container::after {
@@ -51,7 +84,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.6); /* 👈 negro translúcido */
+  background-color: rgba(0,0,0,0.7); /* 👈 negro translúcido */
   z-index: 2;
 }
 
@@ -86,6 +119,7 @@
 .hero-text {
   max-width: 600px;
   text-align: left;
+  margin-top: 5rem;
 }
 
 .hero-title {

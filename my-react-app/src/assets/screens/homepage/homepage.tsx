@@ -1,14 +1,14 @@
 import "./homepage.css";
 import Nav from "../../components/nav/nav";
+import Hero from "../../components/hero/hero";
+import Nav2 from "../../components/nav2/nav2";
 
 const HomePage = () => {
   return (
     <div className="homepage-container">
       <Nav />
-      <div className="homepage-content">
-        <h1>Home Page</h1>
-        <p>Bienvenido a Loopi - Where connections loop</p>
-      </div>
+      <Hero />
+      <Nav2 />
     </div>
   );
 };

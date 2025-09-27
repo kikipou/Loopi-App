@@ -1,58 +1,7 @@
 .homepage-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #2d0066 100%);
+  background: #000000;
   color: white;
+  position: relative;
 }
 
-.homepage-content {
-  padding: 2rem;
-  text-align: center;
-  margin-top: 0rem; /* Espacio para la nav fixed */
-}
-
-.homepage-content h1 {
-  font-size: var(--font-size-4xl);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-primary);
-  margin: 0 0 1rem 0;
-  color: white;
-}
-
-.homepage-content p {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-regular);
-  font-family: var(--font-primary);
-  color: rgba(255, 255, 255, 0.8);
-  margin: 0;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .homepage-content {
-    margin-top: 70px; /* Espacio para la nav en tablet */
-    padding: 1.5rem;
-  }
-  
-  .homepage-content h1 {
-    font-size: var(--font-size-3xl);
-  }
-  
-  .homepage-content p {
-    font-size: var(--font-size-base);
-  }
-}
-
-@media (max-width: 480px) {
-  .homepage-content {
-    margin-top: 60px; /* Espacio para la nav en móvil */
-    padding: 1rem;
-  }
-  
-  .homepage-content h1 {
-    font-size: var(--font-size-2xl);
-  }
-  
-  .homepage-content p {
-    font-size: var(--font-size-sm);
-  }
-}

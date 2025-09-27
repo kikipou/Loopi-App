@@ -40,15 +40,6 @@ const Welcome = () => {
 
       {/* Sección Derecha - Visual y Branding */}
       <div className="welcome-right">
-        <div className="welcome-image-overlay">
-          <div className="welcome-branding">
-            <div className="welcome-logo">
-              <span className="logo-text">Loopi</span>
-              <div className="logo-infinity">∞</div>
-            </div>
-            <p className="welcome-slogan">Where connections loop</p>
-          </div>
-        </div>
       </div>
     </div>
   );

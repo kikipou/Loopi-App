@@ -6,24 +6,31 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
+  background-image: url('../../imgs/Login.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
 }
 
 /* Sección Izquierda - Imagen y Branding */
 .login-left {
-  flex: 0.6;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Sección Derecha - Formulario de Login */
-.login-right {
-  flex: 0.4;
-  background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #2d0066 100%);
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
+  z-index: 2;
+}
+
+/* Sección Derecha - Formulario de Login */
+.login-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
 }
 
 .login-form-container {

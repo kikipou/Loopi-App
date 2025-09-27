@@ -64,7 +64,7 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   transition: background 0.3s ease;
 }
@@ -89,7 +89,7 @@
   background: none;
   border: none;
   color: white;
-  font-size: var(--font-size-base);
+  font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   font-family: var(--font-primary);
   cursor: pointer;

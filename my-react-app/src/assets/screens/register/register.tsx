@@ -37,16 +37,6 @@ const Register = () => {
     <div className="register-container">
       {/* Sección Izquierda - Imagen y Branding */}
       <div className="register-left">
-        <div className="register-image-placeholder">
-          {/* Espacio reservado para la imagen */}
-        </div>
-        <div className="register-branding">
-          <div className="register-logo">
-            <span className="logo-text">Loopi</span>
-            <div className="logo-infinity">∞</div>
-          </div>
-          <p className="register-slogan">Where connections loop</p>
-        </div>
       </div>
 
       {/* Sección Derecha - Formulario de Registro */}

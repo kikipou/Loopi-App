@@ -9,3 +9,13 @@
     background-position: top center;
     background-attachment: fixed;
   }
+
+  .chatspage-title {
+    font-size: var(--font-size-6xl);
+    font-weight: var(--font-weight-bold);
+    margin: 15rem;
+    padding: 0;
+    color: white;
+    text-align: left;
+  }
+

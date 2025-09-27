@@ -192,7 +192,7 @@
 
 @media (max-width: 480px) {
   .welcome-content {
-    padding: 1rem;
+    padding: 0rem;
   }
   
   .welcome-title {

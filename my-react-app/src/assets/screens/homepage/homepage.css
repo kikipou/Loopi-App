@@ -7,7 +7,7 @@
 .homepage-content {
   padding: 2rem;
   text-align: center;
-  margin-top: 80px; /* Espacio para la nav fixed */
+  margin-top: 0rem; /* Espacio para la nav fixed */
 }
 
 .homepage-content h1 {

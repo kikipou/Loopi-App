@@ -1,6 +1,10 @@
+import "./uploadpost.css"
+
 const UploadPost = () => {
    return <>
-    <h1>Upload Post</h1>
+    <div className="uploadpost-container"> 
+      <h1 className="uploadpost-title">Post</h1>
+    </div>
   </>;
 }    
 

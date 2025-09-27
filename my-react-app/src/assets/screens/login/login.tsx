@@ -34,16 +34,6 @@ const Login = () => {
     <div className="login-container">
       {/* Sección Izquierda - Imagen y Branding */}
       <div className="login-left">
-        <div className="login-image-placeholder">
-          {/* Espacio reservado para la imagen */}
-        </div>
-        <div className="login-branding">
-          <div className="login-logo">
-            <span className="logo-text">Loopi</span>
-            <div className="logo-infinity">∞</div>
-          </div>
-          <p className="login-slogan">Where connections loop</p>
-        </div>
       </div>
 
       {/* Sección Derecha - Formulario de Login */}

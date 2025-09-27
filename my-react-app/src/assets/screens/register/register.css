@@ -15,10 +15,12 @@
 
 /* Sección Izquierda - Imagen y Branding */
 .register-left {
-  flex: 0.6;
-  position: relative;
+  flex: 1;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 2;
 }
 
 /* Sección Derecha - Formulario de Registro */

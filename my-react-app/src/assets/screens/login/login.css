@@ -1,0 +1,296 @@
+/* Contenedor principal */
+.login-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Sección Izquierda - Imagen y Branding */
+.login-left {
+  flex: 0.6;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-image-placeholder {
+  flex: 1;
+  background: linear-gradient(135deg, #1a0033 0%, #2d0066 50%, #4d0099 100%);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login-image-placeholder::before {
+  content: "Imagen de fondo";
+  color: rgba(255, 255, 255, 0.3);
+  font-size: var(--font-size-2xl);
+  font-family: var(--font-primary);
+  font-weight: var(--font-weight-medium);
+  text-align: center;
+}
+
+.login-branding {
+  position: absolute;
+  bottom: 4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+  color: white;
+  z-index: 2;
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  gap: 0.5rem;
+}
+
+.logo-text {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  font-family: var(--font-primary);
+  letter-spacing: var(--letter-spacing-tight);
+}
+
+.logo-infinity {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-light);
+  opacity: 0.9;
+  margin-left: 0.5rem;
+}
+
+.login-slogan {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-regular);
+  opacity: 0.9;
+  margin: 0;
+  font-family: var(--font-primary);
+  font-style: italic;
+}
+
+/* Sección Derecha - Formulario de Login */
+.login-right {
+  flex: 0.4;
+  background: linear-gradient(135deg, #000000 0%, #1a0033 50%, #2d0066 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 350px;
+  padding: 1.5rem;
+  color: white;
+}
+
+.login-title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 0.5rem 0;
+  font-family: var(--font-primary);
+  letter-spacing: var(--letter-spacing-tight);
+  text-align: center;
+}
+
+.login-subtitle {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+  margin: 0 0 1.5rem 0;
+  color: #b19cd9;
+  font-family: var(--font-primary);
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  position: relative;
+}
+
+.password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #b19cd9;
+  cursor: pointer;
+  font-size: var(--font-size-base);
+  padding: 0;
+  z-index: 1;
+  transition: color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.password-toggle:hover {
+  color: #8a63d2;
+}
+
+.form-actions {
+  margin-top: 1rem;
+}
+
+/* Estilos específicos para inputs en Login */
+.login-form .my-input {
+  height: 48px;
+  font-size: var(--font-size-sm);
+  padding: 0 16px;
+}
+
+/* Estilos específicos para botones en Login */
+.form-actions .my-button {
+  width: 100%;
+  height: 48px;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-primary);
+  background: #5a00ff;
+  border: none;
+  border-radius: 24px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(90, 0, 255, 0.3);
+}
+
+.form-actions .my-button:hover {
+  background: #3a0099;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(90, 0, 255, 0.4);
+}
+
+.form-actions .my-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(90, 0, 255, 0.3);
+}
+
+.login-signup-link {
+  margin-top: 1.5rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-primary);
+}
+
+.login-signup-link p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-regular);
+}
+
+.signup-link {
+  background: none;
+  border: none;
+  color: #b19cd9;
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-primary);
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease;
+}
+
+.signup-link:hover {
+  color: #8a63d2;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .login-left {
+    flex: 0.5;
+  }
+  
+  .login-right {
+    flex: 0.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .login-container {
+    flex-direction: column;
+  }
+  
+  .login-left {
+    flex: 0.3;
+  }
+  
+  .login-right {
+    flex: 0.7;
+  }
+  
+  .login-title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .login-subtitle {
+    font-size: var(--font-size-sm);
+  }
+  
+  .logo-text {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .logo-infinity {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .login-slogan {
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .login-form-container {
+    padding: 1rem;
+  }
+  
+  .login-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .login-subtitle {
+    font-size: var(--font-size-xs);
+  }
+  
+  .login-signup-link {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+  
+  .logo-text {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .logo-infinity {
+    font-size: var(--font-size-xl);
+  }
+  
+  .login-slogan {
+    font-size: var(--font-size-sm);
+  }
+}

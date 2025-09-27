@@ -1,9 +1,26 @@
 #root {
   width: 100vw;
-  height: 100vh;
+  min-height: 100vh;
   margin: 0;
   padding: 0;
   text-align: center;
+}
+
+/* Ajuste para la navegación fixed */
+body {
+  padding-top: 80px; /* Altura de la nav */
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px; /* Altura de la nav en tablet */
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    padding-top: 60px; /* Altura de la nav en móvil */
+  }
 }
 
 .logo {

@@ -1,7 +1,10 @@
+import "./chatpage1.css";
+
 const ChatPage1 = () => {
-  return <>
-  <h1>Chat</h1>
-  <p>Welcome to the chat page!</p>
+  return <> 
+    <div className="chatpage1-container"> 
+      <h1 className="chatpage1-title">Catalina Martinez</h1>
+    </div>
   </>;
 }    
 

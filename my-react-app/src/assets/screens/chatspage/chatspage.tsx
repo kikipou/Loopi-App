@@ -2,7 +2,9 @@ import "./chatspage.css";
 
 const ChatsPage = () => {
   return <>
-  <h1>Cjats</h1>
+  <div className="chatspage-container"> 
+    <h1 className="chatspage-title">Chats</h1>
+  </div>
   </>;
 }    
 

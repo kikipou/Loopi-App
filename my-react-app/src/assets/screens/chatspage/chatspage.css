@@ -1,14 +1,11 @@
 /* Contenedor principal */
 .chatspage-container {
-    display: flex;
-    height: 100vh;
-    width: 100vw;
     margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-image: url('../../imgs/Chats.png');
-    background-size: cover;
-    background-position: center;
+    min-height: 100vh;
+    overflow: auto;
+    background-image: url('../../imgs/Chats page.png');
     background-repeat: no-repeat;
-    position: relative;
+    background-size: cover;
+    background-position: top center;
+    background-attachment: fixed;
   }

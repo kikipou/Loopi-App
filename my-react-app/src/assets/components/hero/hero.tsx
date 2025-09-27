@@ -6,15 +6,6 @@ const Hero = () => {
       {/* Gradientes laterales */}
       <div className="hero-gradient-left"></div>
       <div className="hero-gradient-right"></div>
-      
-      {/* Imagen de fondo */}
-      <div className="hero-image-container">
-        {/* Aquí puedes reemplazar con tu imagen */}
-        <div className="hero-image-placeholder">
-          <div className="placeholder-text">Tu imagen aquí</div>
-        </div>
-      </div>
-      
       {/* Contenido superpuesto */}
       <div className="hero-content">
         <div className="hero-text">
@@ -26,6 +17,8 @@ const Hero = () => {
           </p>
         </div>
       </div>
+      {/* Imagen de fondo */}
+      <div className="hero-image-container"></div>
     </div>
   );
 };

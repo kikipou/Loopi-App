@@ -35,19 +35,24 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 100%;          /* antes estaba 1000% */
   height: 100%;
-  z-index: 1;
+  background-image: url('../../imgs/people-working-as-team.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 1;           /* queda detrás del contenido */
 }
 
-.hero-image-placeholder {
+.hero-image-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #1a0033 0%, #2d0066 50%, #4d0099 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+  background-color: rgba(0,0,0,0.6); /* 👈 negro translúcido */
+  z-index: 2;
 }
 
 .placeholder-text {
@@ -115,78 +120,4 @@
   margin: 0;
   line-height: 1.4;
   max-width: 500px;
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .hero-container {
-    height: 60vh;
-    min-height: 400px;
-  }
-  
-  .hero-content {
-    padding: 3rem 1.5rem;
-  }
-  
-  .hero-title {
-    font-size: var(--font-size-5xl);
-  }
-  
-  .hero-quote {
-    font-size: var(--font-size-base);
-  }
-  
-  .hero-gradient-left,
-  .hero-gradient-right {
-    width: 60px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-container {
-    height: 50vh;
-    min-height: 350px;
-  }
-  
-  .hero-content {
-    padding: 2rem 1rem;
-  }
-  
-  .hero-title {
-    font-size: var(--font-size-4xl);
-    margin-bottom: 1rem;
-  }
-  
-  .hero-quote {
-    font-size: var(--font-size-sm);
-  }
-  
-  .hero-gradient-left,
-  .hero-gradient-right {
-    width: 40px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-container {
-    height: 40vh;
-    min-height: 300px;
-  }
-  
-  .hero-content {
-    padding: 1.5rem 0.75rem;
-  }
-  
-  .hero-title {
-    font-size: var(--font-size-3xl);
-  }
-  
-  .hero-quote {
-    font-size: var(--font-size-xs);
-  }
-  
-  .hero-gradient-left,
-  .hero-gradient-right {
-    width: 30px;
-  }
 }

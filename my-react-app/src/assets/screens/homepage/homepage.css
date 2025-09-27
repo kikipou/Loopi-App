@@ -1,7 +1,11 @@
 .homepage-container {
   min-height: 100vh;
-  background: #000000;
   color: white;
+  overflow: hidden;
+  background-image: url('../../imgs/Home.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
 }
 

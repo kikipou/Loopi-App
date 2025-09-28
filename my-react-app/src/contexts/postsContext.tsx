@@ -19,7 +19,9 @@ interface PostsContextType {
   posts: Post[];
   loading: boolean;
   error: string | null;
-  fetchPosts: () => Promise<void>;
+  currentCategory: string;
+  fetchPosts: (category?: string) => Promise<void>;
+  setCategory: (category: string) => void;
   addPost: (post: Omit<Post, 'id' | 'created_at' | 'updated_at'>) => Promise<void>;
   updatePost: (id: string, post: Partial<Post>) => Promise<void>;
   deletePost: (id: string) => Promise<void>;
@@ -32,17 +34,25 @@ export const PostsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [currentCategory, setCurrentCategory] = useState<string>('All');
 
-  // Función para obtener posts
-  const fetchPosts = async () => {
+  // Función para obtener posts con filtro por categoría
+  const fetchPosts = async (category: string = 'All') => {
     try {
       setLoading(true);
       setError(null);
       
-      const { data, error } = await supabase
+      let query = supabase
         .from('posts')
         .select('*')
         .order('created_at', { ascending: false });
+
+      // Si no es "All", filtrar por categoría
+      if (category !== 'All') {
+        query = query.eq('post_professions', category);
+      }
+
+      const { data, error } = await query;
 
       if (error) {
         throw error;
@@ -55,6 +65,12 @@ export const PostsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     } finally {
       setLoading(false);
     }
+  };
+
+  // Función para cambiar categoría
+  const setCategory = (category: string) => {
+    setCurrentCategory(category);
+    fetchPosts(category);
   };
 
   // Función para agregar un post
@@ -143,7 +159,9 @@ export const PostsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     posts,
     loading,
     error,
+    currentCategory,
     fetchPosts,
+    setCategory,
     addPost,
     updatePost,
     deletePost,

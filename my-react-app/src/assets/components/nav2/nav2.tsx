@@ -1,25 +1,23 @@
 
-import { useState } from "react";
+import { usePosts } from "../../../contexts/postsContext";
 import "./nav2.css";
 
 const Nav2 = () => {
-  const [activeCategory, setActiveCategory] = useState("All");
+  const { currentCategory, setCategory } = usePosts();
 
   const categories = [
     "All",
-    "Design", 
-    "Development",
-    "Engineering",
-    "Chemistry",
-    "Physics",
-    "Finance",
-    "Marketing"
+    "design", 
+    "development",
+    "engineering",
+    "chemistry",
+    "physics",
+    "finance",
+    "marketing"
   ];
 
   const handleCategoryClick = (category: string) => {
-    setActiveCategory(category);
-    // Aquí se puede agregar lógica para filtrar contenido
-    console.log("Selected category:", category);
+    setCategory(category);
   };
 
   return (
@@ -28,7 +26,7 @@ const Nav2 = () => {
         {categories.map((category) => (
           <button
             key={category}
-            className={`nav2-category ${activeCategory === category ? 'active' : ''}`}
+            className={`nav2-category ${currentCategory === category ? 'active' : ''}`}
             onClick={() => handleCategoryClick(category)}
           >
             {category}

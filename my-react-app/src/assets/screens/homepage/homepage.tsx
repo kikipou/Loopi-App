@@ -2,13 +2,34 @@ import "./homepage.css";
 import Nav from "../../components/nav/nav";
 import Hero from "../../components/hero/hero";
 import Nav2 from "../../components/nav2/nav2";
+import { usePosts } from "../../../contexts/postsContext";
 
 const HomePage = () => {
+  const { posts, loading } = usePosts();
   return (
     <div className="homepage-container">
       <Nav />
       <Hero />
       <Nav2 />
+      <div className="posts-container">
+        {loading ? (
+          <p>Loading posts...</p>
+        ) : posts.length === 0 ? (
+          <div className="no-posts">
+            <p>No posts avaiable</p>
+            <p>Check Supabase connection</p>
+          </div>
+        ) : (
+          posts.map((post) => (
+            <div key={post.id} className="post-card">
+              <h3>{post.post_name}</h3>
+              <p>{post.post_description}</p>
+              <p>{post.post_professions}</p>
+              <p>{post.post_skills}</p>
+            </div>
+          ))
+        )}
+      </div>
     </div>
   );
 };

@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="footer-container">
         {/* Logo Section */}
         <div className="footer-logo">
-          <img className="loopi-logo" src="https://github.com/kikipou/Loopi-App/blob/cata/loopi-logo.png?raw=true" alt="logo" />
+          <img className="loopi-logo" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loopi-logo.png?raw=true" alt="logo" />
         </div>
 
         {/* Content Columns */}

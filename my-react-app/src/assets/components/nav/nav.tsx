@@ -19,7 +19,7 @@ const Nav = () => {
       {/* Logo y Branding - Izquierda */}
       <div className="nav-left">
         <div className="nav-logo" onClick={() => handleNavigation("/home")}>
-        <img className="loopi-logo" src="https://github.com/kikipou/Loopi-App/blob/cata/loopi-logo.png?raw=true" alt="logo" />
+        <img className="loopi-logo" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loopi-logo.png?raw=true" alt="logo" />
         </div>
       </div>
 

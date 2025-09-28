@@ -1,18 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { supabase } from '../database/supabaseClient';
-
-// Tipos para los posts
-export interface Post {
-  id: string;
-  post_name: string;
-  post_description: string;
-  post_professions: string;
-  post_skills: string;
-  image_url?: string;
-  created_at?: string;
-  updated_at?: string;
-}
+import type { Post } from '../types/postTypes';
 
 // Contexto
 interface PostsContextType {

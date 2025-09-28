@@ -7,13 +7,13 @@ const Nav2 = () => {
 
   const categories = [
     "All",
-    "design", 
-    "development",
-    "engineering",
-    "chemistry",
-    "physics",
-    "finance",
-    "marketing"
+    "Design", 
+    "Development",
+    "Engineering",
+    "Chemistry",
+    "Physics",
+    "Finance",
+    "Marketing"
   ];
 
   const handleCategoryClick = (category: string) => {

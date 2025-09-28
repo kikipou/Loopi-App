@@ -52,8 +52,8 @@
 .font-bold { font-weight: var(--font-weight-bold); }
 
 /* Estilo */
-.font-italic  { font-style: italic; }
-.font-normal  { font-style: normal; }
+.font-italic  { font-style: var(--font-style-italic); }
+.font-normal  { font-style: var(--font-style-normal); }
 
 .leading-tight { line-height: var(--line-height-tight); }
 .leading-normal { line-height: var(--line-height-normal); }

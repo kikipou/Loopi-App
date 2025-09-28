@@ -3,9 +3,6 @@ import "./hero.css";
 const Hero = () => {
   return (
     <div className="hero-container">
-      {/* Gradientes laterales */}
-      <div className="hero-gradient-left"></div>
-      <div className="hero-gradient-right"></div>
       {/* Contenido superpuesto */}
       <div className="hero-content">
         <div className="hero-text">

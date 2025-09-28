@@ -14,22 +14,17 @@
   .searchpage-title {
     font-size: var(--font-size-4xl);
     font-weight: var(--font-weight-bold);
-    padding: 0;
     color: white;
     text-align: center;
     margin-top: 6rem;
     margin-bottom: 2rem;
   }
-
-  .searchpage-title2 {
-    font-size: var(--font-size-4xl);
+  
+  .searchpage-title span {
+    font-style: var(--font-style-italic);
     font-weight: var(--font-weight-light);
-    padding: 0;
-    color: white;
-    text-align: center;
-    margin-top: 6rem;
-    margin-bottom: 2rem;
   }
+  
 
   .searchpage-search-container {
     margin-bottom: 3rem;

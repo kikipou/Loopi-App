@@ -26,7 +26,7 @@ const Nav = () => {
       {/* Enlaces de Navegación - Centro */}
       <div className="nav-center">
         <div className="nav-icon">
-          <span className="infinity-icon">∞</span>
+        <img className="loop-icon" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loop.png?raw=true" alt="loop-icon" />
         </div>
         <div className="nav-links">
           <button 

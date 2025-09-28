@@ -33,7 +33,6 @@
   margin-left: 1rem;
 }
 
-
 .logo-text {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
@@ -80,10 +79,9 @@
   background: rgba(255, 255, 255, 0.2);
 }
 
-.infinity-icon {
-  font-size: var(--font-size-lg);
-  color: white;
-  font-weight: var(--font-weight-light);
+.loop-icon {
+  width: 2rem;    
+  height: auto;
 }
 
 .nav-links {

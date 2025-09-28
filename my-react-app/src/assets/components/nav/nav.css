@@ -27,6 +27,13 @@
   gap: 0.5rem;
 }
 
+.loopi-logo {
+  width: 6rem;    
+  height: auto;    
+  margin-left: 1rem;
+}
+
+
 .logo-text {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);

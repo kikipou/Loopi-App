@@ -19,10 +19,8 @@ const Nav = () => {
       {/* Logo y Branding - Izquierda */}
       <div className="nav-left">
         <div className="nav-logo" onClick={() => handleNavigation("/home")}>
-          <span className="logo-text">Loopi</span>
-          <div className="logo-infinity">∞</div>
+        <img className="loopi-logo" src="https://github.com/kikipou/Loopi-App/blob/cata/loopi-logo.png?raw=true" alt="logo" />
         </div>
-        <p className="nav-slogan">Where connections loop</p>
       </div>
 
       {/* Enlaces de Navegación - Centro */}

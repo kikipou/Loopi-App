@@ -11,11 +11,10 @@
   }
 
   .searchpage-title {
-    font-size: var(--font-size-6xl);
+    font-size: var(--font-size-4xl);
     font-weight: var(--font-weight-bold);
     padding: 0;
     color: white;
-    text-align: initial;
-    margin-top: 3rem;
-    margin-left: 3rem;
+    text-align: center;
+    margin-top: 8rem;
   }

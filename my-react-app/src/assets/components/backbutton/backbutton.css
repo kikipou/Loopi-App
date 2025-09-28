@@ -1,0 +1,12 @@
+.back-button {
+    width: 60px;
+    height: 60px;
+    background-image: url('../../imgs/back.png');
+    cursor: pointer;
+    display: flex;
+    margin: 0 auto;
+  }
+  
+  .back-button:hover {
+    background: #3a0099;
+  }

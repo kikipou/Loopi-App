@@ -13,8 +13,9 @@
   .searchpage-title {
     font-size: var(--font-size-6xl);
     font-weight: var(--font-weight-bold);
-    margin: 15rem;
     padding: 0;
     color: white;
-    text-align: left;
+    text-align: initial;
+    margin-top: 3rem;
+    margin-left: 3rem;
   }

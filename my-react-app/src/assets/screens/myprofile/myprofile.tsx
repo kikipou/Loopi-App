@@ -1,6 +1,10 @@
+import './myprofile.css';
+
 const MyProfile = () => {
   return <>
-    <h1>My Profile</h1>
+    <div className="myprofile-container"> 
+      <h1 className="myprofile-title">Your profile</h1>
+    </div>
   </>;
 }    
 

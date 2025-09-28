@@ -35,11 +35,11 @@ const SearchBar = ({ onSearch, placeholder = "Type here", className = "" }: Sear
     handleSearch(localQuery);
   };
 
-  // Limpiar el input cuando se monta el componente
+  // Solo limpiar cuando se monta el componente por primera vez
   useEffect(() => {
     setLocalQuery('');
     resetSearch();
-  }, []); // Solo se ejecuta una vez al montar
+  }, []);
 
   return (
     <form className={`searchbar-container ${className}`} onSubmit={handleSubmit}>

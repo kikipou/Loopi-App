@@ -29,6 +29,7 @@
   text-align: left;
   width: 20rem;
   margin-bottom: 2rem;
+  cursor: pointer;
 }
 
 .post-card:hover {

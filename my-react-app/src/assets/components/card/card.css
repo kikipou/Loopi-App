@@ -1,0 +1,50 @@
+.card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
+  cursor: pointer;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.card h3 {
+  color: white;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 1rem 0;
+}
+
+.card p {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.5rem 0;
+  line-height: 1.5;
+}
+
+.card .post-description {
+  font-size: var(--font-size-base);
+}
+
+.card .post-professions,
+.card .post-skills,
+.card .post-category {
+  font-size: var(--font-size-sm);
+}
+
+.card strong {
+  color: white;
+}

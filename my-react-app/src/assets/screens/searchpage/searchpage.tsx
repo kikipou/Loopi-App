@@ -1,6 +1,7 @@
 import './searchpage.css';
 import BackButton from '../../components/backbutton/backbutton';
 import SearchBar from '../../components/searchbar/searchbar';
+import Card from '../../components/card/card';
 import { usePosts } from '../../../contexts/postsContext';
 
 const SearchPage = () => {
@@ -46,14 +47,7 @@ const SearchPage = () => {
               {filteredPosts.length > 0 ? (
                 <div className="searchpage-posts-grid">
                   {filteredPosts.map((post) => (
-                    <div key={post.id} className="searchpage-post-card">
-                      {post.image_url && <img src={post.image_url} alt={post.post_name} />}
-                      <h3>{post.post_name}</h3>
-                      <p className="post-description">{post.post_description}</p>
-                      <p className="post-professions"><strong>Profesiones:</strong> {post.post_professions}</p>
-                      <p className="post-skills"><strong>Habilidades:</strong> {post.post_skills}</p>
-                      <p className="post-category"><strong>Categoría:</strong> {post.categories}</p>
-                    </div>
+                    <Card key={post.id} post={post} />
                   ))}
                 </div>
               ) : !searchQuery ? (

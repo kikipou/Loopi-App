@@ -16,7 +16,7 @@
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 1.5rem;
   padding: 8rem;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .post-card {
@@ -67,99 +67,4 @@
   margin: 0;
   font-size: 0.9rem;
   opacity: 0.9;
-}
-
-.footer-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 200px repeat(4, 1fr);
-  grid-template-areas: 
-      "logo pages contact socials legal";
-  gap: 4rem;
-  align-items: start;
-}
-
-/* Logo Section */
-.logo-section {
-  grid-area: logo;
-  display: flex;
-  align-items: flex-start;
-}
-
-.logo {
-  font-size: 2.5rem;
-  font-weight: 300;
-  color: white;
-  text-decoration: none;
-  letter-spacing: 1px;
-}
-
-/* Pages Section */
-.pages {
-  grid-area: pages;
-}
-
-/* Contact Section */
-.contact {
-  grid-area: contact;
-}
-
-/* Socials Section */
-.socials {
-  grid-area: socials;
-}
-
-/* Legal Section */
-.legal {
-  grid-area: legal;
-}
-
-/* Section Headers */
-.homepage-footer section h3 {
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 500;
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.3px;
-}
-
-/* Section Content */
-.homepage-footer section p,
-.homepage-footer section a {
-  color: #888;
-  font-size: 0.95rem;
-  line-height: 1.8;
-  margin-bottom: 0.5rem;
-  text-decoration: none;
-  display: block;
-  transition: color 0.2s ease;
-}
-
-.homepage-footer section a:hover {
-  color: white;
-}
-
-/* Contact specific styling */
-.contact p {
-  color: #888;
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
-}
-
-/* Links styling */
-.pages a,
-.socials a,
-.legal a {
-  color: #888;
-  text-decoration: none;
-  display: block;
-  margin-bottom: 0.5rem;
-  transition: color 0.2s ease;
-}
-
-.pages a:hover,
-.socials a:hover,
-.legal a:hover {
-  color: white;
 }

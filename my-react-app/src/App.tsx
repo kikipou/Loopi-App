@@ -14,32 +14,33 @@ import Login from './assets/screens/login/login'
 import SearchPage from './assets/screens/searchpage/searchpage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PostsProvider } from './contexts/postsContext';
+import { AuthProvider } from './contexts/authContext';
 
 function App() {
   
 
   return (
-    
-    <PostsProvider>
-      <Router>
-        <Routes>
-        <Route path="/" element={<Welcome />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/post/:id" element={<PostDetail />} />
-          <Route path="/upload" element={<UploadPost />} />
-          <Route path="/profile" element={<MyProfile />} />
-          <Route path="/chat1" element={<ChatPage1 />} />
-          <Route path="/chats" element={<ChatsPage />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
-          <Route path="/loopi" element={<Loopi />} />
-          <Route path="/other-profile" element={<OtherProfile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/search" element={<SearchPage />} />
-        </Routes>
-      </Router>
-    </PostsProvider>
-    
+    <AuthProvider>
+      <PostsProvider>
+        <Router>
+          <Routes>
+          <Route path="/" element={<Welcome />} />
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/post/:id" element={<PostDetail />} />
+            <Route path="/upload" element={<UploadPost />} />
+            <Route path="/profile" element={<MyProfile />} />
+            <Route path="/chat1" element={<ChatPage1 />} />
+            <Route path="/chats" element={<ChatsPage />} />
+            <Route path="/edit-profile" element={<EditProfile />} />
+            <Route path="/loopi" element={<Loopi />} />
+            <Route path="/other-profile" element={<OtherProfile />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/search" element={<SearchPage />} />
+          </Routes>
+        </Router>
+      </PostsProvider>
+    </AuthProvider>
   );
 }
 

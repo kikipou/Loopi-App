@@ -21,6 +21,16 @@
     margin-bottom: 2rem;
   }
 
+  .searchpage-title2 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-light);
+    padding: 0;
+    color: white;
+    text-align: center;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+  }
+
   .searchpage-search-container {
     margin-bottom: 3rem;
     padding: 0 1rem;

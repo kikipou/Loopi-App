@@ -9,7 +9,8 @@ const SearchPage = () => {
   return (
     <>
       <div className="searchpage-container"> 
-        <h1 className="searchpage-title">What are you loopi-ing for?</h1>
+        <h1 className="searchpage-title">What are you  for?</h1>
+        <h1 className="searchpage-title2">loopi-ing</h1>
         
         <div className="searchpage-search-container">
           <SearchBar />

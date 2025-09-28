@@ -20,7 +20,7 @@ const PostsList = () => {
     <div className="posts-grid">
       {posts.map((post) => (
         <div key={post.id} className="post-card">
-          {/* {post.image_url && <img src={post.image_url} alt={post.title} />} */}
+          {post.image_url && <img src={post.image_url} alt={post.post_name} />}
           <h3>{post.post_name}</h3>
           <p>{post.post_description}</p>
           <p>{post.post_professions}</p>

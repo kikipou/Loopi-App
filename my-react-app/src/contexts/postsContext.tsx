@@ -7,7 +7,7 @@ type Post = {
   post_description: string;
   post_professions: string;
   post_skills: string;
-//   image_url?: string;
+  image_url?: string;
   created_at: string;
 };
 

@@ -6,11 +6,13 @@ import { usePosts } from "../../../contexts/postsContext";
 
 const HomePage = () => {
   const { posts, loading } = usePosts();
+  
   return (
     <div className="homepage-container">
       <Nav />
       <Hero />
       <Nav2 />
+      
       <div className="posts-container">
         {loading ? (
           <p>Loading posts...</p>
@@ -22,10 +24,25 @@ const HomePage = () => {
         ) : (
           posts.map((post) => (
             <div key={post.id} className="post-card">
-              <h3>{post.post_name}</h3>
-              <p>{post.post_description}</p>
-              <p>{post.post_professions}</p>
-              <p>{post.post_skills}</p>
+              {post.image_url && (
+                <div className="post-image-container">
+                  <img 
+                    src={post.image_url} 
+                    alt={post.post_name} 
+                    className="post-image"
+                    onError={(e) => {
+                      console.log(`Error cargando imagen para post ${post.id}:`, post.image_url);
+                      e.currentTarget.style.display = 'none';
+                    }}
+                  />
+                </div>
+              )}
+              <div className="post-content">
+                <h3>{post.post_name}</h3>
+                <p>{post.post_description}</p>
+                <p>{post.post_professions}</p>
+                <p>{post.post_skills}</p>
+              </div>
             </div>
           ))
         )}

@@ -21,7 +21,7 @@ const PostsList = () => {
       {posts.map((post) => (
         <div key={post.id} className="post-card">
           {post.image_url && <img src={post.image_url} alt={post.post_name} />}
-          <h3>{post.post_name}</h3>
+          <h3>Description: {post.post_name}</h3>
           <p>{post.post_description}</p>
           <p>{post.post_professions}</p>
           <p>{post.post_skills}</p>

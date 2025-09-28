@@ -39,8 +39,11 @@ const HomePage = () => {
               )}
               <div className="post-content">
                 <h3>{post.post_name}</h3>
-                <p>{post.post_description}</p>
+                <h4>Description</h4>
+                <p> {post.post_description}</p>
+                <h4>Professions Interested</h4>
                 <p>{post.post_professions}</p>
+                <h4>Skills required</h4>
                 <p>{post.post_skills}</p>
               </div>
             </div>

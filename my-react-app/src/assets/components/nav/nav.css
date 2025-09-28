@@ -16,7 +16,7 @@
 /* Sección Izquierda - Logo y Branding */
 .nav-left {
   display: flex;
-  align-items: center;
+  align-items: left;
   gap: 1rem;
   cursor: pointer;
 }
@@ -30,31 +30,6 @@
 .loopi-logo {
   width: 6rem;    
   height: auto;    
-  margin-left: 1rem;
-}
-
-.logo-text {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-  font-family: var(--font-primary);
-  color: white;
-  letter-spacing: var(--letter-spacing-tight);
-}
-
-.logo-infinity {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-light);
-  color: white;
-  opacity: 0.9;
-}
-
-.nav-slogan {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-regular);
-  color: rgba(255, 255, 255, 0.7);
-  font-family: var(--font-primary);
-  font-style: italic;
-  margin: 0;
 }
 
 /* Sección Centro - Enlaces de Navegación */

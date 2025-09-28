@@ -8,6 +8,7 @@
     background-size: cover;
     background-position: top center;
     background-attachment: fixed;
+    padding: 2rem 1rem;
   }
 
   .searchpage-title {
@@ -16,5 +17,128 @@
     padding: 0;
     color: white;
     text-align: center;
-    margin-top: 8rem;
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+  }
+
+  .searchpage-search-container {
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+  }
+
+  .searchpage-results {
+    padding: 0 1rem;
+  }
+
+  .searchpage-results-header {
+    margin-bottom: 2rem;
+  }
+
+  .searchpage-results-header h2 {
+    color: white;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    text-align: center;
+    margin: 0;
+  }
+
+  .searchpage-posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .searchpage-post-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .searchpage-post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .searchpage-post-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .searchpage-post-card h3 {
+    color: white;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    margin: 0 0 1rem 0;
+  }
+
+  .searchpage-post-card p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0.5rem 0;
+    line-height: 1.5;
+  }
+
+  .searchpage-post-card .post-description {
+    font-size: var(--font-size-base);
+  }
+
+  .searchpage-post-card .post-professions,
+  .searchpage-post-card .post-skills,
+  .searchpage-post-card .post-category {
+    font-size: var(--font-size-sm);
+  }
+
+  .searchpage-post-card strong {
+    color: white;
+  }
+
+  .searchpage-loading,
+  .searchpage-error,
+  .searchpage-empty {
+    text-align: center;
+    color: white;
+    font-size: var(--font-size-lg);
+    margin-top: 2rem;
+  }
+
+  .searchpage-error {
+    color: #ef4444;
+  }
+
+  .searchpage-empty {
+    color: #9ca3af;
+  }
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .searchpage-container {
+      padding: 1rem 0.5rem;
+    }
+
+    .searchpage-title {
+      font-size: var(--font-size-3xl);
+      margin-top: 4rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .searchpage-search-container {
+      margin-bottom: 2rem;
+      padding: 0 0.5rem;
+    }
+
+    .searchpage-posts-grid {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .searchpage-results {
+      padding: 0 0.5rem;
+    }
   }

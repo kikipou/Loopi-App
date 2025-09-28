@@ -3,7 +3,7 @@
   width: 100%;
   height: 70vh;
   min-height: 500px;
-  margin-top: 1rem;
+  margin-top: 5rem;
   overflow: hidden;
   display: flex;
   align-items: center;
@@ -63,14 +63,6 @@
   font-family: var(--font-primary);
   font-weight: var(--font-weight-medium);
   text-align: center;
-}
-
-/* Para cuando agregues tu imagen real, usa esta clase */
-.hero-image-real {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
 }
 
 /* Contenido superpuesto */

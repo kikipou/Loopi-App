@@ -1,0 +1,106 @@
+/* Footer Container */
+.footer {
+  background-color: #000000;
+  color: white;
+  padding: 3rem 0;
+  margin-top: auto;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 4rem;
+  text-align: left;
+}
+
+.loopi-logo {
+  max-width: 10rem;
+  margin-left: 1rem;
+}
+
+/* Content Columns */
+.footer-content {
+  display: flex;
+  gap: 3rem;
+  flex: 1;
+  margin-left: 4rem;
+  margin-top: 1rem;
+}
+
+.footer-column {
+  flex: 1;
+}
+
+.column-title {
+  font-size: 1rem;
+  font-weight: bold;
+  margin: 0 0 1rem 0;
+  color: white;
+  font-family: var(--font-primary);
+}
+
+.column-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.column-list li {
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+  color: white;
+  font-family: var(--font-primary);
+}
+
+.column-list a {
+  color: white;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.column-list a:hover {
+  opacity: 0.7;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer-container {
+    flex-direction: column;
+    gap: 2rem;
+    padding: 0 1rem;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .logo-text {
+    font-size: 1.5rem;
+  }
+  
+  .logo-infinity {
+    font-size: 1.3rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2rem 0;
+  }
+  
+  .footer-content {
+    gap: 1.5rem;
+  }
+  
+  .column-title {
+    font-size: 0.9rem;
+  }
+  
+  .column-list li {
+    font-size: 0.8rem;
+  }
+}

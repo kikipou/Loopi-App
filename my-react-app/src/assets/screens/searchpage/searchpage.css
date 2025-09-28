@@ -1,0 +1,20 @@
+/* Contenedor principal */
+.searchpage-container {
+    margin: 0;
+    min-height: 100vh;
+    overflow: auto;
+    background-image: url('../../imgs/Search page.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top center;
+    background-attachment: fixed;
+  }
+
+  .searchpage-title {
+    font-size: var(--font-size-6xl);
+    font-weight: var(--font-weight-bold);
+    margin: 15rem;
+    padding: 0;
+    color: white;
+    text-align: left;
+  }

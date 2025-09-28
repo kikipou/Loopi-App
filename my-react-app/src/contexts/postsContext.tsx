@@ -12,6 +12,7 @@ export const PostsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [currentCategory, setCurrentCategory] = useState<string>('All');
+  const [categories, setCategories] = useState<string[]>(['All']);
 
   // Función para obtener posts con filtro por categoría
   const fetchPosts = async (category: string = 'All') => {
@@ -26,7 +27,7 @@ export const PostsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
       // Si no es "All", filtrar por categoría
       if (category !== 'All') {
-        query = query.eq('post_professions', category);
+        query = query.eq('categories', category);
       }
 
       const { data, error } = await query;
@@ -41,6 +42,26 @@ export const PostsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
       setError(err instanceof Error ? err.message : 'Error desconocido');
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Función para obtener categorías únicas desde Supabase
+  const fetchCategories = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('posts')
+        .select('categories')
+        .not('categories', 'is', null);
+
+      if (error) {
+        throw error;
+      }
+
+      // Obtener categorías únicas
+      const uniqueCategories = ['All', ...new Set(data?.map(item => item.categories) || [])];
+      setCategories(uniqueCategories);
+    } catch (err) {
+      console.error('Error fetching categories:', err);
     }
   };
 
@@ -127,8 +148,9 @@ export const PostsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     }
   };
 
-  // Cargar posts al montar el componente
+  // Cargar posts y categorías al montar el componente
   useEffect(() => {
+    fetchCategories();
     fetchPosts();
   }, []);
 
@@ -137,6 +159,7 @@ export const PostsProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     loading,
     error,
     currentCategory,
+    categories,
     fetchPosts,
     setCategory,
     addPost,

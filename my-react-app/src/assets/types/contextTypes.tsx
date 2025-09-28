@@ -5,6 +5,7 @@ export interface PostsContextType {
   loading: boolean;
   error: string | null;
   currentCategory: string;
+  categories: string[];
   fetchPosts: (category?: string) => Promise<void>;
   setCategory: (category: string) => void;
   addPost: (post: Omit<Post, 'id' | 'created_at' | 'updated_at'>) => Promise<void>;

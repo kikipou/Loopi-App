@@ -12,7 +12,7 @@ import Loopi from './assets/screens/loopi/loopi'
 import OtherProfile from './assets/screens/otherprofile/otherprofile'
 import Login from './assets/screens/login/login'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { PostsProvider } from "./contexts/postsContext";
+import { PostsProvider } from './contexts/postsContext';
 
 function App() {
   

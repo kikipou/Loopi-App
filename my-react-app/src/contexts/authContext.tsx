@@ -15,7 +15,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [error, setError] = useState<string | null>(null);
 
   // Función para registrar usuario
-  const signUp = async (email: string, password: string, fullName?: string, phone?: string) => {
+  const signUp = async (email: string, password: string, name?: string, username?: string, phone?: string) => {
     try {
       setLoading(true);
       setError(null);
@@ -25,7 +25,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         password,
         options: {
           data: {
-            full_name: fullName,
+            full_name: name,
           },
         },
       });
@@ -44,8 +44,8 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           .insert([
             {
               id: data.user.id,
-              name: fullName,
-              username: fullName,
+              name: name,
+              username: username,
               email: data.user.email!,
               phone: phone ? parseInt(phone) : null,
               password: null,

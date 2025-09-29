@@ -9,7 +9,7 @@ const Register = () => {
   const navigate = useNavigate();
   const { signUp, loading, error } = useAuth();
   const [formData, setFormData] = useState({
-    fullName: "",
+    name: "",
     username: "",
     email: "",
     phone: "",
@@ -31,7 +31,7 @@ const Register = () => {
       setLocalError(null);
       
       // Validar campos requeridos
-      if (!formData.fullName || !formData.email || !formData.password) {
+      if (!formData.name || !formData.email || !formData.password) {
         setLocalError("Por favor completa todos los campos requeridos");
         return;
       }
@@ -51,7 +51,7 @@ const Register = () => {
 
       console.log("Intentando registrar usuario:", formData);
       
-      await signUp(formData.email, formData.password, formData.fullName, formData.phone);
+      await signUp(formData.email, formData.password, formData.name, formData.username, formData.phone);
       
       console.log("Usuario registrado exitosamente");
       navigate("/home");
@@ -96,8 +96,8 @@ const Register = () => {
               <Input
                 placeholder="Full name"
                 type="text"
-                value={formData.fullName}
-                onChange={handleInputChange("fullName")}
+                value={formData.name}
+                onChange={handleInputChange("name")}
                 required
               />
             </div>

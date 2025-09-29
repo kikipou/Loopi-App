@@ -2,10 +2,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
+import { useAuth } from "../../../contexts/authContext";
 import "./register.css";
 
 const Register = () => {
   const navigate = useNavigate();
+  const { signUp, loading, error } = useAuth();
   const [formData, setFormData] = useState({
     fullName: "",
     username: "",
@@ -14,6 +16,8 @@ const Register = () => {
     password: ""
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
+
 
   const handleInputChange = (field: string) => (value: string) => {
     setFormData(prev => ({
@@ -22,11 +26,39 @@ const Register = () => {
     }));
   };
 
-  const handleSignUp = () => {
-    // Aquí irá la lógica de registro
-    console.log("Sign Up data:", formData);
-    // Por ahora redirigimos al home
-    navigate("/home");
+  const handleSignUp = async () => {
+    try {
+      setLocalError(null);
+      
+      // Validar campos requeridos
+      if (!formData.fullName || !formData.email || !formData.password) {
+        setLocalError("Por favor completa todos los campos requeridos");
+        return;
+      }
+
+      // Validar email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        setLocalError("Por favor ingresa un email válido");
+        return;
+      }
+
+      // Validar contraseña
+      if (formData.password.length < 6) {
+        setLocalError("La contraseña debe tener al menos 6 caracteres");
+        return;
+      }
+
+      console.log("Intentando registrar usuario:", formData);
+      
+      await signUp(formData.email, formData.password, formData.fullName, formData.phone);
+      
+      console.log("Usuario registrado exitosamente");
+      navigate("/home");
+    } catch (err) {
+      console.error("Error en registro:", err);
+      setLocalError(err instanceof Error ? err.message : "Error al registrarse");
+    }
   };
 
   const handleLogIn = () => {
@@ -46,6 +78,20 @@ const Register = () => {
           <p className="register-subtitle">Let's start your match!</p>
           
           <form className="register-form">
+            {/* Mostrar errores */}
+            {(error || localError) && (
+              <div className="error-message" style={{ 
+                color: 'red', 
+                backgroundColor: '#ffe6e6', 
+                padding: '10px', 
+                borderRadius: '5px', 
+                marginBottom: '15px',
+                border: '1px solid #ff9999'
+              }}>
+                {error || localError}
+              </div>
+            )}
+            
             <div className="form-group">
               <Input
                 placeholder="Full name"
@@ -107,9 +153,10 @@ const Register = () => {
             
             <div className="form-actions">
               <Button
-                buttonplaceholder="Sign Up"
+                buttonplaceholder={loading ? "Registrando..." : "Sign Up"}
                 buttonid="signup-button"
                 onClick={handleSignUp}
+                disabled={loading}
               />
             </div>
           </form>

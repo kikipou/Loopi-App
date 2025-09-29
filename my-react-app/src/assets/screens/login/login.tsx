@@ -2,15 +2,18 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
+import { useAuth } from "../../../contexts/authContext";
 import "./login.css";
 
 const Login = () => {
   const navigate = useNavigate();
+  const { signIn, loading, error } = useAuth();
   const [formData, setFormData] = useState({
     email: "",
     password: ""
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [localError, setLocalError] = useState<string | null>(null);
 
   const handleInputChange = (field: string) => (value: string) => {
     setFormData(prev => ({
@@ -19,11 +22,33 @@ const Login = () => {
     }));
   };
 
-  const handleLogIn = () => {
-    // Aquí irá la lógica de login
-    console.log("Log In data:", formData);
-    // Por ahora redirigimos al home
-    navigate("/home");
+  const handleLogIn = async () => {
+    try {
+      setLocalError(null);
+      
+      // Validar campos requeridos
+      if (!formData.email || !formData.password) {
+        setLocalError("Por favor completa todos los campos");
+        return;
+      }
+
+      // Validar email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(formData.email)) {
+        setLocalError("Por favor ingresa un email válido");
+        return;
+      }
+
+      console.log("Intentando iniciar sesión:", formData);
+      
+      await signIn(formData.email, formData.password);
+      
+      console.log("Sesión iniciada exitosamente");
+      navigate("/home");
+    } catch (err) {
+      console.error("Error en login:", err);
+      setLocalError(err instanceof Error ? err.message : "Error al iniciar sesión");
+    }
   };
 
   const handleSignUp = () => {
@@ -43,6 +68,20 @@ const Login = () => {
           <p className="login-subtitle">Keep matching!</p>
           
           <form className="login-form">
+            {/* Mostrar errores */}
+            {(error || localError) && (
+              <div className="error-message" style={{ 
+                color: 'red', 
+                backgroundColor: '#ffe6e6', 
+                padding: '10px', 
+                borderRadius: '5px', 
+                marginBottom: '15px',
+                border: '1px solid #ff9999'
+              }}>
+                {error || localError}
+              </div>
+            )}
+            
             <div className="form-group">
               <Input
                 placeholder="Email"
@@ -74,9 +113,10 @@ const Login = () => {
             
             <div className="form-actions">
               <Button
-                buttonplaceholder="Log In"
+                buttonplaceholder={loading ? "Iniciando sesión..." : "Log In"}
                 buttonid="login-button"
                 onClick={handleLogIn}
+                disabled={loading}
               />
             </div>
           </form>

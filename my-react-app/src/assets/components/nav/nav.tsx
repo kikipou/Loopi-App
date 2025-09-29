@@ -43,7 +43,7 @@ const Nav = () => {
           </button>
           <button 
             className={`nav-link ${isActive('/explore') ? 'active' : ''}`}
-            onClick={() => handleNavigation('/explore')}
+            onClick={() => handleNavigation('/home')}
           >
             Explore
           </button>

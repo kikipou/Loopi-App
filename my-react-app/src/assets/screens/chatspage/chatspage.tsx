@@ -1,9 +1,10 @@
 import "./chatspage.css";
+import Nav from "../../components/nav/nav";
 
 const ChatsPage = () => {
   return <>
   <div className="chatspage-container"> 
-    <h1 className="chatspage-title">Chats</h1>
+    <Nav />
   </div>
   </>;
 }    

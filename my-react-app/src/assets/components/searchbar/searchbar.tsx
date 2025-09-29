@@ -27,7 +27,7 @@ const SearchBar = ({ onSearch, placeholder = "Type here", className = "" }: Sear
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLocalQuery(value);
-    handleSearch(value);
+    // Solo actualizar el estado local, no ejecutar búsqueda
   };
 
   const handleSubmit = (e: React.FormEvent) => {

@@ -57,18 +57,15 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      {/* Sección Izquierda - Imagen y Branding */}
       <div className="login-left">
       </div>
 
-      {/* Sección Derecha - Formulario de Login */}
       <div className="login-right">
         <div className="login-form-container">
           <h1 className="login-title">Log In</h1>
           <p className="login-subtitle">Keep matching!</p>
           
           <form className="login-form">
-            {/* Mostrar errores */}
             {(error || localError) && (
               <div className="error-message" style={{ 
                 color: 'red', 

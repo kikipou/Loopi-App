@@ -30,20 +30,17 @@ const Register = () => {
     try {
       setLocalError(null);
       
-      // Validar campos requeridos
       if (!formData.name || !formData.email || !formData.password) {
         setLocalError("Por favor completa todos los campos requeridos");
         return;
       }
 
-      // Validar email
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(formData.email)) {
         setLocalError("Por favor ingresa un email válido");
         return;
       }
 
-      // Validar contraseña
       if (formData.password.length < 6) {
         setLocalError("La contraseña debe tener al menos 6 caracteres");
         return;
@@ -67,18 +64,15 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      {/* Sección Izquierda - Imagen y Branding */}
       <div className="register-left">
       </div>
 
-      {/* Sección Derecha - Formulario de Registro */}
       <div className="register-right">
         <div className="register-form-container">
           <h1 className="register-title">Sign Up</h1>
           <p className="register-subtitle">Let's start your match!</p>
           
           <form className="register-form">
-            {/* Mostrar errores */}
             {(error || localError) && (
               <div className="error-message" style={{ 
                 color: 'red', 

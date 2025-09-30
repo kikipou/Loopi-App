@@ -15,7 +15,6 @@ const Welcome = () => {
 
   return (
     <div className="welcome-container">
-      {/* Sección Izquierda - Bienvenida y Acciones */}
       <div className="welcome-left">
         <div className="welcome-content">
           <h1 className="welcome-title">Welcome!</h1>
@@ -38,7 +37,6 @@ const Welcome = () => {
         </div>
       </div>
 
-      {/* Sección Derecha - Visual y Branding */}
       <div className="welcome-right">
       </div>
     </div>

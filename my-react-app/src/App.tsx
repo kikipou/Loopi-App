@@ -17,7 +17,6 @@ import { PostsProvider } from './contexts/postsContext';
 import { AuthProvider } from './contexts/authContext';
 
 function App() {
-  
 
   return (
     <AuthProvider>

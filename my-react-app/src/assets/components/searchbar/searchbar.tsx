@@ -35,7 +35,6 @@ const SearchBar = ({ onSearch, placeholder = "Type here", className = "" }: Sear
     handleSearch(localQuery);
   };
 
-  // Solo limpiar cuando se monta el componente por primera vez
   useEffect(() => {
     setLocalQuery('');
     resetSearch();

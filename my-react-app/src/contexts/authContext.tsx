@@ -36,7 +36,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
 
       if (data.user) {
         // Crear perfil de usuario en la tabla users (opcional)
-        console.log('📝 Intentando crear perfil en tabla users...');
+        console.log('Intentando crear perfil en tabla users...');
         
         // Usar Promise.race para evitar que se cuelgue
         const insertPromise = supabase
@@ -60,14 +60,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           const { error: profileError } = await Promise.race([insertPromise, timeoutPromise]) as any;
 
           if (profileError) {
-            console.warn('⚠️ No se pudo crear perfil en tabla users:', profileError.message);
-            console.log('✅ Usuario registrado en auth.users (perfil se puede crear después)');
+            console.warn('No se pudo crear perfil en tabla users:', profileError.message);
+            console.log('Usuario registrado en auth.users (perfil se puede crear después)');
           } else {
-            console.log('✅ Perfil de usuario creado exitosamente');
+            console.log('Perfil de usuario creado exitosamente');
           }
         } catch (insertError) {
-          console.warn('⚠️ Error al insertar en tabla users:', insertError);
-          console.log('✅ Usuario registrado en auth.users (perfil se puede crear después)');
+          console.warn('Error al insertar en tabla users:', insertError);
+          console.log('Usuario registrado en auth.users (perfil se puede crear después)');
         }
       }
     } catch (err) {
@@ -119,7 +119,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
           console.error('Error fetching user data:', userError);
           throw new Error(`Error al obtener datos del usuario: ${userError.message}`);
         } else {
-          console.log('✅ Datos del usuario obtenidos:', userData);
+          console.log('Datos del usuario obtenidos:', userData);
           setUser(userData);
         }
       }

@@ -16,7 +16,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { PostsProvider } from './contexts/postsContext';
 
 function App() {
-  
 
   return (
     
@@ -43,4 +42,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

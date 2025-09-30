@@ -13,7 +13,6 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-/* Sección Izquierda - Logo y Branding */
 .nav-left {
   display: flex;
   align-items: left;
@@ -32,7 +31,6 @@
   height: auto;    
 }
 
-/* Sección Centro - Enlaces de Navegación */
 .nav-center {
   display: flex;
   align-items: center;
@@ -101,7 +99,6 @@
   border-radius: 1px;
 }
 
-/* Sección Derecha - Avatar */
 .nav-right {
   display: flex;
   align-items: center;
@@ -128,7 +125,6 @@
   object-fit: cover;
 }
 
-/* Responsive Design */
 @media (max-width: 1024px) {
   .nav-container {
     padding: 0 1.5rem;

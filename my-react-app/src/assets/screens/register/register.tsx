@@ -23,9 +23,7 @@ const Register = () => {
   };
 
   const handleSignUp = () => {
-    // Aquí irá la lógica de registro
     console.log("Sign Up data:", formData);
-    // Por ahora redirigimos al home
     navigate("/home");
   };
 
@@ -35,11 +33,9 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      {/* Sección Izquierda - Imagen y Branding */}
       <div className="register-left">
       </div>
 
-      {/* Sección Derecha - Formulario de Registro */}
       <div className="register-right">
         <div className="register-form-container">
           <h1 className="register-title">Sign Up</h1>

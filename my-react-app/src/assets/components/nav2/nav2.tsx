@@ -1,4 +1,3 @@
-
 import { usePosts } from "../../../contexts/postsContext";
 import "./nav2.css";
 
@@ -9,7 +8,6 @@ const Nav2 = () => {
     setCategory(category);
   };
 
-  // Función para capitalizar la primera letra
   const capitalizeFirst = (str: string) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
   };

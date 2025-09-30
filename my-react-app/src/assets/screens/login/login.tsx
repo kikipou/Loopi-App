@@ -20,9 +20,7 @@ const Login = () => {
   };
 
   const handleLogIn = () => {
-    // Aquí irá la lógica de login
     console.log("Log In data:", formData);
-    // Por ahora redirigimos al home
     navigate("/home");
   };
 
@@ -32,11 +30,9 @@ const Login = () => {
 
   return (
     <div className="login-container">
-      {/* Sección Izquierda - Imagen y Branding */}
       <div className="login-left">
       </div>
 
-      {/* Sección Derecha - Formulario de Login */}
       <div className="login-right">
         <div className="login-form-container">
           <h1 className="login-title">Log In</h1>

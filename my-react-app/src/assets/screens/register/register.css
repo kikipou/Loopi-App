@@ -1,4 +1,3 @@
-/* Contenedor principal */
 .register-container {
   display: flex;
   height: 100vh;
@@ -13,7 +12,6 @@
   position: relative;
 }
 
-/* Sección Izquierda - Imagen y Branding */
 .register-left {
   flex: 1;
   display: flex;
@@ -23,7 +21,6 @@
   z-index: 2;
 }
 
-/* Sección Derecha - Formulario de Registro */
 .register-right {
   flex: 1;
   display: flex;
@@ -100,14 +97,12 @@
   margin-top: 1rem;
 }
 
-/* Estilos específicos para inputs en Register */
 .register-form .my-input {
   height: 48px;
   font-size: var(--font-size-sm);
   padding: 0 16px;
 }
 
-/* Estilos específicos para botones en Register */
 .form-actions .my-button {
   width: 100%;
   height: 48px;

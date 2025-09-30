@@ -40,7 +40,6 @@
   color: #cccccc;
 }
 
-/* Estados de validación */
 .my-input.error {
   border-color: #e74c3c;
 }

@@ -27,15 +27,13 @@ const SearchBar = ({ onSearch, placeholder = "Type here", className = "" }: Sear
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLocalQuery(value);
-    // Solo actualizar el estado local, no ejecutar búsqueda
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     handleSearch(localQuery);
   };
-
-  // Solo limpiar cuando se monta el componente por primera vez
+  
   useEffect(() => {
     setLocalQuery('');
     resetSearch();

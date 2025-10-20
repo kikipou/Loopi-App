@@ -6,6 +6,7 @@ const Nav = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+
   const handleNavigation = (path: string) => {
     navigate(path);
   };
@@ -13,6 +14,7 @@ const Nav = () => {
   const isActive = (path: string) => {
     return location.pathname === path;
   };
+
 
   return (
     <nav className="nav-container">

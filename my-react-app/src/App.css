@@ -6,6 +6,11 @@
   text-align: center;
 }
 
+/* Ajuste para la navegación fixed */
+body {
+  padding-top: 80px; /* Altura de la nav */
+}
+
 @media (max-width: 768px) {
   body {
     padding-top: 70px; /* Altura de la nav en tablet */

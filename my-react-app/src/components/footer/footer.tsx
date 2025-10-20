@@ -5,14 +5,11 @@ const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
-        {/* Logo Section */}
         <div className="footer-logo">
           <img className="loopi-logo" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loopi-logo.png?raw=true" alt="logo" />
         </div>
 
-        {/* Content Columns */}
         <div className="footer-content">
-          {/* Home Column */}
           <div className="footer-column">
             <h3 className="column-title">Home</h3>
             <ul className="column-list">
@@ -22,7 +19,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact Column */}
           <div className="footer-column">
             <h3 className="column-title">Contact</h3>
             <ul className="column-list">
@@ -32,7 +28,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Socials Column */}
           <div className="footer-column">
             <h3 className="column-title">Socials</h3>
             <ul className="column-list">
@@ -42,7 +37,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Legal Column */}
           <div className="footer-column">
             <h3 className="column-title">Legal</h3>
             <ul className="column-list">

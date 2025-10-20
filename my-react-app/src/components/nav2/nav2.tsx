@@ -1,10 +1,6 @@
-
-import { usePosts } from "../../../contexts/postsContext";
 import "./nav2.css";
 
 const Nav2 = () => {
-  const { currentCategory, setCategory, categories } = usePosts();
-
   const handleCategoryClick = (category: string) => {
     setCategory(category);
   };
@@ -20,7 +16,9 @@ const Nav2 = () => {
         {categories.map((category) => (
           <button
             key={category}
-            className={`nav2-category ${currentCategory === category ? 'active' : ''}`}
+            className={`nav2-category ${
+              currentCategory === category ? "active" : ""
+            }`}
             onClick={() => handleCategoryClick(category)}
           >
             {category === "All" ? "All" : capitalizeFirst(category)}

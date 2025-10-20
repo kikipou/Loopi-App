@@ -1,4 +1,3 @@
-
 import "./input.css";
 import type { InputProps } from "../../types/inputType";
 

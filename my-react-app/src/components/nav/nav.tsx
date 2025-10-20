@@ -1,4 +1,3 @@
-
 import { useNavigate, useLocation } from "react-router-dom";
 import "./nav.css";
 
@@ -18,14 +17,12 @@ const Nav = () => {
 
   return (
     <nav className="nav-container">
-      {/* Logo y Branding - Izquierda */}
       <div className="nav-left">
         <div className="nav-logo" onClick={() => handleNavigation("/home")}>
         <img className="loopi-logo" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loopi-logo.png?raw=true" alt="logo" />
         </div>
       </div>
 
-      {/* Enlaces de Navegación - Centro */}
       <div className="nav-center">
         <div className="nav-icon">
         <img className="loop-icon" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loop.png?raw=true" alt="loop-icon" />
@@ -52,7 +49,6 @@ const Nav = () => {
         </div>
       </div>
 
-      {/* Avatar de Perfil - Derecha */}
       <div className="nav-right">
         <div 
           className="nav-avatar"

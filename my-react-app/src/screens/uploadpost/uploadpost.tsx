@@ -1,7 +1,7 @@
 import "./uploadpost.css"
 
 const UploadPost = () => {
-   return <>
+  return <>
     <div className="uploadpost-container"> 
       <h1 className="uploadpost-title">Post</h1>
     </div>

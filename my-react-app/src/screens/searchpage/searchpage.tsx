@@ -1,19 +1,19 @@
-import './searchpage.css';
-import BackButton from '../../components/backbutton/backbutton';
-import SearchBar from '../../components/searchbar/searchbar';
-import Card from '../../components/card/card';
-import { usePosts } from '../../../contexts/postsContext';
+import "./searchpage.css";
+import BackButton from "../../components/backbutton/backbutton";
+import SearchBar from "../../components/searchbar/searchbar";
+import Card from "../../components/card/card";
+// import { usePosts } from '../../../contexts/postsContext';
 
 const SearchPage = () => {
   const { filteredPosts, loading, error, searchQuery } = usePosts();
 
   return (
     <>
-      <div className="searchpage-container"> 
-      <h1 className="searchpage-title">
-            What are you <span>loopi-ing</span> for?
+      <div className="searchpage-container">
+        <h1 className="searchpage-title">
+          What are you <span>loopi-ing</span> for?
         </h1>
-        
+
         <div className="searchpage-search-container">
           <SearchBar />
         </div>
@@ -36,10 +36,11 @@ const SearchPage = () => {
               {searchQuery && (
                 <div className="searchpage-results-header">
                   <h2>
-                    {filteredPosts.length === 0 
+                    {filteredPosts.length === 0
                       ? `No se encontraron resultados para "${searchQuery}"`
-                      : `${filteredPosts.length} resultado${filteredPosts.length !== 1 ? 's' : ''} para "${searchQuery}"`
-                    }
+                      : `${filteredPosts.length} resultado${
+                          filteredPosts.length !== 1 ? "s" : ""
+                        } para "${searchQuery}"`}
                   </h2>
                 </div>
               )}
@@ -52,7 +53,9 @@ const SearchPage = () => {
                 </div>
               ) : !searchQuery ? (
                 <div className="searchpage-empty">
-                  <p>Escribe algo en la barra de búsqueda para encontrar posts</p>
+                  <p>
+                    Escribe algo en la barra de búsqueda para encontrar posts
+                  </p>
                 </div>
               ) : null}
             </>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
-import { useAuth } from "../../../contexts/authContext";
+// import { useAuth } from "../../../contexts/authContext";
 import "./register.css";
 
 const Register = () => {
@@ -13,23 +13,22 @@ const Register = () => {
     username: "",
     email: "",
     phone: "",
-    password: ""
+    password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
 
-
   const handleInputChange = (field: string) => (value: string) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [field]: value
+      [field]: value,
     }));
   };
 
   const handleSignUp = async () => {
     try {
       setLocalError(null);
-      
+
       if (!formData.name || !formData.email || !formData.password) {
         setLocalError("Por favor completa todos los campos requeridos");
         return;
@@ -47,14 +46,22 @@ const Register = () => {
       }
 
       console.log("Intentando registrar usuario:", formData);
-      
-      await signUp(formData.email, formData.password, formData.name, formData.username, formData.phone);
-      
+
+      await signUp(
+        formData.email,
+        formData.password,
+        formData.name,
+        formData.username,
+        formData.phone
+      );
+
       console.log("Usuario registrado exitosamente");
       navigate("/home");
     } catch (err) {
       console.error("Error en registro:", err);
-      setLocalError(err instanceof Error ? err.message : "Error al registrarse");
+      setLocalError(
+        err instanceof Error ? err.message : "Error al registrarse"
+      );
     }
   };
 
@@ -64,28 +71,30 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <div className="register-left">
-      </div>
+      <div className="register-left"></div>
 
       <div className="register-right">
         <div className="register-form-container">
           <h1 className="register-title">Sign Up</h1>
           <p className="register-subtitle">Let's start your match!</p>
-          
+
           <form className="register-form">
             {(error || localError) && (
-              <div className="error-message" style={{ 
-                color: 'red', 
-                backgroundColor: '#ffe6e6', 
-                padding: '10px', 
-                borderRadius: '5px', 
-                marginBottom: '15px',
-                border: '1px solid #ff9999'
-              }}>
+              <div
+                className="error-message"
+                style={{
+                  color: "red",
+                  backgroundColor: "#ffe6e6",
+                  padding: "10px",
+                  borderRadius: "5px",
+                  marginBottom: "15px",
+                  border: "1px solid #ff9999",
+                }}
+              >
                 {error || localError}
               </div>
             )}
-            
+
             <div className="form-group">
               <Input
                 placeholder="Full name"
@@ -95,7 +104,7 @@ const Register = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <Input
                 placeholder="Username"
@@ -105,7 +114,7 @@ const Register = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <Input
                 placeholder="Email"
@@ -115,7 +124,7 @@ const Register = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <Input
                 placeholder="Phone number"
@@ -125,7 +134,7 @@ const Register = () => {
                 required
               />
             </div>
-            
+
             <div className="form-group">
               <div className="password-input-container">
                 <Input
@@ -144,7 +153,7 @@ const Register = () => {
                 </button>
               </div>
             </div>
-            
+
             <div className="form-actions">
               <Button
                 buttonplaceholder={loading ? "Registrando..." : "Sign Up"}
@@ -154,13 +163,10 @@ const Register = () => {
               />
             </div>
           </form>
-          
+
           <div className="register-login-link">
             <p>¿Already have an account?</p>
-            <button 
-              className="login-link"
-              onClick={handleLogIn}
-            >
+            <button className="login-link" onClick={handleLogIn}>
               Log In
             </button>
           </div>

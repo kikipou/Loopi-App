@@ -1,4 +1,4 @@
-import { usePosts } from "../../../contexts/postsContext";
+// import { usePosts } from "../../../contexts/postsContext";
 
 const PostsList = () => {
   const { posts, loading } = usePosts();

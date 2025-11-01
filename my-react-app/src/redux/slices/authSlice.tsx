@@ -1,12 +1,13 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Session } from "@supabase/supabase-js";
 
-interface InitialState {
-  userID: string;
+interface AuthState {
+  session: Session | null;
   isLoading: boolean;
 }
 
-const initialState: InitialState = {
-  userID: "",
+const initialState: AuthState = {
+  session: null,
   isLoading: true,
 };
 
@@ -14,16 +15,15 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<string>) => {
-      state.userID = action.payload;
+    setSession: (state, action: PayloadAction<Session | null>) => {
+      state.session = action.payload;
       state.isLoading = false;
     },
-    clearUser: (state) => {
-      state.userID = "";
-      state.isLoading = false;
+    startLoading: (state) => {
+      state.isLoading = true;
     },
   },
 });
 
-export const { setUser, clearUser } = authSlice.actions;
+export const { setSession, startLoading } = authSlice.actions;
 export default authSlice.reducer;

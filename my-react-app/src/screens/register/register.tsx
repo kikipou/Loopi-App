@@ -1,67 +1,86 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 import Input from "../../components/input/input";
-// import { useAuth } from "../../../contexts/authContext";
+import { supabase } from "../../database/supabaseClient";
 import "./register.css";
 
 const Register = () => {
   const navigate = useNavigate();
-  const { signUp, loading, error } = useAuth();
-  const [formData, setFormData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    phone: "",
-    password: "",
-  });
+
+  // Estados individuales para cada campo
+  const [name, setName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [validatePassword, setValidatePassword] = useState<boolean>(false);
+
   const [showPassword, setShowPassword] = useState(false);
   const [localError, setLocalError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleInputChange = (field: string) => (value: string) => {
-    setFormData((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
+  // Validar contraseña (mínimo 6 caracteres)
+  useEffect(() => {
+    setValidatePassword(password.length >= 6);
+  }, [password]);
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    setLocalError(null);
+    setLoading(true);
+
     try {
-      setLocalError(null);
-
-      if (!formData.name || !formData.email || !formData.password) {
+      // Validaciones básicas
+      if (!name || !email || !password) {
         setLocalError("Por favor completa todos los campos requeridos");
+        setLoading(false);
         return;
       }
 
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(formData.email)) {
+      if (!emailRegex.test(email)) {
         setLocalError("Por favor ingresa un email válido");
+        setLoading(false);
         return;
       }
 
-      if (formData.password.length < 6) {
+      if (!validatePassword) {
         setLocalError("La contraseña debe tener al menos 6 caracteres");
+        setLoading(false);
         return;
       }
 
-      console.log("Intentando registrar usuario:", formData);
+      // Registro con Supabase
+      const { error, data } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            name,
+            username,
+            phone,
+          },
+        },
+      });
 
-      await signUp(
-        formData.email,
-        formData.password,
-        formData.name,
-        formData.username,
-        formData.phone
-      );
+      if (error) {
+        console.error("Error register:", error.message);
+        setLocalError(error.message);
+        setLoading(false);
+        return;
+      }
 
+      console.log("registration data:", data);
       console.log("Usuario registrado exitosamente");
-      navigate("/home");
+      navigate("/login");
     } catch (err) {
       console.error("Error en registro:", err);
       setLocalError(
         err instanceof Error ? err.message : "Error al registrarse"
       );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -78,8 +97,8 @@ const Register = () => {
           <h1 className="register-title">Sign Up</h1>
           <p className="register-subtitle">Let's start your match!</p>
 
-          <form className="register-form">
-            {(error || localError) && (
+          <form className="register-form" onSubmit={handleSignUp}>
+            {localError && (
               <div
                 className="error-message"
                 style={{
@@ -91,7 +110,7 @@ const Register = () => {
                   border: "1px solid #ff9999",
                 }}
               >
-                {error || localError}
+                {localError}
               </div>
             )}
 
@@ -99,8 +118,8 @@ const Register = () => {
               <Input
                 placeholder="Full name"
                 type="text"
-                value={formData.name}
-                onChange={handleInputChange("name")}
+                value={name}
+                onChange={(value: string) => setName(value)}
                 required
               />
             </div>
@@ -109,8 +128,8 @@ const Register = () => {
               <Input
                 placeholder="Username"
                 type="text"
-                value={formData.username}
-                onChange={handleInputChange("username")}
+                value={username}
+                onChange={(value: string) => setUsername(value)}
                 required
               />
             </div>
@@ -119,8 +138,8 @@ const Register = () => {
               <Input
                 placeholder="Email"
                 type="email"
-                value={formData.email}
-                onChange={handleInputChange("email")}
+                value={email}
+                onChange={(value: string) => setEmail(value)}
                 required
               />
             </div>
@@ -129,8 +148,8 @@ const Register = () => {
               <Input
                 placeholder="Phone number"
                 type="tel"
-                value={formData.phone}
-                onChange={handleInputChange("phone")}
+                value={phone}
+                onChange={(value: string) => setPhone(value)}
                 required
               />
             </div>
@@ -140,8 +159,8 @@ const Register = () => {
                 <Input
                   placeholder="Password"
                   type={showPassword ? "text" : "password"}
-                  value={formData.password}
-                  onChange={handleInputChange("password")}
+                  value={password}
+                  onChange={(value: string) => setPassword(value)}
                   required
                 />
                 <button
@@ -152,6 +171,17 @@ const Register = () => {
                   {showPassword ? "👁️" : "👁️‍🗨️"}
                 </button>
               </div>
+              {!validatePassword && password && (
+                <p
+                  style={{
+                    color: "red",
+                    fontSize: "0.9rem",
+                    marginTop: "5px",
+                  }}
+                >
+                  La contraseña debe tener al menos 6 caracteres
+                </p>
+              )}
             </div>
 
             <div className="form-actions">

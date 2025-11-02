@@ -56,6 +56,7 @@ const Register = () => {
         email,
         password,
         options: {
+          emailRedirectTo: "http://localhost:5173", // 👈 redirección tras verificar el correo
           data: {
             name,
             username,

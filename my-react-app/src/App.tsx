@@ -12,9 +12,30 @@ import Loopi from "./screens/loopi/loopi";
 import OtherProfile from "./screens/otherprofile/otherprofile";
 import Login from "./screens/login/login";
 import SearchPage from "./screens/searchpage/searchpage";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { supabase } from "./database/supabaseClient";
+import { setSession } from "./redux/slices/authSlice";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const userSession = supabase.auth.getSession().then(({ data }) => {
+      dispatch(setSession(data.session));
+    });
+    console.log(userSession);
+
+    // Aqui esta función escucha los cambios del auth
+    const { data } = supabase.auth.onAuthStateChange((event, session) => {
+      console.log("Auth state changed", event, session);
+      dispatch(setSession(session));
+    });
+
+    data.subscription.unsubscribe();
+  }, [dispatch]);
+
   return (
     <Router>
       <Routes>

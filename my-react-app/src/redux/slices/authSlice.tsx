@@ -22,6 +22,10 @@ const authSlice = createSlice({
     startLoading: (state) => {
       state.isLoading = true;
     },
+    clearSession: (state) => {
+      state.session = null;
+      state.isLoading = false;
+    },
   },
 });
 

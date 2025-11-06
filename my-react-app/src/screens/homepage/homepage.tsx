@@ -1,9 +1,8 @@
 import "./homepage.css";
 import Nav from "../../components/nav/nav";
 import Hero from "../../components/hero/hero";
-import Nav2 from "../../components/nav2/nav2";
+import PostsList from "../../components/postList/postsList";
 import Footer from "../../components/footer/footer";
-// import { usePosts } from "../../../contexts/postsContext";
 
 const HomePage = () => {
   // const { posts, loading } = usePosts();
@@ -12,7 +11,8 @@ const HomePage = () => {
     <div className="homepage-container">
       <Nav />
       <Hero />
-      <Nav2 />
+      <PostsList />
+      {/* <Nav2 /> */}
 
       {/* <div className="posts-container">
         {loading ? (

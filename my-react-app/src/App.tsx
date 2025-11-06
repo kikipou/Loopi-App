@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { supabase } from "./database/supabaseClient";
 import { setSession } from "./redux/slices/authSlice";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,19 +40,92 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Rutas públicas */}
         <Route path="/" element={<Welcome />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/post/:id" element={<PostDetail />} />
-        <Route path="/upload" element={<UploadPost />} />
-        <Route path="/profile" element={<MyProfile />} />
-        <Route path="/chat1" element={<ChatPage1 />} />
-        <Route path="/chats" element={<ChatsPage />} />
-        <Route path="/edit-profile" element={<EditProfile />} />
-        <Route path="/loopi" element={<Loopi />} />
-        <Route path="/other-profile" element={<OtherProfile />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/search" element={<SearchPage />} />
+        <Route path="/register" element={<Register />} />
+
+        {/* Rutas protegidas */}
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <MyProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            <ProtectedRoute>
+              <UploadPost />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat1"
+          element={
+            <ProtectedRoute>
+              <ChatPage1 />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chats"
+          element={
+            <ProtectedRoute>
+              <ChatsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-profile"
+          element={
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/loopi"
+          element={
+            <ProtectedRoute>
+              <Loopi />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/other-profile"
+          element={
+            <ProtectedRoute>
+              <OtherProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <SearchPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/post/:id"
+          element={
+            <ProtectedRoute>
+              <PostDetail />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Router>
   );

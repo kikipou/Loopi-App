@@ -1,15 +1,41 @@
-// import { usePosts } from "../../../contexts/postsContext";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { RootState, AppDispatch } from "../../redux/store";
+import { setPosts, startLoading } from "../../redux/slices/postSlice";
+import { supabase } from "../../database/supabaseClient";
+import "./postslist.css";
 
 const PostsList = () => {
-  const { posts, loading } = usePosts();
+  const dispatch = useDispatch<AppDispatch>();
+  const { posts, isLoading } = useSelector((state: RootState) => state.posts);
 
-  if (loading) return <p>Loading posts...</p>;
+  useEffect(() => {
+    const fetchPosts = async () => {
+      dispatch(startLoading());
+      const { data, error } = await supabase
+        .from("posts")
+        .select(
+          "created_at, post_name, post_description, post_professions, post_skills,image_url, categories, user_name,id"
+        );
+
+      if (error) {
+        console.error("Error fetching posts:", error);
+        return;
+      }
+
+      dispatch(setPosts(data));
+    };
+
+    fetchPosts();
+  }, [dispatch]);
+
+  if (isLoading) return <p>Loading posts...</p>;
 
   if (posts.length === 0) {
     return (
       <div className="posts-grid">
         <div className="no-posts">
-          <p>No posts avaiable</p>
+          <p>No posts available</p>
           <p>Check Supabase connection</p>
         </div>
       </div>
@@ -20,11 +46,15 @@ const PostsList = () => {
     <div className="posts-grid">
       {posts.map((post) => (
         <div key={post.id} className="post-card">
-          {post.image_url && <img src={post.image_url} alt={post.post_name} />}
+          {post.image_url && (
+            <img src={post.image_url} alt={post.post_name || "Post image"} />
+          )}
           <h3>Description: {post.post_name}</h3>
           <p>{post.post_description}</p>
           <p>{post.post_professions}</p>
           <p>{post.post_skills}</p>
+          {post.user_name && <p>By: {post.user_name}</p>}
+          <p>{new Date(post.created_at || "").toLocaleString()}</p>
         </div>
       ))}
     </div>

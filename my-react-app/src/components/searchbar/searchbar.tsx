@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 import "./searchbar.css";
 
 interface SearchBarProps {
@@ -13,16 +12,10 @@ const SearchBar = ({
   placeholder = "Type here",
   className = "",
 }: SearchBarProps) => {
-  const { searchPosts, resetSearch } = usePosts();
   const [localQuery, setLocalQuery] = useState("");
 
   const handleSearch = (query: string) => {
     setLocalQuery(query);
-    if (query.trim() === "") {
-      resetSearch();
-    } else {
-      searchPosts(query);
-    }
     if (onSearch) {
       onSearch(query);
     }
@@ -41,7 +34,6 @@ const SearchBar = ({
 
   useEffect(() => {
     setLocalQuery("");
-    resetSearch();
   }, []);
 
   return (

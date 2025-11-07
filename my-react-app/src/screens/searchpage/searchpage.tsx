@@ -1,11 +1,50 @@
+import { useState } from "react";
+import { supabase } from "../../database/supabaseClient";
 import "./searchpage.css";
 import BackButton from "../../components/backbutton/backbutton";
 import SearchBar from "../../components/searchbar/searchbar";
 import Card from "../../components/card/card";
-// import { usePosts } from '../../../contexts/postsContext';
+import type { Post } from "../../types/postTypes"; // 👈 importa tu interfaz Post desde tu archivo de tipado
 
 const SearchPage = () => {
-  const { filteredPosts, loading, error, searchQuery } = usePosts();
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const handleSearch = async (query: string): Promise<void> => {
+    setSearchQuery(query);
+
+    if (!query.trim()) {
+      setFilteredPosts([]);
+      return;
+    }
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      // 🔍 Buscar posts que coincidan con el texto ingresado
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*")
+        .or(
+          `post_name.ilike.%${query}%, post_description.ilike.%${query}%, post_professions.ilike.%${query}%, post_skills.ilike.%${query}%`
+        );
+
+      if (error) throw error;
+
+      setFilteredPosts((data as Post[]) || []);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Error desconocido al buscar posts");
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -15,7 +54,7 @@ const SearchPage = () => {
         </h1>
 
         <div className="searchpage-search-container">
-          <SearchBar />
+          <SearchBar onSearch={handleSearch} />
         </div>
 
         <div className="searchpage-results">

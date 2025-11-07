@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./searchbar.css";
 
 interface SearchBarProps {
@@ -14,27 +14,16 @@ const SearchBar = ({
 }: SearchBarProps) => {
   const [localQuery, setLocalQuery] = useState("");
 
-  const handleSearch = (query: string) => {
-    setLocalQuery(query);
+  const handleSearchClick = () => {
     if (onSearch) {
-      onSearch(query);
+      onSearch(localQuery);
     }
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setLocalQuery(value);
-    handleSearch(value);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    handleSearch(localQuery);
+    handleSearchClick();
   };
-
-  useEffect(() => {
-    setLocalQuery("");
-  }, []);
 
   return (
     <form
@@ -46,17 +35,12 @@ const SearchBar = ({
         className="searchbar-input"
         placeholder={placeholder}
         value={localQuery}
-        onChange={handleInputChange}
-        onKeyUp={(e) => {
-          if (e.key === "Enter") {
-            handleSearch(localQuery);
-          }
-        }}
+        onChange={(e) => setLocalQuery(e.target.value)}
       />
       <button
-        type="submit"
+        type="button"
         className="searchbar-button"
-        onClick={() => handleSearch(localQuery)}
+        onClick={handleSearchClick}
       >
         <svg
           width="20"

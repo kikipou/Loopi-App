@@ -11,3 +11,9 @@ export interface Post {
   categories?: string | null; // ajusta si es array o json
   created_at?: string | null;
 }
+
+export interface PostsState {
+  posts: Post[];
+  loading: boolean;
+  error: string | null;
+}

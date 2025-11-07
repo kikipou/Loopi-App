@@ -1,48 +1,37 @@
-import { useState } from "react";
-import { supabase } from "../../database/supabaseClient";
 import "./searchpage.css";
 import BackButton from "../../components/backbutton/backbutton";
 import SearchBar from "../../components/searchbar/searchbar";
 import Card from "../../components/card/card";
-import type { Post } from "../../types/postTypes"; // 👈 importa tu interfaz Post desde tu archivo de tipado
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import type { RootState } from "../../redux/store";
+import type { Post } from "../../types/postTypes";
 
 const SearchPage = () => {
-  const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const { posts, isLoading } = useSelector((state: RootState) => state.posts);
 
-  const handleSearch = async (query: string): Promise<void> => {
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [filteredPosts, setFilteredPosts] = useState<Post[]>(posts);
+
+  const handleSearch = (query: string) => {
     setSearchQuery(query);
 
-    if (!query.trim()) {
-      setFilteredPosts([]);
-      return;
-    }
-
-    try {
-      setLoading(true);
-      setError(null);
-
-      // 🔍 Buscar posts que coincidan con el texto ingresado
-      const { data, error } = await supabase
-        .from("posts")
-        .select("*")
-        .or(
-          `post_name.ilike.%${query}%, post_description.ilike.%${query}%, post_professions.ilike.%${query}%, post_skills.ilike.%${query}%`
-        );
-
-      if (error) throw error;
-
-      setFilteredPosts((data as Post[]) || []);
-    } catch (err) {
-      if (err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Error desconocido al buscar posts");
-      }
-    } finally {
-      setLoading(false);
+    if (query.trim() === "") {
+      setFilteredPosts(posts);
+    } else {
+      const results = posts.filter((post) =>
+        [
+          post.post_name,
+          post.post_description,
+          post.post_professions,
+          post.post_skills,
+          post.user_name,
+          post.categories,
+        ]
+          .filter(Boolean)
+          .some((field) => field!.toLowerCase().includes(query.toLowerCase()))
+      );
+      setFilteredPosts(results);
     }
   };
 
@@ -58,19 +47,13 @@ const SearchPage = () => {
         </div>
 
         <div className="searchpage-results">
-          {loading && (
+          {isLoading && (
             <div className="searchpage-loading">
               <p>Buscando...</p>
             </div>
           )}
 
-          {error && (
-            <div className="searchpage-error">
-              <p>Error: {error}</p>
-            </div>
-          )}
-
-          {!loading && !error && (
+          {!isLoading && (
             <>
               {searchQuery && (
                 <div className="searchpage-results-header">
@@ -93,7 +76,8 @@ const SearchPage = () => {
               ) : !searchQuery ? (
                 <div className="searchpage-empty">
                   <p>
-                    Escribe algo en la barra de búsqueda para encontrar posts
+                    Escribe algo en la barra de búsqueda y haz clic en la lupa
+                    para encontrar posts
                   </p>
                 </div>
               ) : null}

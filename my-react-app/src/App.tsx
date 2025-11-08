@@ -23,7 +23,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Marcamos que estamos cargando sesión
     dispatch(startLoading());
 
     const initSession = async () => {
@@ -31,24 +30,22 @@ function App() {
 
       if (error) {
         console.error("Error al obtener sesión:", error);
-        dispatch(setSession(null)); // esto también pone isLoading = false
+        dispatch(setSession(null));
         return;
       }
 
-      dispatch(setSession(data.session)); // puede ser null o una sesión válida
+      dispatch(setSession(data.session));
     };
 
     initSession();
 
-    // Listener de cambios de auth (login, logout, refresh)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       console.log("Auth state changed", _event, session);
-      dispatch(setSession(session)); // actualiza sesión y pone isLoading = false
+      dispatch(setSession(session));
     });
 
-    // Cleanup cuando se desmonte App
     return () => {
       subscription.unsubscribe();
     };
@@ -57,12 +54,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        {/* Rutas públicas */}
         <Route path="/" element={<Welcome />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-
-        {/* Rutas protegidas */}
         <Route
           path="/home"
           element={

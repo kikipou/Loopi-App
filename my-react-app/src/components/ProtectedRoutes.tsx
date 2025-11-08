@@ -7,7 +7,6 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 }) => {
   const { session, isLoading } = useSelector((state: RootState) => state.auth);
 
-  // Mientras estamos averiguando si hay sesión, NO redirigimos
   if (isLoading) {
     return (
       <div style={{ color: "white", textAlign: "center", marginTop: "2rem" }}>
@@ -16,12 +15,10 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
     );
   }
 
-  // Cuando ya sabemos que no hay sesión → a login
   if (!session) {
     return <Navigate to="/login" replace />;
   }
 
-  // Hay sesión → deja pasar
   return <>{children}</>;
 };
 

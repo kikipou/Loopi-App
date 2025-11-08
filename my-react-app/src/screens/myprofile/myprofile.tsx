@@ -9,11 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Post } from "../../types/postTypes";
 
-// 👇 Tipo para la fila de la tabla 'users'
+// Fila real de la tabla `users` en database
 type UserRow = {
   id: string;
   username: string | null;
-  avatar_url: string | null; // cambia el nombre si tu columna se llama distinto
+};
+
+type UserProfile = {
+  username: string | null;
 };
 
 const MyProfile: React.FC = () => {
@@ -21,13 +24,13 @@ const MyProfile: React.FC = () => {
   const navigate = useNavigate();
   const { session } = useSelector((state: RootState) => state.auth);
 
-  const [profile, setProfile] = useState<Omit<UserRow, "id"> | null>(null);
+  const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(true);
 
   const [myPosts, setMyPosts] = useState<Post[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
 
-  // Datos del usuario desde tabla "users"
+  // 🔹 Datos del usuario desde tabla "users" (database, no auth.users)
   useEffect(() => {
     const fetchProfile = async () => {
       if (!session?.user) return;
@@ -35,19 +38,21 @@ const MyProfile: React.FC = () => {
       setLoadingProfile(true);
 
       const { data, error } = await supabase
-        .from<UserRow>("users") // 👈 usamos tipo genérico en Supabase
-        .select("id, username, avatar_url")
+        .from("users") // 👈 tabla de database
+        .select("id, username")
         .eq("id", session.user.id)
         .single();
 
       if (error) {
-        console.error("Error obteniendo perfil:", error.message);
+        console.error(
+          "Error obteniendo perfil desde tabla users:",
+          error.message
+        );
         setProfile(null);
       } else if (data) {
-        // aquí data YA es UserRow, no hace falta 'any'
+        const user = data as UserRow;
         setProfile({
-          username: data.username,
-          avatar_url: data.avatar_url,
+          username: user.username,
         });
       }
 
@@ -57,7 +62,7 @@ const MyProfile: React.FC = () => {
     fetchProfile();
   }, [session]);
 
-  // Posts del usuario
+  // 🔹 Posts del usuario
   useEffect(() => {
     const fetchMyPosts = async () => {
       if (!session?.user) return;
@@ -105,8 +110,8 @@ const MyProfile: React.FC = () => {
     navigate("/edit-profile");
   };
 
-  const displayName =
-    profile?.username ?? session?.user.email ?? "Your profile";
+  // 👉 Ahora el nombre viene SOLO de la tabla `users`
+  const displayName = profile?.username || "Your profile";
 
   return (
     <div className="myprofile-container">
@@ -114,12 +119,6 @@ const MyProfile: React.FC = () => {
       <div className="myprofile-header">
         {loadingProfile ? (
           <div className="myprofile-avatar skeleton" />
-        ) : profile?.avatar_url ? (
-          <img
-            src={profile.avatar_url || undefined}
-            alt={displayName}
-            className="myprofile-avatar"
-          />
         ) : (
           <div className="myprofile-avatar placeholder">
             {displayName.charAt(0).toUpperCase()}

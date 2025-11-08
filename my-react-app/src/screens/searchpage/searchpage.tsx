@@ -25,7 +25,7 @@ const SearchPage = () => {
           post.post_description,
           post.post_professions,
           post.post_skills,
-          post.user_name,
+          post.username,
           post.categories,
         ]
           .filter(Boolean)

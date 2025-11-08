@@ -15,7 +15,7 @@ const PostsList = () => {
       const { data, error } = await supabase
         .from("posts")
         .select(
-          "created_at, post_name, post_description, post_professions, post_skills,image_url, categories, user_name,id"
+          "created_at, post_name, post_description, post_professions, post_skills,image_url, categories, username,id"
         );
 
       if (error) {
@@ -53,7 +53,7 @@ const PostsList = () => {
           <p>{post.post_description}</p>
           <p>{post.post_professions}</p>
           <p>{post.post_skills}</p>
-          {post.user_name && <p>By: {post.user_name}</p>}
+          {post.username && <p>By: {post.username}</p>}
           <p>{new Date(post.created_at || "").toLocaleString()}</p>
         </div>
       ))}

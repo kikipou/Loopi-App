@@ -7,7 +7,6 @@ import { supabase } from "../../database/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
 
-// fila de tu tabla `users`
 type UserRow = {
   id: string;
   username: string | null;
@@ -22,7 +21,6 @@ const EditProfile: React.FC = () => {
   const [saving, setSaving] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Cargar datos actuales desde la tabla `users`
   useEffect(() => {
     const fetchProfile = async () => {
       if (!session?.user) {
@@ -73,7 +71,6 @@ const EditProfile: React.FC = () => {
       console.error("Error actualizando perfil:", error.message);
       setErrorMsg("Error updating profile");
     } else {
-      // Opcional: podrías mostrar un toast, pero por ahora solo redirigimos
       navigate("/profile");
     }
 

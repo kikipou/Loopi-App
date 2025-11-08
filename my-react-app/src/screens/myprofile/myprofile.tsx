@@ -9,7 +9,6 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Post } from "../../types/postTypes";
 
-// Fila real de la tabla `users` en database
 type UserRow = {
   id: string;
   username: string | null;
@@ -30,7 +29,6 @@ const MyProfile: React.FC = () => {
   const [myPosts, setMyPosts] = useState<Post[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
 
-  // 🔹 Datos del usuario desde tabla "users" (database, no auth.users)
   useEffect(() => {
     const fetchProfile = async () => {
       if (!session?.user) return;
@@ -38,7 +36,7 @@ const MyProfile: React.FC = () => {
       setLoadingProfile(true);
 
       const { data, error } = await supabase
-        .from("users") // 👈 tabla de database
+        .from("users")
         .select("id, username")
         .eq("id", session.user.id)
         .single();
@@ -62,7 +60,6 @@ const MyProfile: React.FC = () => {
     fetchProfile();
   }, [session]);
 
-  // 🔹 Posts del usuario
   useEffect(() => {
     const fetchMyPosts = async () => {
       if (!session?.user) return;
@@ -110,12 +107,10 @@ const MyProfile: React.FC = () => {
     navigate("/edit-profile");
   };
 
-  // 👉 Ahora el nombre viene SOLO de la tabla `users`
   const displayName = profile?.username || "Your profile";
 
   return (
     <div className="myprofile-container">
-      {/* Header con avatar + nombre */}
       <div className="myprofile-header">
         {loadingProfile ? (
           <div className="myprofile-avatar skeleton" />
@@ -133,7 +128,6 @@ const MyProfile: React.FC = () => {
         </div>
       </div>
 
-      {/* Botones principales */}
       <div className="myprofile-actions">
         <Button
           buttonplaceholder="Edit Profile"
@@ -154,7 +148,6 @@ const MyProfile: React.FC = () => {
         />
       </div>
 
-      {/* Sección de posts del usuario */}
       <section className="myprofile-posts-section">
         <h2 className="myprofile-subtitle">Your posts</h2>
 

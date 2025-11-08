@@ -44,19 +44,30 @@ const UploadPost = () => {
 
       // ✅ Subir imagen al bucket 'posts'
       let imageUrl: string | null = null;
+
       if (image) {
         const fileName = `${Date.now()}-${image.name}`;
+
+        // 1. Subimos el archivo
         const { error: uploadError } = await supabase.storage
           .from("posts")
           .upload(fileName, image);
 
         if (uploadError) throw uploadError;
 
-        const { data: urlData } = supabase.storage
+        // 2. Generamos una URL firmada (porque el bucket es privado) 🔥
+        const { data: signedData, error: signedError } = await supabase.storage
           .from("posts")
-          .getPublicUrl(fileName);
+          // segundo parámetro = segundos de validez (aquí 1 año aprox) 🔥
+          .createSignedUrl(fileName, 60 * 60 * 24 * 365);
 
-        imageUrl = urlData.publicUrl;
+        if (signedError || !signedData) {
+          throw (
+            signedError || new Error("No se pudo generar la URL de la imagen")
+          );
+        }
+
+        imageUrl = signedData.signedUrl; // 🔥 URL tipo /object/sign/...token=...
       }
 
       // ✅ Crear el post en la tabla 'posts'
@@ -83,7 +94,8 @@ const UploadPost = () => {
       // ✅ Crear objeto Post con el tipo correcto
       const newPost: Post = {
         id: newPostData.id,
-        user_post_id: newPostData.user_id,
+        // ojo aquí: usas user_post_id en el insert, así que leo user_post_id 🔥
+        user_post_id: newPostData.user_post_id,
         username: newPostData.username,
         post_name: newPostData.post_name,
         post_description: newPostData.post_description,

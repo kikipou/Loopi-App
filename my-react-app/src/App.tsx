@@ -15,7 +15,7 @@ import SearchPage from "./screens/searchpage/searchpage";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { supabase } from "./database/supabaseClient";
-import { setSession } from "./redux/slices/authSlice";
+import { setSession, startLoading } from "./redux/slices/authSlice";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ProtectedRoute from "./components/ProtectedRoutes";
 
@@ -23,18 +23,35 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const userSession = supabase.auth.getSession().then(({ data }) => {
-      dispatch(setSession(data.session));
-    });
-    console.log(userSession);
+    // Marcamos que estamos cargando la sesión
+    dispatch(startLoading());
 
-    // Aqui esta función escucha los cambios del auth
-    const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log("Auth state changed", event, session);
-      dispatch(setSession(session));
+    const initSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error) {
+        console.error("Error al obtener la sesión:", error);
+        dispatch(setSession(null)); // isLoading = false
+        return;
+      }
+
+      dispatch(setSession(data.session)); // puede ser null o sesión válida
+    };
+
+    initSession();
+
+    // Listener para cambios de sesión (login, logout, refresh, etc.)
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log("Auth state changed", _event, session);
+      dispatch(setSession(session)); // también pone isLoading = false
     });
 
-    data.subscription.unsubscribe();
+    // 🔥 Cleanup: AHORA sí nos desuscribimos cuando el componente se desmonta
+    return () => {
+      subscription.unsubscribe();
+    };
   }, [dispatch]);
 
   return (

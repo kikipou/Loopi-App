@@ -43,7 +43,7 @@ const PostDetail = () => {
   if (!post) {
     return (
       <div className="post-detail-not-found">
-        <p>No se encontró el post 😢</p>
+        <p>No se encontró el post</p>
         <Link to="/home">Volver al inicio</Link>
       </div>
     );

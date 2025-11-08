@@ -1,4 +1,3 @@
-// src/components/nav2/Nav2.tsx
 import "./nav2.css";
 
 interface Nav2Props {

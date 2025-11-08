@@ -1,4 +1,3 @@
-// src/screens/myprofile/myprofile.tsx
 import "./myprofile.css";
 import Button from "../../components/button/button";
 import { useDispatch, useSelector } from "react-redux";

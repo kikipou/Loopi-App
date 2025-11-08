@@ -1,4 +1,3 @@
-// src/screens/editprofile/editprofile.tsx
 import "./editprofile.css";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";

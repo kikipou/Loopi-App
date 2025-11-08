@@ -1,4 +1,3 @@
-// src/screens/homepage/homepage.tsx
 import "./homepage.css";
 import { useState } from "react";
 import Nav from "../../components/nav/nav";

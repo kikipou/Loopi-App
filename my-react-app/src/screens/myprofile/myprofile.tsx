@@ -9,9 +9,11 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Post } from "../../types/postTypes";
 
-type UserProfile = {
+// 👇 Tipo para la fila de la tabla 'users'
+type UserRow = {
+  id: string;
   username: string | null;
-  avatar_url: string | null; // 👈 ajusta al nombre real de tu columna
+  avatar_url: string | null; // cambia el nombre si tu columna se llama distinto
 };
 
 const MyProfile: React.FC = () => {
@@ -19,13 +21,13 @@ const MyProfile: React.FC = () => {
   const navigate = useNavigate();
   const { session } = useSelector((state: RootState) => state.auth);
 
-  const [profile, setProfile] = useState<UserProfile | null>(null);
+  const [profile, setProfile] = useState<Omit<UserRow, "id"> | null>(null);
   const [loadingProfile, setLoadingProfile] = useState(true);
 
   const [myPosts, setMyPosts] = useState<Post[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
 
-  // 🔹 Cargar datos básicos del usuario desde la tabla "users"
+  // Datos del usuario desde tabla "users"
   useEffect(() => {
     const fetchProfile = async () => {
       if (!session?.user) return;
@@ -33,19 +35,19 @@ const MyProfile: React.FC = () => {
       setLoadingProfile(true);
 
       const { data, error } = await supabase
-        .from("users")
-        // 👇 PON aquí los nombres reales de tus columnas
-        .select("username, avatar_url")
+        .from<UserRow>("users") // 👈 usamos tipo genérico en Supabase
+        .select("id, username, avatar_url")
         .eq("id", session.user.id)
         .single();
 
       if (error) {
         console.error("Error obteniendo perfil:", error.message);
         setProfile(null);
-      } else {
+      } else if (data) {
+        // aquí data YA es UserRow, no hace falta 'any'
         setProfile({
-          username: (data as any).username ?? null,
-          avatar_url: (data as any).avatar_url ?? null,
+          username: data.username,
+          avatar_url: data.avatar_url,
         });
       }
 
@@ -55,7 +57,7 @@ const MyProfile: React.FC = () => {
     fetchProfile();
   }, [session]);
 
-  // 🔹 Cargar los posts creados por este usuario
+  // Posts del usuario
   useEffect(() => {
     const fetchMyPosts = async () => {
       if (!session?.user) return;
@@ -99,6 +101,10 @@ const MyProfile: React.FC = () => {
     navigate("/upload");
   };
 
+  const handleEditProfile = () => {
+    navigate("/edit-profile");
+  };
+
   const displayName =
     profile?.username ?? session?.user.email ?? "Your profile";
 
@@ -130,6 +136,12 @@ const MyProfile: React.FC = () => {
 
       {/* Botones principales */}
       <div className="myprofile-actions">
+        <Button
+          buttonplaceholder="Edit Profile"
+          buttonid="edit-profile-button"
+          onClick={handleEditProfile}
+        />
+
         <Button
           buttonplaceholder="Add Post"
           buttonid="add-button"
@@ -192,17 +204,6 @@ const MyProfile: React.FC = () => {
                       </p>
                     )}
                   </div>
-
-                  <button
-                    type="button"
-                    className="myprofile-edit-button"
-                    onClick={() => {
-                      // Aquí luego meterás la navegación a /edit-post/:id o modal
-                      console.log("Edit post id:", post.id);
-                    }}
-                  >
-                    Edit
-                  </button>
                 </div>
               );
             })}

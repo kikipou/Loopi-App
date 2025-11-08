@@ -38,7 +38,6 @@ const PostsList: React.FC<PostsListProps> = ({ currentCategory }) => {
 
   if (isLoading) return <p>Loading posts...</p>;
 
-  // 🔥 Filtrado por categoría
   const visiblePosts =
     currentCategory === "All"
       ? posts

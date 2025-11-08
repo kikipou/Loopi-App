@@ -20,7 +20,6 @@ const UploadPost = () => {
     try {
       setLoading(true);
 
-      // ✅ Obtener usuario actual
       const {
         data: { user },
         error: userError,
@@ -31,7 +30,6 @@ const UploadPost = () => {
         return;
       }
 
-      // ✅ Obtener el user_name desde la tabla 'users'
       const { data: userData, error: userTableError } = await supabase
         .from("users")
         .select("username")
@@ -42,23 +40,19 @@ const UploadPost = () => {
         throw new Error("No se pudo obtener el nombre de usuario");
       }
 
-      // ✅ Subir imagen al bucket 'posts'
       let imageUrl: string | null = null;
 
       if (image) {
         const fileName = `${Date.now()}-${image.name}`;
 
-        // 1. Subimos el archivo
         const { error: uploadError } = await supabase.storage
           .from("posts")
           .upload(fileName, image);
 
         if (uploadError) throw uploadError;
 
-        // 2. Generamos una URL firmada (porque el bucket es privado) 🔥
         const { data: signedData, error: signedError } = await supabase.storage
           .from("posts")
-          // segundo parámetro = segundos de validez (aquí 1 año aprox) 🔥
           .createSignedUrl(fileName, 60 * 60 * 24 * 365);
 
         if (signedError || !signedData) {
@@ -67,10 +61,9 @@ const UploadPost = () => {
           );
         }
 
-        imageUrl = signedData.signedUrl; // 🔥 URL tipo /object/sign/...token=...
+        imageUrl = signedData.signedUrl;
       }
 
-      // ✅ Crear el post en la tabla 'posts'
       const { data: newPostData, error: insertError } = await supabase
         .from("posts")
         .insert([
@@ -91,10 +84,8 @@ const UploadPost = () => {
 
       if (insertError) throw insertError;
 
-      // ✅ Crear objeto Post con el tipo correcto
       const newPost: Post = {
         id: newPostData.id,
-        // ojo aquí: usas user_post_id en el insert, así que leo user_post_id 🔥
         user_post_id: newPostData.user_post_id,
         username: newPostData.username,
         post_name: newPostData.post_name,
@@ -106,10 +97,9 @@ const UploadPost = () => {
         created_at: newPostData.created_at,
       };
 
-      // ✅ Guardar en Redux
       dispatch(addPost(newPost));
 
-      alert("Post creado con éxito 🎉");
+      alert("Post creado con éxito");
       setPostName("");
       setPostDescription("");
       setPostProfessions("");

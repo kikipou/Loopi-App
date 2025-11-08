@@ -23,32 +23,32 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Marcamos que estamos cargando la sesión
+    // Marcamos que estamos cargando sesión
     dispatch(startLoading());
 
     const initSession = async () => {
       const { data, error } = await supabase.auth.getSession();
 
       if (error) {
-        console.error("Error al obtener la sesión:", error);
-        dispatch(setSession(null)); // isLoading = false
+        console.error("Error al obtener sesión:", error);
+        dispatch(setSession(null)); // esto también pone isLoading = false
         return;
       }
 
-      dispatch(setSession(data.session)); // puede ser null o sesión válida
+      dispatch(setSession(data.session)); // puede ser null o una sesión válida
     };
 
     initSession();
 
-    // Listener para cambios de sesión (login, logout, refresh, etc.)
+    // Listener de cambios de auth (login, logout, refresh)
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       console.log("Auth state changed", _event, session);
-      dispatch(setSession(session)); // también pone isLoading = false
+      dispatch(setSession(session)); // actualiza sesión y pone isLoading = false
     });
 
-    // 🔥 Cleanup: AHORA sí nos desuscribimos cuando el componente se desmonta
+    // Cleanup cuando se desmonte App
     return () => {
       subscription.unsubscribe();
     };

@@ -1,8 +1,10 @@
+// src/screens/postslist/postslist.tsx
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState, AppDispatch } from "../../redux/store";
 import { setPosts, startLoading } from "../../redux/slices/postSlice";
 import { supabase } from "../../database/supabaseClient";
+import { Link } from "react-router-dom"; // 👈 IMPORTANTE
 import "./postslist.css";
 
 const PostsList = () => {
@@ -15,7 +17,7 @@ const PostsList = () => {
       const { data, error } = await supabase
         .from("posts")
         .select(
-          "created_at, post_name, post_description, post_professions, post_skills,image_url, categories, username,id"
+          "created_at, post_name, post_description, post_professions, post_skills, image_url, categories, username, id"
         );
 
       if (error) {
@@ -45,17 +47,24 @@ const PostsList = () => {
   return (
     <div className="posts-grid">
       {posts.map((post) => (
-        <div key={post.id} className="post-card">
-          {post.image_url && (
-            <img src={post.image_url} alt={post.post_name || "Post image"} />
-          )}
-          <h3>Description: {post.post_name}</h3>
-          <p>{post.post_description}</p>
-          <p>{post.post_professions}</p>
-          <p>{post.post_skills}</p>
-          {post.username && <p>By: {post.username}</p>}
-          <p>{new Date(post.created_at || "").toLocaleString()}</p>
-        </div>
+        <Link
+          key={post.id}
+          to={`/post/${post.id}`} // 👈 aquí navegamos al detalle
+          className="post-card-link"
+          style={{ textDecoration: "none", color: "inherit" }} // que no se vea como <a>
+        >
+          <div className="post-card">
+            {post.image_url && (
+              <img src={post.image_url} alt={post.post_name || "Post image"} />
+            )}
+            <h3>{post.post_name}</h3>
+            <p>{post.post_description}</p>
+            <p>{post.post_professions}</p>
+            <p>{post.post_skills}</p>
+            {post.username && <p>By: {post.username}</p>}
+            <p>{new Date(post.created_at || "").toLocaleString()}</p>
+          </div>
+        </Link>
       ))}
     </div>
   );

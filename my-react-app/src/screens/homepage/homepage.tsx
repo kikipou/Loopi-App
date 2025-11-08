@@ -24,17 +24,12 @@ const HomePage = () => {
     <div className="homepage-container">
       <Nav />
       <Hero />
-
-      {/* Nav de categorías */}
       <Nav2
         categories={CATEGORIES}
         currentCategory={currentCategory}
         onCategoryChange={setCurrentCategory}
       />
-
-      {/* Lista de posts filtrados por categoría */}
       <PostsList currentCategory={currentCategory} />
-
       <Footer />
     </div>
   );

@@ -1,6 +1,5 @@
 import "./searchpage.css";
 import Nav from "../../components/nav/nav";
-import BackButton from "../../components/backbutton/backbutton";
 import SearchBar from "../../components/searchbar/searchbar";
 import Card from "../../components/card/card";
 import { useState } from "react";

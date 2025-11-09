@@ -1,44 +1,144 @@
-import './App.css'
-import Welcome from './assets/screens/welcome/welcome'
-import Register from './assets/screens/register/register'
-import PostDetail from './assets/screens/postdetail/postdetail'
-import UploadPost from './assets/screens/uploadpost/uploadpost' 
-import MyProfile from './assets/screens/myprofile/myprofile'
-import HomePage from './assets/screens/homepage/homepage'
-import ChatPage1 from './assets/screens/chatpage1/chatpage1'
-import ChatsPage from './assets/screens/chatspage/chatspage'
-import EditProfile from './assets/screens/editprofile/editprofile'
-import Loopi from './assets/screens/loopi/loopi'
-import OtherProfile from './assets/screens/otherprofile/otherprofile'
-import Login from './assets/screens/login/login'
-import SearchPage from './assets/screens/searchpage/searchpage'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { PostsProvider } from './contexts/postsContext';
+import "./App.css";
+import Welcome from "./screens/welcome/welcome";
+import Register from "./screens/register/register";
+import PostDetail from "./screens/postdetail/postdetail";
+import UploadPost from "./screens/uploadpost/uploadpost";
+import MyProfile from "./screens/myprofile/myprofile";
+import HomePage from "./screens/homepage/homepage";
+import ChatPage1 from "./screens/chatpage1/chatpage1";
+import ChatsPage from "./screens/chatspage/chatspage";
+import EditProfile from "./screens/editprofile/editprofile";
+import Loopi from "./screens/loopi/loopi";
+import OtherProfile from "./screens/otherprofile/otherprofile";
+import Login from "./screens/login/login";
+import SearchPage from "./screens/searchpage/searchpage";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { supabase } from "./database/supabaseClient";
+import { setSession, startLoading } from "./redux/slices/authSlice";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoutes";
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(startLoading());
+
+    const initSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+
+      if (error) {
+        console.error("Error al obtener sesión:", error);
+        dispatch(setSession(null));
+        return;
+      }
+
+      dispatch(setSession(data.session));
+    };
+
+    initSession();
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      console.log("Auth state changed", _event, session);
+      dispatch(setSession(session));
+    });
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [dispatch]);
 
   return (
-    
-    <PostsProvider>
-      <Router>
-        <Routes>
+    <Router>
+      <Routes>
         <Route path="/" element={<Welcome />} />
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/post/:id" element={<PostDetail />} />
-          <Route path="/upload" element={<UploadPost />} />
-          <Route path="/profile" element={<MyProfile />} />
-          <Route path="/chat1" element={<ChatPage1 />} />
-          <Route path="/chats" element={<ChatsPage />} />
-          <Route path="/edit-profile" element={<EditProfile />} />
-          <Route path="/loopi" element={<Loopi />} />
-          <Route path="/other-profile" element={<OtherProfile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/search" element={<SearchPage />} />
-        </Routes>
-      </Router>
-    </PostsProvider>
-    
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <MyProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/upload"
+          element={
+            <ProtectedRoute>
+              <UploadPost />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chat1"
+          element={
+            <ProtectedRoute>
+              <ChatPage1 />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chats"
+          element={
+            <ProtectedRoute>
+              <ChatsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-profile"
+          element={
+            <ProtectedRoute>
+              <EditProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/loopi"
+          element={
+            <ProtectedRoute>
+              <Loopi />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/other-profile"
+          element={
+            <ProtectedRoute>
+              <OtherProfile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <SearchPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/post/:id"
+          element={
+            <ProtectedRoute>
+              <PostDetail />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 

@@ -1,4 +1,5 @@
 import "./searchpage.css";
+import Nav from "../../components/nav/nav";
 import BackButton from "../../components/backbutton/backbutton";
 import SearchBar from "../../components/searchbar/searchbar";
 import Card from "../../components/card/card";
@@ -38,54 +39,54 @@ const SearchPage = () => {
   return (
     <>
       <div className="searchpage-container">
-        <h1 className="searchpage-title">
-          What are you <span>loopi-ing</span> for?
-        </h1>
+        <Nav />
+          <h1 className="searchpage-title">
+            What are you <span>loopi-ing</span> for?
+          </h1>
 
-        <div className="searchpage-search-container">
-          <SearchBar onSearch={handleSearch} />
+          <div className="searchpage-search-container">
+            <SearchBar onSearch={handleSearch} />
+          </div>
+
+          <div className="searchpage-results">
+            {isLoading && (
+              <div className="searchpage-loading">
+                <p>Buscando...</p>
+              </div>
+            )}
+
+            {!isLoading && (
+              <>
+                {searchQuery && (
+                  <div className="searchpage-results-header">
+                    <h2>
+                      {filteredPosts.length === 0
+                        ? `No se encontraron resultados para "${searchQuery}"`
+                        : `${filteredPosts.length} resultado${
+                            filteredPosts.length !== 1 ? "s" : ""
+                          } para "${searchQuery}"`}
+                    </h2>
+                  </div>
+                )}
+
+                {filteredPosts.length > 0 ? (
+                  <div className="searchpage-posts-grid">
+                    {filteredPosts.map((post) => (
+                      <Card key={post.id} post={post} />
+                    ))}
+                  </div>
+                ) : !searchQuery ? (
+                  <div className="searchpage-empty">
+                    <p>
+                      Escribe algo en la barra de búsqueda y haz clic en la lupa
+                      para encontrar posts
+                    </p>
+                  </div>
+                ) : null}
+              </>
+            )}
+          </div>
         </div>
-
-        <div className="searchpage-results">
-          {isLoading && (
-            <div className="searchpage-loading">
-              <p>Buscando...</p>
-            </div>
-          )}
-
-          {!isLoading && (
-            <>
-              {searchQuery && (
-                <div className="searchpage-results-header">
-                  <h2>
-                    {filteredPosts.length === 0
-                      ? `No se encontraron resultados para "${searchQuery}"`
-                      : `${filteredPosts.length} resultado${
-                          filteredPosts.length !== 1 ? "s" : ""
-                        } para "${searchQuery}"`}
-                  </h2>
-                </div>
-              )}
-
-              {filteredPosts.length > 0 ? (
-                <div className="searchpage-posts-grid">
-                  {filteredPosts.map((post) => (
-                    <Card key={post.id} post={post} />
-                  ))}
-                </div>
-              ) : !searchQuery ? (
-                <div className="searchpage-empty">
-                  <p>
-                    Escribe algo en la barra de búsqueda y haz clic en la lupa
-                    para encontrar posts
-                  </p>
-                </div>
-              ) : null}
-            </>
-          )}
-        </div>
-      </div>
-      <BackButton />
     </>
   );
 };

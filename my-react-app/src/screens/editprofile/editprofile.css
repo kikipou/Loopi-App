@@ -18,3 +18,8 @@
     color: white;
     text-align: initial;
   }
+
+  .back-button {
+    margin: 1rem;
+    padding: 1rem;
+  }

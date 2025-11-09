@@ -5,6 +5,7 @@ import type { RootState } from "../../redux/store";
 import { supabase } from "../../database/supabaseClient";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
+import BackButton from "../../components/backbutton/backbutton";
 
 type UserRow = {
   id: string;
@@ -140,6 +141,7 @@ const EditProfile: React.FC = () => {
           />
         </div>
       </div>
+      <BackButton />
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import "./myprofile.css";
+import Nav from "../../components/nav/nav";
 import Button from "../../components/button/button";
 import { useDispatch, useSelector } from "react-redux";
 import { clearSession } from "../../redux/slices/authSlice";
@@ -110,97 +111,98 @@ const MyProfile: React.FC = () => {
 
   return (
     <div className="myprofile-container">
-      <div className="myprofile-header">
-        {loadingProfile ? (
-          <div className="myprofile-avatar skeleton" />
-        ) : (
-          <div className="myprofile-avatar placeholder">
-            {displayName.charAt(0).toUpperCase()}
-          </div>
-        )}
-
-        <div className="myprofile-info">
-          <h1 className="myprofile-title">{displayName}</h1>
-          {session?.user.email && (
-            <p className="myprofile-email">{session.user.email}</p>
+      <Nav />
+        <div className="myprofile-header">
+          {loadingProfile ? (
+            <div className="myprofile-avatar skeleton" />
+          ) : (
+            <div className="myprofile-avatar placeholder">
+              {displayName.charAt(0).toUpperCase()}
+            </div>
           )}
+
+          <div className="myprofile-info">
+            <h1 className="myprofile-title">{displayName}</h1>
+            {session?.user.email && (
+              <p className="myprofile-email">{session.user.email}</p>
+            )}
+          </div>
         </div>
-      </div>
 
-      <div className="myprofile-actions">
-        <Button
-          buttonplaceholder="Edit Profile"
-          buttonid="edit-profile-button"
-          onClick={handleEditProfile}
-        />
+        <div className="myprofile-actions">
+          <Button
+            buttonplaceholder="Edit Profile"
+            buttonid="edit-profile-button"
+            onClick={handleEditProfile}
+          />
 
-        <Button
-          buttonplaceholder="Add Post"
-          buttonid="add-button"
-          onClick={handleAddPost}
-        />
+          <Button
+            buttonplaceholder="Add Post"
+            buttonid="add-button"
+            onClick={handleAddPost}
+          />
 
-        <Button
-          buttonplaceholder="Log out"
-          buttonid="logout-button"
-          onClick={handleLogout}
-        />
-      </div>
+          <Button
+            buttonplaceholder="Log out"
+            buttonid="logout-button"
+            onClick={handleLogout}
+          />
+        </div>
 
-      <section className="myprofile-posts-section">
-        <h2 className="myprofile-subtitle">Your posts</h2>
+        <section className="myprofile-posts-section">
+          <h2 className="myprofile-subtitle">Your posts</h2>
 
-        {loadingPosts ? (
-          <p>Loading your posts...</p>
-        ) : myPosts.length === 0 ? (
-          <p className="myprofile-no-posts">
-            You haven't created any posts yet.
-          </p>
-        ) : (
-          <div className="myprofile-posts-grid">
-            {myPosts.map((post) => {
-              const formattedDate = post.created_at
-                ? new Date(post.created_at).toLocaleString()
-                : "";
+          {loadingPosts ? (
+            <p>Loading your posts...</p>
+          ) : myPosts.length === 0 ? (
+            <p className="myprofile-no-posts">
+              You haven't created any posts yet.
+            </p>
+          ) : (
+            <div className="myprofile-posts-grid">
+              {myPosts.map((post) => {
+                const formattedDate = post.created_at
+                  ? new Date(post.created_at).toLocaleString()
+                  : "";
 
-              return (
-                <div key={post.id} className="myprofile-post-card">
-                  {post.image_url && (
-                    <img
-                      src={post.image_url || undefined}
-                      alt={post.post_name ?? "Post image"}
-                      className="myprofile-post-image"
-                    />
-                  )}
+                return (
+                  <div key={post.id} className="myprofile-post-card">
+                    {post.image_url && (
+                      <img
+                        src={post.image_url || undefined}
+                        alt={post.post_name ?? "Post image"}
+                        className="myprofile-post-image"
+                      />
+                    )}
 
-                  <div className="myprofile-post-main">
-                    <div className="myprofile-post-header">
-                      <h3 className="myprofile-post-title">{post.post_name}</h3>
-                      {formattedDate && (
-                        <span className="myprofile-post-date">
-                          {formattedDate}
-                        </span>
+                    <div className="myprofile-post-main">
+                      <div className="myprofile-post-header">
+                        <h3 className="myprofile-post-title">{post.post_name}</h3>
+                        {formattedDate && (
+                          <span className="myprofile-post-date">
+                            {formattedDate}
+                          </span>
+                        )}
+                      </div>
+
+                      {post.post_description && (
+                        <p className="myprofile-post-description">
+                          {post.post_description}
+                        </p>
+                      )}
+
+                      {post.categories && (
+                        <p className="myprofile-post-meta">
+                          <strong>Category:</strong> {post.categories}
+                        </p>
                       )}
                     </div>
-
-                    {post.post_description && (
-                      <p className="myprofile-post-description">
-                        {post.post_description}
-                      </p>
-                    )}
-
-                    {post.categories && (
-                      <p className="myprofile-post-meta">
-                        <strong>Category:</strong> {post.categories}
-                      </p>
-                    )}
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        )}
-      </section>
+                );
+              })}
+            </div>
+          )}
+        </section>
     </div>
   );
 };

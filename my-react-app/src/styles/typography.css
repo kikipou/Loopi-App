@@ -1,7 +1,7 @@
 /* Variables de Tipografía */
 :root {
   /* Fuente principal */
-  --font-primary: 'Montserrat', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-primary: 'Montserrat', system-ui;
   
   /* Pesos de fuente */
   --font-weight-light: 300;

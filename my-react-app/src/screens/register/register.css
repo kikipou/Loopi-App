@@ -10,6 +10,7 @@
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  font-family: var(--font-primary);
 }
 
 .register-left {

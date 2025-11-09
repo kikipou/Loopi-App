@@ -9,6 +9,7 @@
   background-repeat: no-repeat;
   background-attachment: fixed;
   position: relative;
+  font-family: var(--font-primary);
 }
 
 .posts-container {

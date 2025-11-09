@@ -8,6 +8,7 @@
     background-position: top center;
     background-attachment: fixed;
     padding: 2rem 1rem;
+    font-family: var(--font-primary);
   }
 
   .searchpage-title {

@@ -1,20 +1,23 @@
 .posts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: 2rem;
     padding: 2rem;
     font-family: var(--font-primary);
+    margin-top: 5rem;
   }
   
   .post-card {
-    background: #1a1a1a;
-    color: white;
-    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
     padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    transition: transform 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
     text-align: left;
+    cursor: pointer;
     font-family: var(--font-primary);
+    width: 80%;
   }
   
   .post-card img {
@@ -27,5 +30,6 @@
   
   .post-card:hover {
     transform: translateY(-5px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
   }
   

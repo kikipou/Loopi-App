@@ -15,6 +15,7 @@ type UserRow = {
   user_profession: string  | null;
   profile_description: string | null;
   profile_img_url: string | null;
+  profile_cover_url: string | null;
 };
 
 const EditProfile: React.FC = () => {
@@ -24,8 +25,12 @@ const EditProfile: React.FC = () => {
   const [username, setUsername] = useState<string>("");
   const [profession, setProfession] = useState<string>("");
   const [description, setDescription] = useState<string>("");
+
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
+
+  const [coverFile, setCoverFile] = useState<File | null>(null);
+  const [coverPreview, setCoverPreview] = useState<string | null>(null);
 
   const [loadingProfile, setLoadingProfile] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -42,7 +47,7 @@ const EditProfile: React.FC = () => {
 
       const { data, error } = await supabase
         .from("users")
-        .select("id, username, user_profession, profile_description, profile_img_url")
+        .select("id, username, user_profession, profile_description, profile_img_url, profile_cover_url")
         .eq("id", session.user.id)
         .single();
 
@@ -55,6 +60,7 @@ const EditProfile: React.FC = () => {
         setProfession(user.user_profession ?? "");
         setDescription(user.profile_description ?? "");
         setAvatarPreview(user.profile_img_url ?? null);
+        setCoverPreview(user.profile_cover_url ?? null);
       }
 
       setLoadingProfile(false);
@@ -69,10 +75,17 @@ const EditProfile: React.FC = () => {
 
     if (file) {
       setAvatarPreview(URL.createObjectURL(file));
-    } else {
-      setAvatarPreview(null);
     }
-  }
+};
+
+  const handleCoverChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    setCoverFile(file);
+
+    if (file) {
+      setCoverPreview(URL.createObjectURL(file));
+    }
+};
 
   const handleSave = async () => {
     if (!session?.user) return;
@@ -90,7 +103,16 @@ const EditProfile: React.FC = () => {
     setErrorMsg(null);
 
     try {
-      let profileImgUrl: string | null | undefined = avatarPreview;
+
+      let profileImgUrl: string | null =
+        avatarPreview && avatarPreview.startsWith("http")
+          ? avatarPreview
+          : null;
+
+      let profileCoverUrl: string | null =
+        coverPreview && coverPreview.startsWith("http")
+          ? coverPreview
+          : null;
 
       if(avatarFile) {
         const fileExt = avatarFile.name.split(".").pop();
@@ -102,11 +124,28 @@ const EditProfile: React.FC = () => {
 
         if (uploadError) throw uploadError;
 
-        const { data: publicData } = supabase.storage
+        const { data: publicData} = supabase.storage
         .from("profile_pictures")
         .getPublicUrl(fileName);
-        
+
         profileImgUrl = publicData.publicUrl;
+      }
+
+      if (coverFile) {
+        const ext = coverFile.name.split(".").pop();
+        const fileName = `${session.user.id}-cover-${Date.now()}.${ext}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from("profile_cover_imgs")
+          .upload(fileName, coverFile, { upsert: true });
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicData } = supabase.storage
+          .from("profile_cover_imgs")
+          .getPublicUrl(fileName);
+
+        profileCoverUrl = publicData.publicUrl;
       }
 
       const { error } = await supabase
@@ -115,7 +154,8 @@ const EditProfile: React.FC = () => {
         username: trimmedUsername,
         user_profession: trimmedProfession || null,
         profile_description: trimmedDescription || null,
-        profile_img_url: profileImgUrl ?? null,
+        profile_img_url: profileImgUrl,
+        profile_cover_url: profileCoverUrl,
       })
       .eq("id", session.user.id);
 
@@ -167,6 +207,15 @@ const EditProfile: React.FC = () => {
           </section>
           <h1 className="editprofile-title">Edit Profile</h1>
       <div className="editprofile-inner">
+
+          <label className="editprofile-cover">
+            {coverPreview ? (
+              <img src={coverPreview} alt="Cover preview" />
+            ) : (
+              <span className="editprofile-cover-text">Upload cover</span>
+            )}
+            <input type="file" accept="image/*" onChange={handleCoverChange} />
+          </label>
 
           <label className="editprofile-avatar">
           {avatarPreview ? (

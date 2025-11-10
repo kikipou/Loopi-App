@@ -13,10 +13,17 @@ type UserRow = {
   id: string;
   username: string | null;
   profile_img_url: string | null;
+  user_profession: string | null;
+  profile_description: string | null;
+  profile_cover_url: string | null;
 };
 
 type UserProfile = {
   username: string | null;
+  profile_img_url: string | null;
+  user_profession: string | null;
+  profile_description: string | null;
+  profile_cover_url: string | null;
 };
 
 const MyProfile: React.FC = () => {
@@ -38,7 +45,7 @@ const MyProfile: React.FC = () => {
 
       const { data, error } = await supabase
         .from("users")
-        .select("id, username")
+        .select("id, username, profile_img_url, user_profession, profile_description, profile_cover_url")
         .eq("id", session.user.id)
         .single();
 
@@ -50,8 +57,13 @@ const MyProfile: React.FC = () => {
         setProfile(null);
       } else if (data) {
         const user = data as UserRow;
+        console.log("MyProfile fetch user:", user);
         setProfile({
           username: user.username,
+          profile_img_url: user.profile_img_url,
+          user_profession: user.user_profession,
+          profile_description: user.profile_description,
+          profile_cover_url: user.profile_cover_url,
         });
       }
 
@@ -109,13 +121,30 @@ const MyProfile: React.FC = () => {
   };
 
   const displayName = profile?.username || "Your profile";
+  const avatarUrl = profile?.profile_img_url ?? null;
+  const coverUrl = profile?.profile_cover_url ?? null;
 
   return (
     <div className="myprofile-container">
       <Nav />
+      {coverUrl && (
+      <div className="myprofile-cover-container">
+        <img
+          src={coverUrl}
+          alt="Profile cover"
+          className="myprofile-cover-img"
+        />
+      </div>
+      )}
         <div className="myprofile-header">
           {loadingProfile ? (
             <div className="myprofile-avatar skeleton" />
+          ) : avatarUrl ? (
+            <img
+            src={avatarUrl}
+            alt={displayName}
+            className="myprofile-avatar-img"
+          />
           ) : (
             <div className="myprofile-avatar placeholder">
               {displayName.charAt(0).toUpperCase()}
@@ -124,31 +153,48 @@ const MyProfile: React.FC = () => {
 
           <div className="myprofile-info">
             <h1 className="myprofile-title">{displayName}</h1>
+
+            {profile?.user_profession && (
+            <p className="myprofile-profession">
+              {profile.user_profession}
+            </p>
+          )}
+
+            {profile?.profile_description && (
+            <p className="myprofile-description">
+              {profile.profile_description}
+            </p>
+          )}
+
             {session?.user.email && (
               <p className="myprofile-email">{session.user.email}</p>
-            )}
+          )}
           </div>
         </div>
+          
+          <section className="myprofile-editbutton">
+            <Button
+              buttonplaceholder="Edit Profile"
+              buttonid="edit-profile-button"
+              onClick={handleEditProfile}
+            />
+          </section>
 
-        <div className="myprofile-actions">
-          <Button
-            buttonplaceholder="Edit Profile"
-            buttonid="edit-profile-button"
-            onClick={handleEditProfile}
-          />
-
-          <Button
-            buttonplaceholder="Add Post"
-            buttonid="add-button"
-            onClick={handleAddPost}
-          />
-
-          <Button
-            buttonplaceholder="Log out"
-            buttonid="logout-button"
-            onClick={handleLogout}
-          />
-        </div>
+          <section className="myprofile-addpostbutton">
+            <Button
+              buttonplaceholder="Add Post"
+              buttonid="add-button"
+              onClick={handleAddPost}
+            />
+          </section>
+          
+          <section className="myprofile-logoutbutton">
+            <Button
+              buttonplaceholder="Log out"
+              buttonid="logout-button"
+              onClick={handleLogout}
+            />
+          </section>
 
         <section className="myprofile-posts-section">
           <h2 className="myprofile-subtitle">Your posts</h2>

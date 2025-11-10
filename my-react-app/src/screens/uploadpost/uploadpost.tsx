@@ -1,10 +1,13 @@
+import "./uploadpost.css";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPost } from "../../redux/slices/postSlice";
 import { supabase } from "../../database/supabaseClient";
 import type { Post } from "../../types/postTypes";
 import Button from "../../components/button/button";
-import "./uploadpost.css";
+import BackButton from "../../components/backbutton/backbutton";
+import Nav from "../../components/nav/nav";
+import Input from "../../components/input/input";
 
 const UploadPost = () => {
   const [postName, setPostName] = useState("");
@@ -119,60 +122,65 @@ const UploadPost = () => {
 
   return (
     <div className="addpost-container">
-      <h1 className="addpost-title">Create a new post</h1>
+      <Nav />
+      <section className="back-button-addpost">
+        <BackButton />
+      </section>
 
-      <input
-        type="text"
-        placeholder="Post name"
-        value={postName}
-        onChange={(e) => setPostName(e.target.value)}
-        className="addpost-input"
-      />
+        <h1 className="addpost-title">Create a new post</h1>
 
-      <textarea
-        placeholder="Description"
-        value={postDescription}
-        onChange={(e) => setPostDescription(e.target.value)}
-        className="addpost-textarea"
-      />
+        <Input
+          type="text"
+          placeholder="Post name"
+          value={postName}
+          onChange={setPostName}
+          className="addpost-input"
+        />
 
-      <input
-        type="text"
-        placeholder="Professions"
-        value={postProfessions}
-        onChange={(e) => setPostProfessions(e.target.value)}
-        className="addpost-input"
-      />
+        <textarea
+          placeholder="Description"
+          value={postDescription}
+          onChange={(e) => setPostDescription(e.target.value)}
+          className="addpost-textarea"
+        />
 
-      <input
-        type="text"
-        placeholder="Skills"
-        value={postSkills}
-        onChange={(e) => setPostSkills(e.target.value)}
-        className="addpost-input"
-      />
+        <Input
+          type="text"
+          placeholder="Professions"
+          value={postProfessions}
+          onChange={setPostProfessions}
+          className="addpost-input"
+        />
 
-      <input
-        type="text"
-        placeholder="Categories"
-        value={categories}
-        onChange={(e) => setCategories(e.target.value)}
-        className="addpost-input"
-      />
+        <Input
+          type="text"
+          placeholder="Skills"
+          value={postSkills}
+          onChange={setPostSkills}
+          className="addpost-input"
+        />
 
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => setImage(e.target.files?.[0] ?? null)}
-        className="addpost-file"
-      />
+        <Input
+          type="text"
+          placeholder="Categories"
+          value={categories}
+          onChange={setCategories}
+          className="addpost-input"
+        />
 
-      <Button
-        buttonplaceholder={loading ? "Uploading..." : "Upload Post"}
-        onClick={handleUpload}
-        buttonid="upload-button"
-        disabled={loading}
-      />
+        <input
+          type="file"
+          accept="image/*"
+          onChange={(e) => setImage(e.target.files?.[0] ?? null)}
+          className="addpost-file"
+        />
+
+        <Button
+          buttonplaceholder={loading ? "Uploading..." : "Upload Post"}
+          onClick={handleUpload}
+          buttonid="upload-button"
+          disabled={loading}
+        />
     </div>
   );
 };

@@ -71,12 +71,6 @@ const Nav = () => {
             Search
           </button>
           <button 
-            className={`nav-link ${isActive('/chats') ? 'active' : ''}`}
-            onClick={() => handleNavigation('/chats')}
-          >
-            Chats
-          </button>
-          <button 
             className={`nav-link ${isActive('/explore') ? 'active' : ''}`}
             onClick={() => handleNavigation('/home')}
           >

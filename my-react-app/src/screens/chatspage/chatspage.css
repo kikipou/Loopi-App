@@ -19,3 +19,26 @@
     text-align: left;
   }
 
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .chatspage-title {
+      margin: 10rem 4rem;
+      font-size: var(--font-size-5xl);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .chatspage-title {
+      margin: 8rem 2rem;
+      font-size: var(--font-size-4xl);
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .chatspage-title {
+      margin: 6rem 1rem;
+      font-size: var(--font-size-3xl);
+    }
+  }
+  

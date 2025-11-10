@@ -155,12 +155,19 @@
 @media (max-width: 1024px) {
   .back-button-addpost {
     padding: 1rem 1.5rem 0;
+    margin-left: 1rem;
+  }
+
+  #upload-button {
+    width: 22rem;
+    margin-right: 2rem;
   }
 
   .addpost-container {
     grid-template-columns: 1fr;
     padding: 0 1.5rem 3rem;
     justify-items: center;
+    margin-right: auto;
   }
 
   .addpost-title {
@@ -172,15 +179,70 @@
   .addpost-file {
     grid-column: 1;
     max-width: 380px;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem;
   }
 
   .addpost-input,
   .addpost-textarea,
   .addpost-container > .my-button {
     grid-column: 1;
-    max-width: 420px;
+    max-width: 350px;
     width: 100%;
     justify-self: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .back-button-addpost {
+    margin-right: 20rem;
+    margin-top: -0.5rem;
+    padding: 0.75rem 0.5rem 0;
+  }
+
+  .addpost-container {
+    padding: 0 1rem 2rem;
+    margin-top: 0.5rem;
+  }
+
+  .addpost-title {
+    font-size: var(--font-size-3xl);
+    margin: 0.5rem 0 1rem;
+  }
+
+  .addpost-file {
+    max-width: 82%;
+    height: auto;
+    aspect-ratio: 3/4;
+  }
+
+  .addpost-input,
+  .addpost-textarea {
+    width: 100%;
+  }
+
+  .addpost-container > .my-button {
+    width: 100%;
+    max-width: 100%;
+    margin-right: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .back-button-addpost {
+    margin-left: 0.25rem;
+    padding: 0.5rem 0.25rem 0;
+  }
+
+  .addpost-container {
+    padding: 0 0.75rem 1.5rem;
+  }
+
+  .addpost-title {
+    font-size: var(--font-size-2xl);
+    margin: 0.25rem 0 0.75rem;
+  }
+
+  .addpost-file {
+    border-radius: 24px;
   }
 }

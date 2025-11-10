@@ -162,3 +162,54 @@
 .login-link:hover {
   color: #8a63d2;
 }
+
+@media (max-width: 1024px) {
+  .register-left {
+    flex: 0.5;
+  }
+  
+  .register-right {
+    flex: 0.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .register-container {
+    flex-direction: column;
+  }
+  
+  .register-left {
+    flex: 0.3;
+  }
+  
+  .register-right {
+    flex: 0.7;
+  }
+  
+  .register-title {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .register-subtitle {
+    font-size: var(--font-size-sm);
+  }
+}
+
+@media (max-width: 480px) {
+  .register-form-container {
+    padding: 1rem;
+  }
+  
+  .register-title {
+    font-size: var(--font-size-xl);
+  }
+  
+  .register-subtitle {
+    font-size: var(--font-size-xs);
+  }
+  
+  .register-login-link {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+}

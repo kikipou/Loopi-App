@@ -11,7 +11,7 @@
   }
 
   .back-button-editprofile {
-    max-width: 1400px;
+    max-width: 140px;
     margin-top: 6rem;
     padding: 1rem 1rem 0;
     display: flex;
@@ -23,7 +23,7 @@
   .editprofile-inner {
     width: 100%;
     max-width: 420px;
-    padding: 4rem 1.5rem 3rem; /* espacio desde la navbar */
+    padding: 4rem 1.5rem 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -123,8 +123,6 @@
     cursor: pointer;
   }
   
-  /* ===== Form ===== */
-  
   .editprofile-form {
     width: 100%;
     display: flex;
@@ -132,7 +130,6 @@
     gap: 0.75rem;
   }
   
-  /* Tu componente Input ya añade .my-input */
   .my-input.editprofile-input {
     width: 100%;
     border-radius: 999px;
@@ -190,14 +187,12 @@
   color: #cccccc;
 }
   
-  /* Error */
   .editprofile-error {
     color: #ffb3b3;
     font-size: 0.85rem;
     margin-top: 0.5rem;
   }
   
-  /* Botones */
   .editprofile-actions {
     margin-top: 2rem;
     display: flex;
@@ -212,9 +207,75 @@
     font-weight: var(--font-weight-semibold);
   }
   
-  /* Responsive ligero */
-  @media (max-width: 480px) {
+  @media (max-width: 1024px) {
+    .back-button-editprofile {
+      margin-left: 1rem;
+      margin-top: -5rem;
+    }
+
     .editprofile-inner {
-      padding: 5rem 1rem 2.5rem;
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 350px;
+    }
+
+    .editprofile-title {
+      margin: -3.2rem 0 1rem;
+      text-align: center;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .back-button-editprofile {
+      margin-left: 0.5rem;
+    }
+
+    .editprofile-inner {
+      padding: 3rem 1rem 2rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .editprofile-title {
+      font-size: var(--font-size-3xl);
+      margin: 0 0 1.5rem;
+      text-align: center;
+    }
+
+    .editprofile-cover {
+      height: 180px;
+    }
+
+    .editprofile-avatar {
+      width: 150px;
+      height: 150px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .back-button-editprofile {
+      margin-left: 0.5rem;
+      padding: 0.75rem 0.5rem 0;
+    }
+
+    .editprofile-inner {
+      padding: 2rem 0.75rem 1.5rem;
+    }
+
+    .editprofile-title {
+      font-size: var(--font-size-2xl);
+    }
+
+    .editprofile-cover {
+      height: 150px;
+    }
+
+    .editprofile-avatar {
+      width: 120px;
+      height: 120px;
+    }
+
+    .editprofile-avatar-plus {
+      font-size: 3rem;
     }
   }

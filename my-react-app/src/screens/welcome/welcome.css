@@ -102,3 +102,69 @@
   position: relative;
   z-index: 2;
 }
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .welcome-left {
+    flex: 0.5;
+  }
+  
+  .welcome-right {
+    flex: 0.5;
+  }
+}
+
+@media (max-width: 768px) {
+  .welcome-container {
+    flex-direction: column;
+  }
+  
+  .welcome-left {
+    flex: 0.3;
+  }
+  
+  .welcome-right {
+    flex: 0.7;
+  }
+  
+  .welcome-title {
+    font-size: var(--font-size-4xl);
+  }
+  
+  .welcome-subtitle {
+    font-size: var(--font-size-base);
+  }
+  
+  .welcome-cta {
+    font-size: var(--font-size-base);
+  }
+  
+  .welcome-buttons .my-button {
+    width: 240px;
+    font-size: var(--font-size-base);
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-content {
+    padding: 1rem;
+    max-width: 100%;
+  }
+  
+  .welcome-title {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .welcome-subtitle {
+    font-size: var(--font-size-sm);
+  }
+  
+  .welcome-cta {
+    font-size: var(--font-size-sm);
+  }
+  
+  .welcome-buttons .my-button {
+    width: 100%;
+    max-width: 280px;
+  }
+}

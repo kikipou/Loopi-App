@@ -242,8 +242,11 @@
     font-size: var(--font-size-lg);
   }
 
-  /* Responsive */
   @media (max-width: 1024px) {
+
+    .myprofile-container {
+      margin-top: 0rem;
+    }
     .myprofile-posts-grid {
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       padding: 2rem 2rem;
@@ -255,12 +258,89 @@
   }
 
   @media (max-width: 768px) {
+    .myprofile-header {
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 6rem 1.5rem 1rem;
+      margin-left: 1.5rem;
+      gap: 1.5rem;
+    }
+
+    .myprofile-avatar,
+    .myprofile-avatar-img {
+      width: 10rem;
+      height: 10rem;
+    }
+
+    .myprofile-info {
+      margin-top: -10rem;
+      margin-left: 10rem;
+    }
+
+    .myprofile-title {
+      font-size: var(--font-size-4xl);
+      margin-top: 0;
+    }
+
+    .myprofile-editbutton > .my-button,
+    .myprofile-addpostbutton > .my-button,
+    .myprofile-logoutbutton > .my-button {
+      width: 10rem;
+      max-width: 12rem;
+      margin: 1rem 2rem 0;
+    }
+
+    .myprofile-addpostbutton > .my-button {
+      margin-left: 14rem;
+      margin-top: -3rem;
+    }
+
+    .myprofile-logoutbutton > .my-button {
+      margin-left: 2rem;
+      margin-top: 1rem;
+    }
+
+    .myprofile-subtitle {
+      margin: 6rem 1.5rem 1rem;
+      font-size: var(--font-size-xl);
+    }
+
     .myprofile-posts-grid {
       grid-template-columns: 1fr;
       padding: 2rem 1rem;
     }
+  }
+
+  @media (max-width: 480px) {
+    .myprofile-header {
+      padding: 5rem 1rem 1rem;
+    }
+
+    .myprofile-avatar,
+    .myprofile-avatar-img {
+      width: 8rem;
+      height: 8rem;
+    }
+
+    .myprofile-title {
+      font-size: var(--font-size-3xl);
+    }
+
+    .myprofile-cover-img {
+      height: 15rem;
+    }
 
     .myprofile-subtitle {
-      margin: 2rem 1rem 1rem;
+      margin: 4rem 1rem 1rem;
+      font-size: var(--font-size-lg);
+    }
+
+    .myprofile-posts-grid {
+      padding: 1.5rem 3rem;
+      gap: 1rem;
+    }
+
+    .myprofile-post-card {
+      padding: 1rem;
     }
   }

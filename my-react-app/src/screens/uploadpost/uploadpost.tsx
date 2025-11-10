@@ -121,66 +121,70 @@ const UploadPost = () => {
   };
 
   return (
-    <div className="addpost-container">
-      <Nav />
-      <section className="back-button-addpost">
-        <BackButton />
-      </section>
+    <div className="addpost-page">
+      <div className="addpost-container">
+        <Nav />
+          <section className="back-button-addpost">
+            <BackButton />
+          </section>
 
-        <h1 className="addpost-title">Create a new post</h1>
+          <h1 className="addpost-title">Create a new post</h1>
 
-        <Input
-          type="text"
-          placeholder="Post name"
-          value={postName}
-          onChange={setPostName}
-          className="addpost-input"
-        />
+          <Input
+            type="text"
+            placeholder="Post name"
+            value={postName}
+            onChange={setPostName}
+            className="addpost-input"
+          />
 
-        <textarea
-          placeholder="Description"
-          value={postDescription}
-          onChange={(e) => setPostDescription(e.target.value)}
-          className="addpost-textarea"
-        />
+          <textarea
+            placeholder="Description"
+            value={postDescription}
+            onChange={(e) => setPostDescription(e.target.value)}
+            className="addpost-textarea"
+          />
 
-        <Input
-          type="text"
-          placeholder="Professions"
-          value={postProfessions}
-          onChange={setPostProfessions}
-          className="addpost-input"
-        />
+          <Input
+            type="text"
+            placeholder="Professions"
+            value={postProfessions}
+            onChange={setPostProfessions}
+            className="addpost-input"
+          />
 
-        <Input
-          type="text"
-          placeholder="Skills"
-          value={postSkills}
-          onChange={setPostSkills}
-          className="addpost-input"
-        />
+          <Input
+            type="text"
+            placeholder="Skills"
+            value={postSkills}
+            onChange={setPostSkills}
+            className="addpost-input"
+          />
 
-        <Input
-          type="text"
-          placeholder="Categories"
-          value={categories}
-          onChange={setCategories}
-          className="addpost-input"
-        />
+          <Input
+            type="text"
+            placeholder="Categories"
+            value={categories}
+            onChange={setCategories}
+            className="addpost-input"
+          />
 
-        <input
-          type="file"
-          accept="image/*"
-          onChange={(e) => setImage(e.target.files?.[0] ?? null)}
-          className="addpost-file"
-        />
+          <label className="addpost-file">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => setImage(e.target.files?.[0] ?? null)}
+            />
+          </label>
 
-        <Button
-          buttonplaceholder={loading ? "Uploading..." : "Upload Post"}
-          onClick={handleUpload}
-          buttonid="upload-button"
-          disabled={loading}
-        />
+
+          <Button
+            buttonplaceholder={loading ? "Uploading..." : "Upload Post"}
+            onClick={handleUpload}
+            buttonid="upload-button"
+            disabled={loading}
+          />
+      </div>
     </div>
   );
 };

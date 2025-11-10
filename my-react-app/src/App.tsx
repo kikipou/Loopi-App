@@ -114,7 +114,7 @@ function App() {
           }
         />
         <Route
-          path="/other-profile"
+          path="/user/:id"
           element={
             <ProtectedRoute>
               <OtherProfile />

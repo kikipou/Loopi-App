@@ -12,6 +12,7 @@ import type { Post } from "../../types/postTypes";
 type UserRow = {
   id: string;
   username: string | null;
+  profile_img_url: string | null;
 };
 
 type UserProfile = {

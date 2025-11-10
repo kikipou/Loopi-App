@@ -5,6 +5,7 @@ import Nav from "../../components/nav/nav";
 import Button from "../../components/button/button";
 import { supabase } from "../../database/supabaseClient";
 import type { Post } from "../../types/postTypes";
+import BackButton from "../../components/backbutton/backbutton";
 
 type UserRow = {
   id: string;
@@ -109,18 +110,19 @@ const OtherProfile: React.FC = () => {
   return (
     <div className="otherprofile-container">
       <Nav />
+        {coverUrl && (
+        <div className="otherprofile-cover-container">
+          <section className="back-button-editprofile">
+            <BackButton />
+          </section>
+          <img
+            src={coverUrl}
+            alt={`${displayName} cover`}
+            className="otherprofile-cover-img"
+          />
+        </div>
+        )}
 
-      {/* Cover del usuario */}
-      <div
-        className="otherprofile-cover"
-        style={
-          coverUrl
-            ? { backgroundImage: `url(${coverUrl})` }
-            : undefined
-        }
-      />
-
-      {/* Header: avatar + info, misma estética que myprofile */}
       <div className="otherprofile-header">
         <div className="otherprofile-avatar-wrapper">
           {avatarUrl ? (
@@ -153,19 +155,16 @@ const OtherProfile: React.FC = () => {
         </div>
       </div>
 
-      {/* Acciones – para otro usuario tiene sentido un CTA tipo "Send request" */}
       <div className="otherprofile-actions">
         <Button
           buttonplaceholder="Send request"
           buttonid="otherprofile-request-button"
           onClick={() => {
-            // aquí luego puedes abrir un modal o iniciar chat
             console.log("Send request to", profile.id);
           }}
         />
       </div>
 
-      {/* Posts de este usuario (misma estética que MyProfile) */}
       <section className="otherprofile-posts-section">
         <h2 className="otherprofile-subtitle">
           {displayName}'s posts
@@ -188,7 +187,7 @@ const OtherProfile: React.FC = () => {
                   <div
                     key={post.id}
                     className="otherprofile-post-card"
-                    onClick={() => navigate(`/post/${post.id}`)}  // 👈 navega al detalle
+                    onClick={() => navigate(`/post/${post.id}`)}
                     role="button"
                   >
                     {post.image_url && (

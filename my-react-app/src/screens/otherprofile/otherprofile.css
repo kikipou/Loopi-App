@@ -1,257 +1,298 @@
 .otherprofile-container {
-    min-height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   color: white;
-  overflow: hidden;
+  overflow: auto;
   background-image: url('../../assets/imgs/Other profile page.png');
   background-size: cover;
-  background-position: center;
+  background-position: top center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   position: relative;
   font-family: var(--font-primary);
-  }
-  
-  /* Cover grande arriba */
-  .otherprofile-cover {
-    width: 100%;
-    height: 260px;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: relative;
-  }
-  
-  /* degradado para que el texto se lea mejor */
-  .otherprofile-cover::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), #050007 80%);
-  }
-  
-  /* Header con avatar + info, alineado a la izquierda */
+}
+
+.back-button-editprofile {
+  max-width: 1400px;
+  margin-top: 6rem;
+  padding: 1rem 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 3rem;
+  background-color: transparent;
+}
+
+.otherprofile-cover {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.otherprofile-cover-img {
+  width: 100%;
+  height: 25rem;
+  object-fit: cover;
+  z-index: 1;
+
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 40%,
+    rgba(0,0,0,0) 100%
+  );
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0%,
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,1) 40%,
+    rgba(0,0,0,0) 100%
+  );
+  mask-repeat: no-repeat;
+  mask-size: 100% 100%;
+}
+
+/* Header con avatar + info, alineado a la izquierda */
+.otherprofile-header {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  padding: 8rem 8rem 1rem;
+  margin-top: -1rem;
+  margin-left: 2rem;
+}
+
+/* Avatar circular */
+.otherprofile-avatar-wrapper {
+  width: 15rem;
+  height: 15rem;
+  border-radius: 50%;
+  border: 3px solid #a259ff;
+  background: rgba(0, 0, 0, 0.75);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.otherprofile-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.otherprofile-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: var(--font-weight-bold);
+  color: #ffffff;
+}
+
+/* Info del usuario */
+.otherprofile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 7.6rem;
+}
+
+.otherprofile-title {
+  font-size: var(--font-size-6xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  color: white;
+  text-align: left;
+  margin-top: -5rem;
+}
+
+.otherprofile-profession {
+  color: #c8a2ff;
+  font-size: var(--font-size-base);
+  margin: 0.25rem 0 0;
+  text-align: left;
+}
+
+.otherprofile-description {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--font-size-sm);
+  margin: 0.35rem 0 0;
+  text-align: left;
+}
+
+/* Botón de acción debajo del header */
+.otherprofile-actions {
+  display: flex;
+  gap: 1rem;
+  padding: 0 8rem 0;
+  margin-top: 1rem;
+}
+
+.otherprofile-actions > .my-button {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  font-family: var(--font-primary);
+  width: 220px;
+  height: 48px;
+}
+
+/* Loading / not found */
+.otherprofile-loading {
+  padding-top: 8rem;
+  text-align: center;
+  font-size: var(--font-size-lg);
+}
+
+/* Posts Grid - misma estética que en MyProfile */
+.otherprofile-posts-section {
+  padding: 2rem 0 4rem;
+}
+
+.otherprofile-subtitle {
+  color: white;
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 6rem 8rem 1rem;
+  padding: 0;
+}
+
+.otherprofile-posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
+  padding: 0 8rem;
+  margin-top: 1.5rem;
+}
+
+/* Card de post */
+.otherprofile-post-card {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: left;
+  cursor: pointer;
+  font-family: var(--font-primary);
+}
+
+.otherprofile-post-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
+}
+
+.otherprofile-post-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.otherprofile-post-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.otherprofile-post-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.otherprofile-post-title {
+  color: white;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 0.25rem 0;
+}
+
+.otherprofile-post-date {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: var(--font-size-sm);
+}
+
+.otherprofile-post-description {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.25rem 0;
+  line-height: 1.5;
+  font-size: var(--font-size-base);
+}
+
+.otherprofile-post-meta {
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0.25rem 0 0;
+  line-height: 1.5;
+  font-size: var(--font-size-sm);
+}
+
+.otherprofile-post-meta strong {
+  color: white;
+}
+
+/* Mensaje sin posts */
+.otherprofile-no-posts {
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 3rem;
+  font-size: var(--font-size-lg);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
   .otherprofile-header {
-    display: flex;
-    align-items: center;
-    gap: 2rem;
-    padding: 0 8rem;
-    margin-top: -80px; /* solapa el avatar con la cover */
+    padding: 8rem 2rem 1rem;
+    margin-left: 0;
   }
-  
-  /* Avatar circular */
-  .otherprofile-avatar-wrapper {
-    width: 9rem;
-    height: 9rem;
-    border-radius: 50%;
-    border: 4px solid #a259ff;
-    background: rgba(0, 0, 0, 0.75);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-  }
-  
-  .otherprofile-avatar-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .otherprofile-avatar-placeholder {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    font-weight: var(--font-weight-bold);
-    color: #ffffff;
-  }
-  
-  /* Info del usuario */
-  .otherprofile-info {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-  }
-  
-  .otherprofile-title {
-    font-size: var(--font-size-6xl);
-    font-weight: var(--font-weight-bold);
-    margin: 0;
-  }
-  
-  .otherprofile-profession {
-    color: #c8a2ff;
-    font-size: var(--font-size-base);
-    margin: 0.25rem 0 0;
-  }
-  
-  .otherprofile-description {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: var(--font-size-sm);
-    margin: 0.35rem 0 0;
-  }
-  
-  /* Acciones debajo del header */
+
   .otherprofile-actions {
-    display: flex;
-    gap: 1rem;
-    padding: 2rem 8rem 0;
+    padding: 0 2rem 0;
   }
-  
-  .otherprofile-actions > .my-button {
-    font-size: var(--font-size-base);
-    font-weight: var(--font-weight-semibold);
-    font-family: var(--font-primary);
-    width: 220px;
-    height: 48px;
-  }
-  
-  /* Loading / not found */
-  .otherprofile-loading {
-    padding-top: 8rem;
-    text-align: center;
-    font-size: var(--font-size-lg);
-  }
-  
-  /* Posts Grid - misma estética que en MyProfile */
-  .otherprofile-posts-section {
-    padding: 2rem 0 4rem;
-  }
-  
-  .otherprofile-subtitle {
-    color: white;
-    font-size: var(--font-size-2xl);
-    font-weight: var(--font-weight-bold);
-    margin: 2rem 8rem 1rem;
-    padding: 0;
-  }
-  
+
   .otherprofile-posts-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-    gap: 1.5rem;
-    padding: 0 8rem;
-    margin-top: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    padding: 0 2rem;
   }
-  
-  /* Card de post */
-  .otherprofile-post-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(10px);
-    border-radius: 1rem;
-    padding: 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    text-align: left;
-    cursor: pointer;
-    font-family: var(--font-primary);
+
+  .otherprofile-subtitle {
+    margin: 4rem 2rem 1rem;
   }
-  
-  .otherprofile-post-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.3);
-  }
-  
-  .otherprofile-post-image {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    border-radius: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .otherprofile-post-main {
-    display: flex;
+}
+
+@media (max-width: 768px) {
+  .otherprofile-header {
     flex-direction: column;
-    gap: 0.5rem;
-  }
-  
-  .otherprofile-post-header {
-    display: flex;
-    justify-content: space-between;
     align-items: flex-start;
+    padding: 6rem 1.5rem 1rem;
+    margin-top: 0;
+    margin-left: 0;
   }
-  
-  .otherprofile-post-title {
-    color: white;
-    font-size: var(--font-size-xl);
-    font-weight: var(--font-weight-bold);
-    margin: 0 0 0.25rem 0;
+
+  .otherprofile-info {
+    margin-top: 1rem;
   }
-  
-  .otherprofile-post-date {
-    color: rgba(255, 255, 255, 0.7);
-    font-size: var(--font-size-sm);
+
+  .otherprofile-actions {
+    padding: 0 1.5rem 0;
+    margin-top: 1rem;
   }
-  
-  .otherprofile-post-description {
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0.25rem 0;
-    line-height: 1.5;
-    font-size: var(--font-size-base);
+
+  .otherprofile-posts-grid {
+    grid-template-columns: 1fr;
+    padding: 0 1.5rem;
   }
-  
-  .otherprofile-post-meta {
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0.25rem 0 0;
-    line-height: 1.5;
-    font-size: var(--font-size-sm);
+
+  .otherprofile-subtitle {
+    margin: 4rem 1.5rem 1rem;
   }
-  
-  .otherprofile-post-meta strong {
-    color: white;
-  }
-  
-  /* Mensaje sin posts */
-  .otherprofile-no-posts {
-    color: rgba(255, 255, 255, 0.8);
-    text-align: center;
-    padding: 3rem;
-    font-size: var(--font-size-lg);
-  }
-  
-  /* Responsive */
-  @media (max-width: 1024px) {
-    .otherprofile-header {
-      padding: 0 2rem;
-    }
-  
-    .otherprofile-actions {
-      padding: 1.5rem 2rem 0;
-    }
-  
-    .otherprofile-posts-grid {
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      padding: 0 2rem;
-    }
-  
-    .otherprofile-subtitle {
-      margin: 2rem 2rem 1rem;
-    }
-  }
-  
-  @media (max-width: 768px) {
-    .otherprofile-header {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 0 1.5rem;
-      margin-top: -60px;
-    }
-  
-    .otherprofile-actions {
-      padding: 1.5rem 1.5rem 0;
-    }
-  
-    .otherprofile-posts-grid {
-      grid-template-columns: 1fr;
-      padding: 0 1.5rem;
-    }
-  
-    .otherprofile-subtitle {
-      margin: 2rem 1.5rem 1rem;
-    }
-  }
+}

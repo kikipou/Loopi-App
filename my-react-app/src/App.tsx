@@ -5,10 +5,8 @@ import PostDetail from "./screens/postdetail/postdetail";
 import UploadPost from "./screens/uploadpost/uploadpost";
 import MyProfile from "./screens/myprofile/myprofile";
 import HomePage from "./screens/homepage/homepage";
-import ChatPage1 from "./screens/chatpage1/chatpage1";
-import ChatsPage from "./screens/chatspage/chatspage";
 import EditProfile from "./screens/editprofile/editprofile";
-import Loopi from "./screens/loopi/loopi";
+// import Loopi from "./screens/loopi/loopi";
 import OtherProfile from "./screens/otherprofile/otherprofile";
 import Login from "./screens/login/login";
 import SearchPage from "./screens/searchpage/searchpage";
@@ -82,22 +80,6 @@ function App() {
           }
         />
         <Route
-          path="/chat1"
-          element={
-            <ProtectedRoute>
-              <ChatPage1 />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/chats"
-          element={
-            <ProtectedRoute>
-              <ChatsPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
           path="/edit-profile"
           element={
             <ProtectedRoute>
@@ -105,14 +87,14 @@ function App() {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/loopi"
           element={
             <ProtectedRoute>
               <Loopi />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route
           path="/user/:id"
           element={

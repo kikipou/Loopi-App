@@ -128,22 +128,6 @@
   text-align: left;
 }
 
-/* Botón de acción debajo del header */
-.otherprofile-actions {
-  display: flex;
-  gap: 1rem;
-  padding: 0 8rem 0;
-  margin-top: 1rem;
-}
-
-.otherprofile-actions > .my-button {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  font-family: var(--font-primary);
-  width: 220px;
-  height: 48px;
-}
-
 /* Loading / not found */
 .otherprofile-loading {
   padding-top: 8rem;

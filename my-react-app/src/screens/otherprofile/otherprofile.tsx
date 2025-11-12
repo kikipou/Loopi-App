@@ -2,7 +2,6 @@ import "./otherprofile.css";
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Nav from "../../components/nav/nav";
-import Button from "../../components/button/button";
 import { supabase } from "../../database/supabaseClient";
 import type { Post } from "../../types/postTypes";
 import BackButton from "../../components/backbutton/backbutton";
@@ -153,16 +152,6 @@ const OtherProfile: React.FC = () => {
             </p>
           )}
         </div>
-      </div>
-
-      <div className="otherprofile-actions">
-        <Button
-          buttonplaceholder="Send request"
-          buttonid="otherprofile-request-button"
-          onClick={() => {
-            console.log("Send request to", profile.id);
-          }}
-        />
       </div>
 
       <section className="otherprofile-posts-section">

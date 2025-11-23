@@ -229,15 +229,15 @@ const ProjectTasksPage: React.FC = () => {
             <div className="mt-progress-bar" style={{ width: `${progress}%` }} />
           </div>
           <p className="mt-progress-label">
-            {done}/{total} tareas · {progress}%
+            {done}/{total} tasks completed · {progress}%
           </p>
 
           <div className="mt-hero-actions">
             <Link className="link-button" to={`/post/${match.project_id}`}>
-              Ver proyecto
+              View project
             </Link>
             <Link className="link-button" to="/profile">
-              Volver a mi perfil
+              Back to my profile
             </Link>
           </div>
         </div>
@@ -248,7 +248,7 @@ const ProjectTasksPage: React.FC = () => {
           <input
             className="mt-input"
             type="text"
-            placeholder="Título de la tarea"
+            placeholder="Task title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -260,12 +260,12 @@ const ProjectTasksPage: React.FC = () => {
           />
           <textarea
             className="mt-textarea"
-            placeholder="Detalles (opcional)"
+            placeholder="Details or comments"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
           />
           <button className="mt-btn" onClick={addTask}>
-            Agregar tarea
+            Add task
           </button>
         </div>
 
@@ -316,19 +316,19 @@ const ProjectTasksPage: React.FC = () => {
                     })
                   }
                 >
-                  <option value="todo">Por hacer</option>
-                  <option value="in_progress">En progreso</option>
-                  <option value="done">Hecha</option>
+                  <option value="todo">To Do</option>
+                  <option value="in_progress">In progress</option>
+                  <option value="done">Done</option>
                 </select>
                 <button className="mt-del" onClick={() => removeTask(task.id)}>
-                  Eliminar
+                  Delete
                 </button>
               </div>
             </div>
           ))}
 
           {tasks.length === 0 && (
-            <p className="mt-empty">No hay tareas aún. ¡Crea la primera! 🌱</p>
+            <p className="mt-empty">No tasks created yet.</p>
           )}
         </div>
       </div>

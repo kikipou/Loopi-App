@@ -393,13 +393,13 @@ const MyProfile: React.FC = () => {
           </section>
 
         <section className="myprofile-posts-section">
-          <h2 className="myprofile-subtitle">Your posts</h2>
+          <h2 className="myprofile-subtitle">Your projects</h2>
 
           {loadingPosts ? (
-            <p>Loading your posts...</p>
+            <p>Loading your projects...</p>
           ) : myPosts.length === 0 ? (
             <p className="myprofile-no-posts">
-              You haven't created any posts yet.
+              You haven't created any projects yet.
             </p>
           ) : (
             <div className="myprofile-posts-grid">
@@ -499,6 +499,9 @@ const MyProfile: React.FC = () => {
                           </Link>
                           <Link className="link-button" to={`/user/${m.partner_id}`}>
                             Ver perfil
+                          </Link>
+                          <Link className="link-button" to={`/match/${m.match_id}/tasks`}>
+                            Ver tareas
                           </Link>
                         </div>
                       </div>

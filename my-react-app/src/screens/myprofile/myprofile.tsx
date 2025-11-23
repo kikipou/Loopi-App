@@ -247,36 +247,38 @@ const MyProfile: React.FC = () => {
         user_post_id: string;
       }>;
 
-      const ownerIds = Array.from(new Set(posts.map((p) => p.user_post_id)));
+      // Mapa: project_id -> owner_id
+      const ownerByProject = new Map<number, string>(
+        posts.map((p) => [p.id, p.user_post_id])
+      );
 
-      let ownersById = new Map<string, any>();
-      if (ownerIds.length > 0) {
-        const { data: owners, error: uErr } = await supabase
-          .from("users")
-          .select("id, username, profile_img_url")
-          .in("id", ownerIds);
-
-        if (uErr) {
-          console.error("Error leyendo owners:", uErr.message);
-        } else {
-          ownersById = new Map((owners ?? []).map((o) => [o.id, o]));
-        }
-      }
-
-      // 3) mapear likedMatches
-      // Usamos el primer match encontrado por proyecto para la fecha (si necesitas más detalle, puedes enriquecerlo).
-      const firstMatchByProject = new Map<number, { id: number; created_at: string }>();
+      // Elegimos el match donde tu "partner" sea el dueño de ese proyecto
+      const matchByProjectOwner = new Map<number, { id: number; created_at: string }>();
       (matches ?? []).forEach((m) => {
-        if (!firstMatchByProject.has(m.project_id)) {
-          firstMatchByProject.set(m.project_id, { id: m.id, created_at: m.created_at });
+        const ownerId = ownerByProject.get(m.project_id);
+        if (!ownerId) return;
+        const partner = m.user_a_id === uid ? m.user_b_id : m.user_a_id;
+        if (partner === ownerId && !matchByProjectOwner.has(m.project_id)) {
+          matchByProjectOwner.set(m.project_id, { id: m.id, created_at: m.created_at });
         }
       });
 
+      // (opcional) hidrata info del owner
+      const ownerIds = Array.from(new Set(posts.map((p) => p.user_post_id)));
+      let ownersById = new Map<string, any>();
+      if (ownerIds.length > 0) {
+        const { data: owners } = await supabase
+          .from("users")
+          .select("id, username, profile_img_url")
+          .in("id", ownerIds);
+        ownersById = new Map((owners ?? []).map((o) => [o.id, o]));
+      }
+
       const mapped: LikedMatchItem[] = posts.map((p) => {
-        const m = firstMatchByProject.get(p.id);
+        const m = matchByProjectOwner.get(p.id);
         const owner = ownersById.get(p.user_post_id);
         return {
-          match_id: m?.id ?? p.id,
+          match_id: m?.id ?? 0,
           project_id: p.id,
           created_at: m?.created_at ?? (p.created_at ?? new Date().toISOString()),
           owner_id: p.user_post_id,
@@ -561,6 +563,9 @@ const MyProfile: React.FC = () => {
                           </Link>
                           <Link to={`/post/${p.project_id}`} className="link-button">
                             View project
+                          </Link>
+                          <Link to={`/match/${p.match_id}/tasks`} className="link-button">
+                            Ver tareas
                           </Link>
                         </div>
                       </div>

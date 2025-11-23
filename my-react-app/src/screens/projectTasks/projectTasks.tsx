@@ -12,9 +12,9 @@ type ProjectTask = {
   title: string;
   details: string | null;
   status: TaskStatus;
-  due_date: string | null; // 'YYYY-MM-DD'
-  assigned_to: string | null; // uuid
-  created_by: string;
+  due_date: string | null;        // 'YYYY-MM-DD'
+  assigned_to: string | null;     // uuid
+  created_by: string;             // uuid
   created_at: string;
   updated_at: string;
 };
@@ -28,6 +28,12 @@ type MatchInfo = {
   image_url: string | null;
 };
 
+// Helper: si el join viene como array, toma el primero; si viene como objeto, úsalo tal cual
+function asOne<T>(rel: T | T[] | null | undefined): T | null {
+  if (!rel) return null;
+  return Array.isArray(rel) ? rel[0] ?? null : rel;
+}
+
 const ProjectTasksPage: React.FC = () => {
   const { matchId } = useParams<{ matchId: string }>();
   const mid = Number(matchId);
@@ -40,10 +46,10 @@ const ProjectTasksPage: React.FC = () => {
   // form
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
-  const [due, setDue] = useState<string>(""); // input date
+  const [due, setDue] = useState<string>("");
 
   const total = tasks.length;
-  const done = tasks.filter(t => t.status === "done").length;
+  const done = tasks.filter((t) => t.status === "done").length;
   const progress = useMemo(
     () => (total === 0 ? 0 : Math.round((done / total) * 100)),
     [done, total]
@@ -55,14 +61,17 @@ const ProjectTasksPage: React.FC = () => {
       const { data: auth } = await supabase.auth.getUser();
       setMe(auth.user?.id ?? null);
 
-      if (!mid) return;
+      if (!mid || Number.isNaN(mid)) return;
 
       setLoading(true);
 
-      // 1) Info del match + post (nombre/imagen) para contexto visual
+      // 1) Info del match + post (alias 'post' para evitar ambigüedad)
       const { data: mdata, error: merr } = await supabase
         .from("project_matches")
-        .select("id, project_id, user_a_id, user_b_id, posts:posts!inner(id, post_name, image_url)")
+        .select(`
+          id, project_id, user_a_id, user_b_id,
+          post:posts!inner ( id, post_name, image_url )
+        `)
         .eq("id", mid)
         .single();
 
@@ -70,13 +79,14 @@ const ProjectTasksPage: React.FC = () => {
         console.error("Error cargando match:", merr?.message);
         setMatch(null);
       } else {
+        const post = asOne(mdata.post);
         setMatch({
           id: mdata.id,
           project_id: mdata.project_id,
           user_a_id: mdata.user_a_id,
           user_b_id: mdata.user_b_id,
-          post_name: mdata.posts?.post_name ?? null,
-          image_url: mdata.posts?.image_url ?? null,
+          post_name: post?.post_name ?? null,
+          image_url: post?.image_url ?? null,
         });
       }
 
@@ -101,7 +111,8 @@ const ProjectTasksPage: React.FC = () => {
   }, [mid]);
 
   const addTask = async () => {
-    if (!title.trim() || !me) return;
+    if (!title.trim() || !me || !mid || Number.isNaN(mid)) return;
+
     const { data, error } = await supabase
       .from("project_tasks")
       .insert([
@@ -109,7 +120,7 @@ const ProjectTasksPage: React.FC = () => {
           match_id: mid,
           title: title.trim(),
           details: details.trim() || null,
-          status: "todo",
+          status: "todo" as TaskStatus,
           due_date: due || null,
           created_by: me,
           assigned_to: null,
@@ -122,6 +133,7 @@ const ProjectTasksPage: React.FC = () => {
       console.error("Error creando tarea:", error.message);
       return;
     }
+
     setTasks((prev) => [...prev, data as ProjectTask]);
     setTitle("");
     setDetails("");
@@ -139,7 +151,10 @@ const ProjectTasksPage: React.FC = () => {
       console.error("Error actualizando estado:", error.message);
       return;
     }
-    setTasks((prev) => prev.map(t => t.id === task.id ? { ...t, status: next } : t));
+
+    setTasks((prev) =>
+      prev.map((t) => (t.id === task.id ? { ...t, status: next } : t))
+    );
   };
 
   const updateTask = async (taskId: number, patch: Partial<ProjectTask>) => {
@@ -154,7 +169,7 @@ const ProjectTasksPage: React.FC = () => {
       console.error("Error actualizando tarea:", error.message);
       return;
     }
-    setTasks((prev) => prev.map(t => t.id === taskId ? (data as ProjectTask) : t));
+    setTasks((prev) => prev.map((t) => (t.id === taskId ? (data as ProjectTask) : t)));
   };
 
   const removeTask = async (taskId: number) => {
@@ -162,18 +177,21 @@ const ProjectTasksPage: React.FC = () => {
       .from("project_tasks")
       .delete()
       .eq("id", taskId);
+
     if (error) {
       console.error("Error eliminando tarea:", error.message);
       return;
     }
-    setTasks((prev) => prev.filter(t => t.id !== taskId));
+    setTasks((prev) => prev.filter((t) => t.id !== taskId));
   };
 
   if (loading) {
     return (
       <div className="mt-container">
         <Nav />
-        <div className="mt-body"><p>Cargando tablero…</p></div>
+        <div className="mt-body">
+          <p>Cargando tablero…</p>
+        </div>
       </div>
     );
   }
@@ -184,7 +202,9 @@ const ProjectTasksPage: React.FC = () => {
         <Nav />
         <div className="mt-body">
           <p>No se encontró este Loopi/Match.</p>
-          <Link className="mt-link" to="/profile">Volver a mi perfil</Link>
+          <Link className="mt-link" to="/profile">
+            Volver a mi perfil
+          </Link>
         </div>
       </div>
     );
@@ -195,16 +215,30 @@ const ProjectTasksPage: React.FC = () => {
       <Nav />
 
       <div className="mt-hero">
-        {match.image_url && <img className="mt-hero-img" src={match.image_url} alt={match.post_name ?? "Project"} />}
+        {match.image_url && (
+          <img
+            className="mt-hero-img"
+            src={match.image_url}
+            alt={match.post_name ?? "Project"}
+          />
+        )}
         <div className="mt-hero-info">
           <h1 className="mt-title">{match.post_name ?? "Proyecto"}</h1>
+
           <div className="mt-progress">
             <div className="mt-progress-bar" style={{ width: `${progress}%` }} />
           </div>
-          <p className="mt-progress-label">{done}/{total} tareas · {progress}%</p>
+          <p className="mt-progress-label">
+            {done}/{total} tareas · {progress}%
+          </p>
+
           <div className="mt-hero-actions">
-            <Link className="link-button" to={`/post/${match.project_id}`}>Ver proyecto</Link>
-            <Link className="link-button" to="/profile">Volver a mi perfil</Link>
+            <Link className="link-button" to={`/post/${match.project_id}`}>
+              Ver proyecto
+            </Link>
+            <Link className="link-button" to="/profile">
+              Volver a mi perfil
+            </Link>
           </div>
         </div>
       </div>
@@ -230,11 +264,13 @@ const ProjectTasksPage: React.FC = () => {
             value={details}
             onChange={(e) => setDetails(e.target.value)}
           />
-          <button className="mt-btn" onClick={addTask}>Agregar tarea</button>
+          <button className="mt-btn" onClick={addTask}>
+            Agregar tarea
+          </button>
         </div>
 
         <div className="mt-grid">
-          {tasks.map(task => (
+          {tasks.map((task) => (
             <div key={task.id} className="mt-card">
               <div className="mt-card-row">
                 <label className="mt-check">
@@ -245,8 +281,11 @@ const ProjectTasksPage: React.FC = () => {
                   />
                   <span />
                 </label>
+
                 <input
-                  className={`mt-card-title ${task.status === "done" ? "is-done" : ""}`}
+                  className={`mt-card-title ${
+                    task.status === "done" ? "is-done" : ""
+                  }`}
                   value={task.title}
                   onChange={(e) => updateTask(task.id, { title: e.target.value })}
                 />
@@ -264,18 +303,26 @@ const ProjectTasksPage: React.FC = () => {
                   className="mt-date"
                   type="date"
                   value={task.due_date ?? ""}
-                  onChange={(e) => updateTask(task.id, { due_date: e.target.value || null })}
+                  onChange={(e) =>
+                    updateTask(task.id, { due_date: e.target.value || null })
+                  }
                 />
                 <select
                   className="mt-status"
                   value={task.status}
-                  onChange={(e) => updateTask(task.id, { status: e.target.value as TaskStatus })}
+                  onChange={(e) =>
+                    updateTask(task.id, {
+                      status: e.target.value as TaskStatus,
+                    })
+                  }
                 >
                   <option value="todo">Por hacer</option>
                   <option value="in_progress">En progreso</option>
                   <option value="done">Hecha</option>
                 </select>
-                <button className="mt-del" onClick={() => removeTask(task.id)}>Eliminar</button>
+                <button className="mt-del" onClick={() => removeTask(task.id)}>
+                  Eliminar
+                </button>
               </div>
             </div>
           ))}

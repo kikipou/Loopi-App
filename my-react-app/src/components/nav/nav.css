@@ -47,6 +47,7 @@
   background: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
   transition: background 0.3s ease;
+  cursor: pointer;
 }
 
 .nav-icon:hover {

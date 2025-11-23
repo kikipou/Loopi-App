@@ -37,6 +37,17 @@ type ProjectMatchItem = {
   image_url: string | null;
 };
 
+type LikedMatchItem = {
+  match_id: number;
+  project_id: number;
+  created_at: string;
+  owner_id: string;
+  owner_username: string | null;
+  owner_avatar: string | null;
+  post_name: string | null;
+  image_url: string | null;
+};
+
 const MyProfile: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -50,6 +61,9 @@ const MyProfile: React.FC = () => {
 
   const [myMatches, setMyMatches] = useState<ProjectMatchItem[]>([]);
   const [loadingMatches, setLoadingMatches] = useState(true);
+
+  const [likedMatches, setLikedMatches] = useState<LikedMatchItem[]>([]);
+  const [loadingLikedMatches, setLoadingLikedMatches] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -182,6 +196,104 @@ const MyProfile: React.FC = () => {
     fetchOwnerMatches();
   }, [session]);
 
+  useEffect(() => {
+    const fetchILikedMatches = async () => {
+      if (!session?.user) return;
+      setLoadingLikedMatches(true);
+      const uid = session.user.id;
+
+      // 1) matches donde participo yo
+      const { data: matches, error: mErr } = await supabase
+        .from("project_matches")
+        .select("id, created_at, project_id, user_a_id, user_b_id")
+        .or(`user_a_id.eq.${uid},user_b_id.eq.${uid}`)
+        .order("created_at", { ascending: false });
+
+      if (mErr) {
+        console.error("Error leyendo project_matches:", mErr.message);
+        setLikedMatches([]);
+        setLoadingLikedMatches(false);
+        return;
+      }
+
+      const projectIds = Array.from(new Set((matches ?? []).map((m) => m.project_id)));
+      if (projectIds.length === 0) {
+        setLikedMatches([]);
+        setLoadingLikedMatches(false);
+        return;
+      }
+
+      // 2) posts de esos matches PERO que no sean míos
+      const { data: postsData, error: pErr } = await supabase
+        .from("posts")
+        .select(
+          "id, created_at, post_name, image_url, user_post_id"
+        )
+        .in("id", projectIds)
+        .neq("user_post_id", uid);
+
+      if (pErr) {
+        console.error("Error leyendo posts de matches (yo):", pErr.message);
+        setLikedMatches([]);
+        setLoadingLikedMatches(false);
+        return;
+      }
+
+      const posts = postsData as Array<{
+        id: number;
+        created_at: string | null;
+        post_name: string | null;
+        image_url: string | null;
+        user_post_id: string;
+      }>;
+
+      const ownerIds = Array.from(new Set(posts.map((p) => p.user_post_id)));
+
+      let ownersById = new Map<string, any>();
+      if (ownerIds.length > 0) {
+        const { data: owners, error: uErr } = await supabase
+          .from("users")
+          .select("id, username, profile_img_url")
+          .in("id", ownerIds);
+
+        if (uErr) {
+          console.error("Error leyendo owners:", uErr.message);
+        } else {
+          ownersById = new Map((owners ?? []).map((o) => [o.id, o]));
+        }
+      }
+
+      // 3) mapear likedMatches
+      // Usamos el primer match encontrado por proyecto para la fecha (si necesitas más detalle, puedes enriquecerlo).
+      const firstMatchByProject = new Map<number, { id: number; created_at: string }>();
+      (matches ?? []).forEach((m) => {
+        if (!firstMatchByProject.has(m.project_id)) {
+          firstMatchByProject.set(m.project_id, { id: m.id, created_at: m.created_at });
+        }
+      });
+
+      const mapped: LikedMatchItem[] = posts.map((p) => {
+        const m = firstMatchByProject.get(p.id);
+        const owner = ownersById.get(p.user_post_id);
+        return {
+          match_id: m?.id ?? p.id,
+          project_id: p.id,
+          created_at: m?.created_at ?? (p.created_at ?? new Date().toISOString()),
+          owner_id: p.user_post_id,
+          owner_username: owner?.username ?? null,
+          owner_avatar: owner?.profile_img_url ?? null,
+          post_name: p.post_name ?? null,
+          image_url: p.image_url ?? null,
+        };
+      });
+
+      setLikedMatches(mapped);
+      setLoadingLikedMatches(false);
+    };
+
+    fetchILikedMatches();
+  }, [session]);
+
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
 
@@ -205,6 +317,8 @@ const MyProfile: React.FC = () => {
   const displayName = profile?.username || "Your profile";
   const avatarUrl = profile?.profile_img_url ?? null;
   const coverUrl = profile?.profile_cover_url ?? null;
+
+  const fmt = (iso?: string | null) => (iso ? new Date(iso).toLocaleString() : "");
 
   return (
     <div className="myprofile-container">
@@ -333,12 +447,12 @@ const MyProfile: React.FC = () => {
           )}
         </section>
         <section className="myprofile-matches-section">
-        <h2 className="myprofile-subtitle">Your Loopis</h2>
+        <h2 className="myprofile-subtitle">Loopis with your projects</h2>
 
         {loadingMatches ? (
           <p>Loading matches…</p>
         ) : myMatches.length === 0 ? (
-          <p className="myprofile-no-posts">No Loopis yet.</p>
+          <p className="myprofile-no-posts">You don't have Loopis yet.</p>
         ) : (
           <div className="myprofile-matches-grid">
             {myMatches.map((m) => {
@@ -385,6 +499,65 @@ const MyProfile: React.FC = () => {
                           </Link>
                           <Link className="link-button" to={`/user/${m.partner_id}`}>
                             Ver perfil
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
+      <section className="myprofile-myloopis-section">
+        <h2 className="myprofile-subtitle">Projects you Loopied</h2>
+
+        {loadingLikedMatches ? (
+          <p className="myprofile-no-posts">Loading your Loopis...</p>
+        ) : likedMatches.length === 0 ? (
+          <p className="myprofile-no-posts">You haven't do Loopi with any project yet.</p>
+        ) : (
+          <div className="myprofile-matches-grid">
+            {likedMatches.map((p) => {
+              const when = fmt(p.created_at);
+              return (
+                <div key={`match-${p.match_id}`} className="myprofile-match-card">
+                  {p.image_url && (
+                    <img
+                      src={p.image_url}
+                      alt={p.post_name ?? "Project image"}
+                      className="myprofile-match-image"
+                    />
+                  )}
+
+                  <div className="myprofile-match-main">
+                    <div className="myprofile-match-header">
+                      <h3 className="myprofile-post-title">{p.post_name ?? "Untitled project"}</h3>
+                      {when && <span className="myprofile-post-date">{when}</span>}
+                    </div>
+
+                    <div className="myprofile-match-partner">
+                      <div className="myprofile-match-partner-avatar">
+                        {p.owner_avatar ? (
+                          <img src={p.owner_avatar} alt={p.owner_username ?? "Owner"} />
+                        ) : (
+                          <div className="avatar-placeholder">
+                            {(p.owner_username ?? "U").charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="myprofile-match-partner-info">
+                        <Link to={`/user/${p.owner_id}`} className="partner-link">
+                          {p.owner_username ?? "User"}
+                        </Link>
+                        <div className="myprofile-match-actions">
+                          <Link to={`/user/${p.owner_id}`} className="link-button">
+                            View profile
+                          </Link>
+                          <Link to={`/post/${p.project_id}`} className="link-button">
+                            View project
                           </Link>
                         </div>
                       </div>

@@ -164,7 +164,7 @@
     gap: 1.5rem;
     padding: 2rem 8rem;
     margin-top: 3rem;
-    margin-bottom: 4rem;
+    margin-bottom: 3rem;
   }
 
   /* Post Card - Same style as homepage card */
@@ -394,7 +394,7 @@
   grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 1.5rem;
   padding: 2rem 8rem;
-  margin-top: 1.5rem;
+  margin-top: 4rem;
   margin-bottom: 6rem;
 }
 

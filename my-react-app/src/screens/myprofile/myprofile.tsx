@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { clearSession } from "../../redux/slices/authSlice";
 import type { RootState } from "../../redux/store";
 import { supabase } from "../../database/supabaseClient";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import type { Post } from "../../types/postTypes";
 
@@ -26,6 +26,17 @@ type UserProfile = {
   profile_cover_url: string | null;
 };
 
+type ProjectMatchItem = {
+  match_id: number;
+  project_id: number;
+  created_at: string;
+  partner_id: string;
+  partner_username: string | null;
+  partner_avatar: string | null;
+  post_name: string | null;
+  image_url: string | null;
+};
+
 const MyProfile: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,6 +47,9 @@ const MyProfile: React.FC = () => {
 
   const [myPosts, setMyPosts] = useState<Post[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
+
+  const [myMatches, setMyMatches] = useState<ProjectMatchItem[]>([]);
+  const [loadingMatches, setLoadingMatches] = useState(true);
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -98,6 +112,74 @@ const MyProfile: React.FC = () => {
     };
 
     fetchMyPosts();
+  }, [session]);
+
+  useEffect(() => {
+    const fetchOwnerMatches = async () => {
+      if (!session?.user) return;
+      setLoadingMatches(true);
+
+      // 1) Lee matches sólo de proyectos que te pertenecen (inner join con posts)
+      const { data: rows, error } = await supabase
+        .from("project_matches")
+        .select(`
+          id, created_at, project_id, user_a_id, user_b_id, posts!inner(id, user_post_id, post_name, image_url)
+        `)
+        .eq("posts.user_post_id", session.user.id)
+        .order("created_at", { ascending: false });
+
+      if (error) {
+        console.error("Error obteniendo matches:", error.message);
+        setMyMatches([]);
+        setLoadingMatches(false);
+        return;
+      }
+
+      // 2) Determina el "partner" (la otra persona en el match)
+      const partnerIds = Array.from(
+        new Set(
+          (rows ?? []).map((r: any) =>
+            r.user_a_id === session.user.id ? r.user_b_id : r.user_a_id
+          )
+        )
+      );
+
+      // 3) Hidrata con username y avatar de la tabla users
+      let byId = new Map<string, any>();
+      if (partnerIds.length > 0) {
+        const { data: usersData, error: usersErr } = await supabase
+          .from("users")
+          .select("id, username, profile_img_url")
+          .in("id", partnerIds);
+
+        if (usersErr) {
+          console.error("Error obteniendo perfiles:", usersErr.message);
+        }
+
+        byId = new Map((usersData ?? []).map((u) => [u.id, u]));
+      }
+
+      const mapped: ProjectMatchItem[] = (rows ?? []).map((r: any) => {
+        const partnerId =
+          r.user_a_id === session.user.id ? r.user_b_id : r.user_a_id;
+        const partner = byId.get(partnerId);
+        return {
+          match_id: r.id,
+          project_id: r.project_id,
+          created_at: r.created_at,
+          partner_id: partnerId,
+          partner_username: partner?.username ?? null,
+          partner_avatar: partner?.profile_img_url ?? null,
+          post_name: r.posts?.post_name ?? null,
+          image_url: r.posts?.image_url ?? null,
+        };
+      });
+
+      setMyMatches(mapped);
+      setLoadingMatches(false);
+    };
+
+    fetchOwnerMatches();
   }, [session]);
 
   const handleLogout = async () => {
@@ -250,6 +332,70 @@ const MyProfile: React.FC = () => {
             </div>
           )}
         </section>
+        <section className="myprofile-matches-section">
+        <h2 className="myprofile-subtitle">Your Loopis</h2>
+
+        {loadingMatches ? (
+          <p>Loading matches…</p>
+        ) : myMatches.length === 0 ? (
+          <p className="myprofile-no-posts">No Loopis yet.</p>
+        ) : (
+          <div className="myprofile-matches-grid">
+            {myMatches.map((m) => {
+              const when = m.created_at
+                ? new Date(m.created_at).toLocaleString()
+                : "";
+              return (
+                <div key={m.match_id} className="myprofile-match-card">
+                  {m.image_url && (
+                    <img
+                      src={m.image_url || undefined}
+                      alt={m.post_name ?? "Project image"}
+                      className="myprofile-match-image"
+                    />
+                  )}
+
+                  <div className="myprofile-match-main">
+                    <div className="myprofile-match-header">
+                      <h3 className="myprofile-post-title">{m.post_name ?? "Proyecto"}</h3>
+                      {when && <span className="myprofile-post-date">{when}</span>}
+                    </div>
+
+                    <div className="myprofile-match-partner">
+                      <div className="myprofile-match-partner-avatar">
+                        {m.partner_avatar ? (
+                          <img
+                            src={m.partner_avatar}
+                            alt={m.partner_username ?? "User"}
+                          />
+                        ) : (
+                          <div className="avatar-placeholder">
+                            {(m.partner_username ?? "U").charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className="myprofile-match-partner-info">
+                        <Link className="partner-link" to={`/user/${m.partner_id}`}>
+                          {m.partner_username ?? "Usuario"}
+                        </Link>
+                        <div className="myprofile-match-actions">
+                          <Link className="link-button" to={`/post/${m.project_id}`}>
+                            Ver proyecto
+                          </Link>
+                          <Link className="link-button" to={`/user/${m.partner_id}`}>
+                            Ver perfil
+                          </Link>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </section>
     </div>
   );
 };

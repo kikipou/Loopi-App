@@ -4,7 +4,7 @@ import type { RootState, AppDispatch } from "../../redux/store";
 import { setPosts, startLoading } from "../../redux/slices/postSlice";
 import { supabase } from "../../database/supabaseClient";
 import { Link } from "react-router-dom";
-import "./postslist.css";
+import "./postsList.css";
 
 interface PostsListProps {
   currentCategory: string;

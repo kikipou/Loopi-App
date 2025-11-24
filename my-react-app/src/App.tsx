@@ -7,6 +7,7 @@ import MyProfile from "./screens/myprofile/myprofile";
 import HomePage from "./screens/homepage/homepage";
 import EditProfile from "./screens/editprofile/editprofile";
 import OtherProfile from "./screens/otherprofile/otherprofile";
+import Loopi from "./screens/loopi/loopi";
 import Login from "./screens/login/login";
 import SearchPage from "./screens/searchpage/searchpage";
 import ProjectTasksPage from "./screens/projectTasks/projectTasks";
@@ -88,14 +89,16 @@ function App() {
             </ProtectedRoute>
           }
         />
-        {/* <Route
+
+          <Route
           path="/loopi"
           element={
             <ProtectedRoute>
               <Loopi />
             </ProtectedRoute>
           }
-        /> */}
+        />
+
         <Route
           path="/user/:id"
           element={

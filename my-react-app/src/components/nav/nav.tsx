@@ -55,24 +55,32 @@ const Nav = () => {
     <nav className="nav-container">
       <div className="nav-left">
         <div className="nav-logo" onClick={() => handleNavigation("/home")}>
-        <img className="loopi-logo" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loopi-logo.png?raw=true" alt="logo" />
+          <img
+            className="loopi-logo"
+            src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loopi-logo.png?raw=true"
+            alt="logo"
+          />
         </div>
       </div>
 
       <div className="nav-center">
         <div className="nav-icon" onClick={() => handleNavigation("/loopi")}>
-        <img className="loop-icon" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loop.png?raw=true" alt="loop-icon" />
+          <img
+            className="loop-icon"
+            src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loop.png?raw=true"
+            alt="loop-icon"
+          />
         </div>
         <div className="nav-links">
-          <button 
-            className={`nav-link ${isActive('/search') ? 'active' : ''}`}
-            onClick={() => handleNavigation('/search')}
+          <button
+            className={`nav-link ${isActive("/search") ? "active" : ""}`}
+            onClick={() => handleNavigation("/search")}
           >
             Search
           </button>
-          <button 
-            className={`nav-link ${isActive('/explore') ? 'active' : ''}`}
-            onClick={() => handleNavigation('/home')}
+          <button
+            className={`nav-link ${isActive("/explore") ? "active" : ""}`}
+            onClick={() => handleNavigation("/home")}
           >
             Explore
           </button>
@@ -80,24 +88,20 @@ const Nav = () => {
       </div>
 
       <div className="nav-right">
-        <div 
+        <div
           className="nav-avatar"
-          onClick={() => handleNavigation('/profile')}
+          onClick={() => handleNavigation("/profile")}
         >
           {avatarUrl ? (
-            <img
-              src={avatarUrl}
-              alt="Profile"
-              className="avatar-image"
-            />
+            <img src={avatarUrl} alt="Profile" className="avatar-image" />
           ) : (
             <div className="nav-avatar-placeholder">
               {session?.user?.email
                 ? session.user.email.charAt(0).toUpperCase()
                 : "?"}
-        </div>
+            </div>
           )}
-      </div>
+        </div>
       </div>
     </nav>
   );

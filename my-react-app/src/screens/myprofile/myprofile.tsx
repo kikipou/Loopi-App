@@ -499,9 +499,6 @@ const MyProfile: React.FC = () => {
                           <Link className="link-button" to={`/post/${m.project_id}`}>
                             Ver proyecto
                           </Link>
-                          <Link className="link-button" to={`/user/${m.partner_id}`}>
-                            Ver perfil
-                          </Link>
                           <Link className="link-button" to={`/match/${m.match_id}/tasks`}>
                             Ver tareas
                           </Link>
@@ -558,9 +555,6 @@ const MyProfile: React.FC = () => {
                           {p.owner_username ?? "User"}
                         </Link>
                         <div className="myprofile-match-actions">
-                          <Link to={`/user/${p.owner_id}`} className="link-button">
-                            View profile
-                          </Link>
                           <Link to={`/post/${p.project_id}`} className="link-button">
                             View project
                           </Link>

@@ -133,7 +133,6 @@ const MyProfile: React.FC = () => {
       if (!session?.user) return;
       setLoadingMatches(true);
 
-      // 1) Lee matches sólo de proyectos que te pertenecen (inner join con posts)
       const { data: rows, error } = await supabase
         .from("project_matches")
         .select(`
@@ -149,7 +148,6 @@ const MyProfile: React.FC = () => {
         return;
       }
 
-      // 2) Determina el "partner" (la otra persona en el match)
       const partnerIds = Array.from(
         new Set(
           (rows ?? []).map((r: any) =>
@@ -158,7 +156,6 @@ const MyProfile: React.FC = () => {
         )
       );
 
-      // 3) Hidrata con username y avatar de la tabla users
       let byId = new Map<string, any>();
       if (partnerIds.length > 0) {
         const { data: usersData, error: usersErr } = await supabase
@@ -202,7 +199,6 @@ const MyProfile: React.FC = () => {
       setLoadingLikedMatches(true);
       const uid = session.user.id;
 
-      // 1) matches donde participo yo
       const { data: matches, error: mErr } = await supabase
         .from("project_matches")
         .select("id, created_at, project_id, user_a_id, user_b_id")
@@ -223,7 +219,6 @@ const MyProfile: React.FC = () => {
         return;
       }
 
-      // 2) posts de esos matches PERO que no sean míos
       const { data: postsData, error: pErr } = await supabase
         .from("posts")
         .select(
@@ -247,12 +242,10 @@ const MyProfile: React.FC = () => {
         user_post_id: string;
       }>;
 
-      // Mapa: project_id -> owner_id
       const ownerByProject = new Map<number, string>(
         posts.map((p) => [p.id, p.user_post_id])
       );
 
-      // Elegimos el match donde tu "partner" sea el dueño de ese proyecto
       const matchByProjectOwner = new Map<number, { id: number; created_at: string }>();
       (matches ?? []).forEach((m) => {
         const ownerId = ownerByProject.get(m.project_id);
@@ -263,7 +256,6 @@ const MyProfile: React.FC = () => {
         }
       });
 
-      // (opcional) hidrata info del owner
       const ownerIds = Array.from(new Set(posts.map((p) => p.user_post_id)));
       let ownersById = new Map<string, any>();
       if (ownerIds.length > 0) {

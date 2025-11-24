@@ -417,14 +417,14 @@ const ProjectTasksPage: React.FC = () => {
                 <input
                 className="mt-input"
                 type="text"
-                placeholder="Título del deadline"
+                placeholder="Títle"
                 value={dlTitle}
                 onChange={(e) => setDlTitle(e.target.value)}
                 />
                 <input
                 className="mt-input"
                 type="text"
-                placeholder="Notas (opcional)"
+                placeholder="Comments"
                 value={dlNotes}
                 onChange={(e) => setDlNotes(e.target.value)}
                 />

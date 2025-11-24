@@ -101,12 +101,12 @@ export default function DeadlinePanel({ matchId }: Props) {
 
     const updateDeadline = async (id: number, patch: Partial<Deadline>) => {
         const { error } = await supabase.from("project_deadlines").update(patch).eq("id", id);
-        if (error) console.error("Error actualizando deadline:", error.message);
+        if (error) console.error("Error updating deadline:", error.message);
     };
 
     const removeDeadline = async (id: number) => {
         const { error } = await supabase.from("project_deadlines").delete().eq("id", id);
-        if (error) console.error("Error eliminando deadline:", error.message);
+        if (error) console.error("Error deleting deadline:", error.message);
     };
 
     const tileContent = ({ date }: { date: Date }) => {
@@ -120,8 +120,8 @@ export default function DeadlinePanel({ matchId }: Props) {
         <div className="dl-wrap">
         {(soonCount > 0 || overdueCount > 0) && (
             <div className="dl-banners">
-            {overdueCount > 0 && <div className="dl-banner dl-banner--danger">⚠️ {overdueCount} entregas vencidas</div>}
-            {soonCount > 0 && <div className="dl-banner dl-banner--warn">⏳ {soonCount} entregas en los próximos 3 días</div>}
+            {overdueCount > 0 && <div className="dl-banner dl-banner--danger">⚠️ {overdueCount} overdue deliveries</div>}
+            {soonCount > 0 && <div className="dl-banner dl-banner--warn">⏳ {soonCount} deliveries in the next 3 days</div>}
             </div>
         )}
 
@@ -132,13 +132,13 @@ export default function DeadlinePanel({ matchId }: Props) {
 
             <div className="dl-right">
             <h3 className="dl-subtitle">
-                Entregas del {format(day, "dd/MM/yyyy")}
+                Deliveries for {format(day, "dd/MM/yyyy")}
             </h3>
 
             {loading ? (
-                <p>Cargando…</p>
+                <p>Loading…</p>
             ) : listForDay.length === 0 ? (
-                <p className="dl-empty">No hay entregas en esta fecha.</p>
+                <p className="dl-empty">No deliveries this date.</p>
             ) : (
                 <ul className="dl-list">
                 {listForDay.map(d => (
@@ -158,12 +158,12 @@ export default function DeadlinePanel({ matchId }: Props) {
                     </div>
                     <textarea
                         className="dl-notes"
-                        placeholder="Notas…"
+                        placeholder="Comments"
                         value={d.notes ?? ""}
                         onChange={(e) => updateDeadline(d.id, { notes: e.target.value })}
                     />
                     <div className="dl-actions">
-                        <button className="dl-del" onClick={() => removeDeadline(d.id)}>Eliminar</button>
+                        <button className="dl-del" onClick={() => removeDeadline(d.id)}>Delete</button>
                     </div>
                     </li>
                 ))}
@@ -171,14 +171,14 @@ export default function DeadlinePanel({ matchId }: Props) {
             )}
 
             <div className="dl-form">
-                <h4>Nueva entrega</h4>
-                <input className="dl-input" placeholder="Título" value={title} onChange={(e)=>setTitle(e.target.value)} />
-                <textarea className="dl-textarea" placeholder="Notas (opcional)" value={notes} onChange={(e)=>setNotes(e.target.value)} />
+                <h4>New deliverie</h4>
+                <input className="dl-input" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
+                <textarea className="dl-textarea" placeholder="Comments" value={notes} onChange={(e)=>setNotes(e.target.value)} />
                 <div className="dl-row">
                 <input className="dl-input" type="date" value={dateStr} onChange={(e)=>setDateStr(e.target.value)} />
                 <input className="dl-input" type="time" value={timeStr} onChange={(e)=>setTimeStr(e.target.value)} />
                 </div>
-                <button className="dl-btn" onClick={createDeadline}>Agregar</button>
+                <button className="dl-btn" onClick={createDeadline}>Add deadline</button>
             </div>
             </div>
         </div>

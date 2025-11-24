@@ -209,6 +209,117 @@
   opacity: .85;
 }
 
+.mt-deadlines {
+  margin: 2rem 0 2.5rem;
+}
+
+.mt-subtitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 1rem 0 .5rem;
+}
+
+/* Formulario para crear deadlines */
+.dl-form {
+  display: grid;
+  grid-template-columns: 0.6fr 1.4fr auto auto; /* fecha | título | color | botón */
+  gap: .75rem;
+  align-items: center;
+  margin: .75rem 0 1.25rem;
+}
+
+.dl-color {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: transparent;
+  padding: 0;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+/* Lista de deadlines */
+.dl-list {
+  display: grid;
+  gap: .6rem;
+  list-style:none;
+}
+
+.dl-item {
+  display: grid;
+  grid-template-columns: 18px 1fr 210px 60px auto; /* punto | título | fecha | color | eliminar */
+  gap: .6rem;
+  align-items: center;
+  background: rgba(255,255,255,.08);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 12px;
+  padding: .6rem .75rem;
+}
+
+.dl-item::marker { 
+    content: none; 
+}
+
+.dl-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #a259ff; /* color por defecto si no hay label_color */
+}
+
+.dl-title {
+  width: min-content;
+
+  color: #fff;
+  background: transparent;
+  border: none;
+  outline: none;
+  border-bottom: 1px dashed rgba(255,255,255,.25);
+  padding-bottom: 2px;
+  font-size: var(--font-size-base);
+}
+
+.dl-date {
+  height: 36px;
+  width: 10rem;
+  margin-left: 11rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.28);
+  background: #fff;
+  color: #333;
+  padding: 0 .5rem;
+}
+
+.dl-notes {
+    margin-right: 10rem;
+    width: 40rem;
+    height: 2rem;
+    position: relative;
+    margin-left: -30rem;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    color: #fff;
+}
+
+/* reutilizamos tu botón de borrar */
+.dl-item .mt-del {
+  justify-self: end;
+}
+
+/* Estados opcionales (si los aplicas desde React) */
+.dl-item.is-overdue {
+  border-color: rgba(255,80,80,.5);
+  background: rgba(255,80,80,.08);
+}
+.dl-item.is-today {
+  border-color: rgba(255,200,80,.5);
+  background: rgba(255,200,80,.06);
+}
+.dl-item.is-overdue .dl-dot { background: #ff5050; }
+.dl-item.is-today   .dl-dot { background: #ffc850; }
+
 /* responsive */
 @media (max-width: 1024px) {
   .mt-hero { padding: 8rem 2rem 1rem; grid-template-columns: 1fr; }

@@ -21,7 +21,12 @@ const swipeVariants = {
   }),
 };
 
-const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMatch }) => {
+const LoopiSwiper: React.FC<Props> = ({
+  projects,
+  onExhausted,
+  onLikeSaved,
+  onMatch,
+}) => {
   const [index, setIndex] = useState(0);
   const [dir, setDir] = useState<"left" | "right">("right");
 
@@ -42,11 +47,18 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
   const saveLike = useCallback(
     async (project: LoopiProjectCard) => {
       const uid = await getUid();
-      if (uid === project.user_post_id) throw new Error("No puedes hacer match con tu propio proyecto.");
+      if (uid === project.user_post_id)
+        throw new Error("No puedes hacer match con tu propio proyecto.");
 
       const { error } = await supabase
         .from("projects_likes")
-        .insert([{ user_id: uid, project_id: project.id, project_owner_id: project.user_post_id }]);
+        .insert([
+          {
+            user_id: uid,
+            project_id: project.id,
+            project_owner_id: project.user_post_id,
+          },
+        ]);
 
       if (error && error.code !== "23505") throw error;
       return uid;
@@ -56,8 +68,14 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
 
   const tryFetchMatch = useCallback(
     async (project: LoopiProjectCard, currentUserId: string) => {
-      const a = currentUserId < project.user_post_id ? currentUserId : project.user_post_id;
-      const b = currentUserId < project.user_post_id ? project.user_post_id : currentUserId;
+      const a =
+        currentUserId < project.user_post_id
+          ? currentUserId
+          : project.user_post_id;
+      const b =
+        currentUserId < project.user_post_id
+          ? project.user_post_id
+          : currentUserId;
 
       const { data } = await supabase
         .from("project_matches")
@@ -67,7 +85,12 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
         .eq("user_b_id", b)
         .maybeSingle();
 
-      if (data) onMatch?.({ projectId: project.id, withUserId: project.user_post_id, matchId: data.id });
+      if (data)
+        onMatch?.({
+          projectId: project.id,
+          withUserId: project.user_post_id,
+          matchId: data.id,
+        });
     },
     [onMatch]
   );
@@ -91,22 +114,31 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
     [current, onLikeSaved, onMatch, saveLike, tryFetchMatch]
   );
 
-  if (projects.length === 0) return <div className="ps-empty">No hay proyectos para mostrar.</div>;
-  if (!current) return <div className="ps-empty">¡Genial! Ya revisaste todos los proyectos.</div>;
+  if (projects.length === 0)
+    return <div className="ps-empty">No hay proyectos para mostrar.</div>;
+  if (!current)
+    return (
+      <div className="ps-empty">¡Genial! Ya revisaste todos los proyectos.</div>
+    );
 
   return (
     <div className="ps-root">
       <div className="ps-stage">
         <AnimatePresence initial={false} custom={dir}>
           <motion.div
-            key={current.id}           
+            key={current.id}
             className="ps-card"
             custom={dir}
             variants={swipeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ type: "spring", stiffness: 220, damping: 24, mass: 0.85 }}
+            transition={{
+              type: "spring",
+              stiffness: 220,
+              damping: 24,
+              mass: 0.85,
+            }}
           >
             {current.image_url && (
               <img
@@ -118,12 +150,20 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
             )}
 
             <div className="ps-content">
-              <h2 className="ps-title">{current.post_name ?? "Proyecto sin título"}</h2>
-              {current.post_professions && <p className="ps-profession">{current.post_professions}</p>}
-              {current.post_description && <p className="ps-description">{current.post_description}</p>}
+              <h2 className="ps-title">
+                {current.post_name ?? "Proyecto sin título"}
+              </h2>
+              {current.post_professions && (
+                <p className="ps-profession">{current.post_professions}</p>
+              )}
+              {current.post_description && (
+                <p className="ps-description">{current.post_description}</p>
+              )}
               {current.post_skills && (
                 <div className="ps-meta">
-                  <p><span>Skills:</span> {current.post_skills}</p>
+                  <p>
+                    <span>Skills:</span> {current.post_skills}
+                  </p>
                 </div>
               )}
             </div>
@@ -132,12 +172,21 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
       </div>
 
       <div className="ps-actions">
-        <button className="ps-btn ps-btn--skip" onClick={() => handleDecision("left")}>❌</button>
-        <button 
-        className="ps-btn ps-btn--like" 
-        onClick={() => handleDecision("right")}
+        <button
+          className="ps-btn ps-btn--skip"
+          onClick={() => handleDecision("left")}
         >
-        <img className="loop-icon" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loop.png?raw=true" alt="loop-icon" />
+          ❌
+        </button>
+        <button
+          className="ps-btn ps-btn--like"
+          onClick={() => handleDecision("right")}
+        >
+          <img
+            className="loop-icon"
+            src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loop.png?raw=true"
+            alt="loop-icon"
+          />
         </button>
       </div>
 

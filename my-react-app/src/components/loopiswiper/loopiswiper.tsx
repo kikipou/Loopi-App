@@ -136,13 +136,18 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
       </div>
 
       <div className="ps-actions">
-        <button className="ps-btn ps-btn--skip" onClick={() => handleDecision("left")}>❌ Skip</button>
-        <button className="ps-btn ps-btn--like" onClick={() => handleDecision("right")}>✅ Match</button>
+        <button className="ps-btn ps-btn--skip" onClick={() => handleDecision("left")}>❌</button>
+        <button 
+        className="ps-btn ps-btn--like" 
+        onClick={() => handleDecision("right")}
+        >
+        <img className="loop-icon" src="https://github.com/kikipou/Loopi-App/blob/cata/my-react-app/src/assets/imgs/loop.png?raw=true" alt="loop-icon" />
+        </button>
       </div>
 
       <div className="ps-legend">
-        <span>Izquierda: omitir</span>
-        <span>Derecha: guardar like</span>
+        <span>Skip</span>
+        <span>Loopi</span>
       </div>
     </div>
   );

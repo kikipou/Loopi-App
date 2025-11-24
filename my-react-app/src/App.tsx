@@ -10,6 +10,7 @@ import EditProfile from "./screens/editprofile/editprofile";
 import OtherProfile from "./screens/otherprofile/otherprofile";
 import Login from "./screens/login/login";
 import SearchPage from "./screens/searchpage/searchpage";
+import ProjectTasksPage from "./screens/projectTasks/projectTasks";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { supabase } from "./database/supabaseClient";
@@ -116,6 +117,14 @@ function App() {
           element={
             <ProtectedRoute>
               <PostDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/match/:matchId/tasks"
+          element={
+            <ProtectedRoute>
+              <ProjectTasksPage />
             </ProtectedRoute>
           }
         />

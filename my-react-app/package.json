@@ -12,7 +12,10 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.2",
     "@supabase/supabase-js": "^2.78.0",
+    "date-fns": "^4.1.0",
+    "framer-motion": "^11.18.2",
     "react": "^19.1.1",
+    "react-calendar": "^6.0.0",
     "react-dom": "^19.1.1",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.3",

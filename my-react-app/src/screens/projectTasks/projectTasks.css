@@ -383,10 +383,121 @@
 }
 
 @media (max-width: 1024px) {
-    .mt-hero { padding: 8rem 2rem 1rem; grid-template-columns: 1fr; }
-    .mt-body { padding: 1rem 2rem 3rem; }
-    .mt-form { grid-template-columns: 1fr 1fr; }
+  .mt-container{
+    background-attachment: scroll; /* evita bug en móviles/tablets */
+    min-height: 100svh;            /* alto real del viewport en móvil */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: scroll;
+  }
+
+  .mt-hero{
+    grid-template-columns: 1fr;
+    padding: 6rem 2rem 1rem;
+    row-gap: 1rem;
+  }
+  .mt-hero-img{ width: 100%; height: 220px; }
+  .mt-title{ font-size: calc(var(--font-size-4xl) * .9); }
+
+  .mt-body{ padding: 0 2rem 3rem; }
+
+  .mt-form{ grid-template-columns: 1fr 1fr; }
+  .mt-input, .mt-date, .mt-status,
+  .mt-input-title, .mt-input-date{ width: 100%; }
+  .mt-input-date{ margin-right: 0; }
+  #mt-btn{ width: 100%; height: 42px; }
+
+  .link-button{ width: auto; margin-top: .75rem; }
+
+  .mt-grid{ grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); }
+  .mt-card-footer{ grid-template-columns: 1fr 1fr; }
+
+  /* Deadlines */
+  .dl-form{ grid-template-columns: 1fr 1fr auto; }
+  .dl-list{ row-gap: .75rem; }
+
+  .dl-item{
+    grid-template-columns: 18px 1fr 180px auto;
+    margin-left: 0;
+    margin-bottom: 1rem;
+  }
+  .dl-title{ width: 100%; }
+  .dl-date{ margin-left: 0; width: 100%; }
+  .dl-notes{
+    grid-column: 2 / -1;
+    width: 100%;
+    margin: .5rem 0 0 0;
+    height: auto;
+    min-height: 40px;
+  }
 }
+
+/* =========================
+   MÓVIL (≤ 768px)
+   ========================= */
 @media (max-width: 768px) {
-    .mt-form { grid-template-columns: 1fr; }
+  .mt-container{
+    background-attachment: scroll;
+    min-height: 100svh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  }
+
+  .mt-hero{ padding: 5.5rem 1rem .5rem; }
+  .mt-hero-img{ height: 190px; }
+  .mt-progress-label{ font-size: .85rem; }
+
+  .mt-body{ padding: 0 1rem 2.5rem; margin: 2rem 2rem 0 1rem}
+
+  .mt-form{ grid-template-columns: 1fr; gap: .6rem; }
+  .mt-input, .mt-date, .mt-status,
+  .mt-input-title, .mt-input-date, .mt-textarea{ width: 100%; }
+  .mt-empty {
+    margin-left: 1.5rem;
+  }
+  #mt-btn{ width: 100%; height: 42px; font-size: .95rem; margin-left: .8rem; }
+
+  .link-button{ width: 100%; justify-content: center; }
+
+  .mt-grid{ grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+  .mt-card-footer{ grid-template-columns: 1fr; }
+  .mt-date-card, .mt-status{ width: 100%; }
+
+  /* Deadlines */
+  .dl-form{ grid-template-columns: 1fr; gap: .6rem; }
+
+  .dl-item{
+    display: grid;
+    grid-template-columns: 18px 1fr;
+    grid-template-rows: auto auto auto auto;
+    gap: .5rem .6rem;
+    padding: .75rem;
+  }
+  .dl-dot   { grid-column: 1; grid-row: 1; }
+  .dl-title { grid-column: 2; grid-row: 1; width: 100%; }
+
+  .dl-date{
+    grid-column: 2; grid-row: 2;
+    width: 100%; margin-left: 0;
+  }
+  .dl-notes{
+    grid-column: 1 / -1; grid-row: 3;
+    width: 100%; margin: 0; height: auto; min-height: 40px;
+  }
+  .dl-item .mt-del{ grid-column: 2; grid-row: 4; justify-self: end; }
 }
+
+/* =========================
+   TELÉFONOS PEQUEÑOS (≤ 480px)
+   ========================= */
+@media (max-width: 480px) {
+  .mt-hero-img{ height: 160px; }
+  .mt-title{ font-size: calc(var(--font-size-4xl) * .8); }
+  .mt-card-details{ width: 100%; }
+  .dl-item{ padding: .6rem; }
+  .dl-title{ font-size: .95rem; }
+}
+

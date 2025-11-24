@@ -79,7 +79,7 @@ const MyProfile: React.FC = () => {
 
       if (error) {
         console.error(
-          "Error obteniendo perfil desde tabla users:",
+          "Error getting profile from table users:",
           error.message
         );
         setProfile(null);
@@ -116,7 +116,7 @@ const MyProfile: React.FC = () => {
         .order("created_at", { ascending: false });
 
       if (error) {
-        console.error("Error obteniendo posts del usuario:", error.message);
+        console.error("Error getting user posts:", error.message);
         setMyPosts([]);
       } else {
         setMyPosts((data ?? []) as Post[]);
@@ -142,7 +142,7 @@ const MyProfile: React.FC = () => {
         .order("created_at", { ascending: false });
 
       if (error) {
-        console.error("Error obteniendo matches:", error.message);
+        console.error("Error getting matches:", error.message);
         setMyMatches([]);
         setLoadingMatches(false);
         return;
@@ -164,7 +164,7 @@ const MyProfile: React.FC = () => {
           .in("id", partnerIds);
 
         if (usersErr) {
-          console.error("Error obteniendo perfiles:", usersErr.message);
+          console.error("Error getting profiles:", usersErr.message);
         }
 
         byId = new Map((usersData ?? []).map((u) => [u.id, u]));

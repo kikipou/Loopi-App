@@ -14,7 +14,9 @@ export default function LoopiPage() {
     (async () => {
       const { data, error } = await supabase
         .from("posts")
-        .select("id, post_name, post_description, post_professions, post_skills, image_url, user_post_id")
+        .select(
+          "id, post_name, post_description, post_professions, post_skills, image_url, user_post_id"
+        )
         .order("created_at", { ascending: false });
 
       if (!error && data) setProjects(data as LoopiProjectCard[]);
@@ -31,7 +33,14 @@ export default function LoopiPage() {
         onExhausted={() => console.log("No quedan más proyectos")}
         onLikeSaved={(p) => console.log("Like guardado a:", p.id)}
         onMatch={(m: MatchEvent) =>
-          console.log("🎉 Match!", m.projectId, "con", m.withUserId, "matchId:", m.matchId)
+          console.log(
+            "🎉 Match!",
+            m.projectId,
+            "con",
+            m.withUserId,
+            "matchId:",
+            m.matchId
+          )
         }
       />
     </div>

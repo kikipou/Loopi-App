@@ -50,15 +50,13 @@ const LoopiSwiper: React.FC<Props> = ({
       if (uid === project.user_post_id)
         throw new Error("No puedes hacer match con tu propio proyecto.");
 
-      const { error } = await supabase
-        .from("projects_likes")
-        .insert([
-          {
-            user_id: uid,
-            project_id: project.id,
-            project_owner_id: project.user_post_id,
-          },
-        ]);
+      const { error } = await supabase.from("projects_likes").insert([
+        {
+          user_id: uid,
+          project_id: project.id,
+          project_owner_id: project.user_post_id,
+        },
+      ]);
 
       if (error && error.code !== "23505") throw error;
       return uid;

@@ -488,11 +488,11 @@ const MyProfile: React.FC = () => {
                           {m.partner_username ?? "Usuario"}
                         </Link>
                         <div className="myprofile-match-actions">
-                          <Link className="link-button" to={`/post/${m.project_id}`}>
-                            Ver proyecto
+                          <Link className="link-button-card" to={`/post/${m.project_id}`}>
+                            View project
                           </Link>
-                          <Link className="link-button" to={`/match/${m.match_id}/tasks`}>
-                            Ver tareas
+                          <Link className="link-button-card" to={`/match/${m.match_id}/tasks`}>
+                            View tasks
                           </Link>
                         </div>
                       </div>
@@ -547,11 +547,11 @@ const MyProfile: React.FC = () => {
                           {p.owner_username ?? "User"}
                         </Link>
                         <div className="myprofile-match-actions">
-                          <Link to={`/post/${p.project_id}`} className="link-button">
+                          <Link to={`/post/${p.project_id}`} className="link-button-card">
                             View project
                           </Link>
-                          <Link to={`/match/${p.match_id}/tasks`} className="link-button">
-                            Ver tareas
+                          <Link to={`/match/${p.match_id}/tasks`} className="link-button-card">
+                            View tasks
                           </Link>
                         </div>
                       </div>

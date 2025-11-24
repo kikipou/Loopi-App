@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { supabase } from "../../database/supabaseClient";
 import Nav from "../../components/nav/nav";
+import Button from "../../components/button/button";
+import Input from "../../components/input/input";
 import "./projectTasks.css";
 
 type TaskStatus = "todo" | "in_progress" | "done";
@@ -330,17 +332,17 @@ const ProjectTasksPage: React.FC = () => {
       </div>
 
       <div className="mt-body">
-        {/* Tasks form */}
+        <h2 className="mt-subtitle-tasks">Tasks</h2>
         <div className="mt-form">
           <input
-            className="mt-input"
+            className="mt-input-title"
             type="text"
             placeholder="Task title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <input
-            className="mt-input"
+            className="mt-input-date"
             type="date"
             value={due}
             onChange={(e) => setDue(e.target.value)}
@@ -354,73 +356,13 @@ const ProjectTasksPage: React.FC = () => {
             value={details}
             onChange={(e) => setDetails(e.target.value)}
           />
-          <button className="mt-btn" onClick={addTask}>Add task</button>
+          <Button
+              buttonplaceholder="Add task"
+              buttonid="mt-btn"
+              onClick={addTask}
+            />
         </div>
 
-        {/* Deadlines (solo fecha) */}
-        <section className="mt-deadlines">
-          <h2 className="mt-subtitle">Deadlines</h2>
-
-          <div className="dl-form">
-            <input
-              className="mt-input"
-              type="date"
-              value={dlDate}
-              onChange={(e) => setDlDate(e.target.value)}
-            />
-            <input
-              className="mt-input"
-              type="text"
-              placeholder="Título del deadline"
-              value={dlTitle}
-              onChange={(e) => setDlTitle(e.target.value)}
-            />
-            <input
-              className="mt-input"
-              type="text"
-              placeholder="Notas (opcional)"
-              value={dlNotes}
-              onChange={(e) => setDlNotes(e.target.value)}
-            />
-            <button className="mt-btn" onClick={addDeadline}>Agregar</button>
-          </div>
-
-          {loadingDeadlines ? (
-            <p>Cargando deadlines…</p>
-          ) : sortedDeadlines.length === 0 ? (
-            <p className="mt-empty">Sin deadlines por ahora.</p>
-          ) : (
-            <ul className="dl-list">
-              {sortedDeadlines.map(d => (
-                <li key={d.id} className="dl-item">
-                  <input
-                    className="dl-title"
-                    value={d.title}
-                    onChange={(e) => updateDeadline(d.id, { title: e.target.value })}
-                  />
-                  <input
-                    className="dl-date"
-                    type="date"
-                    value={d.due_date ?? ""}
-                    onChange={(e) => updateDeadline(d.id, { due_date: e.target.value })}
-                  />
-                  <input
-                    className="dl-notes"
-                    type="text"
-                    placeholder="Notas…"
-                    value={d.notes ?? ""}
-                    onChange={(e) => updateDeadline(d.id, { notes: e.target.value })}
-                  />
-                  <button className="mt-del" onClick={() => deleteDeadline(d.id)}>
-                    Eliminar
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </section>
-
-        {/* Tasks grid */}
         <div className="mt-grid">
           {tasks.map((task) => (
             <div key={task.id} className="mt-card">
@@ -443,14 +385,14 @@ const ProjectTasksPage: React.FC = () => {
 
               <textarea
                 className="mt-card-details"
-                placeholder="Detalles…"
+                placeholder="Details..."
                 value={task.details ?? ""}
                 onChange={(e) => updateTask(task.id, { details: e.target.value })}
               />
 
               <div className="mt-card-footer">
                 <input
-                  className="mt-date"
+                  className="mt-date-card"
                   type="date"
                   value={task.due_date ?? ""}
                   onChange={(e) => updateTask(task.id, { due_date: e.target.value || null })}
@@ -471,6 +413,72 @@ const ProjectTasksPage: React.FC = () => {
 
           {tasks.length === 0 && <p className="mt-empty">No tasks created yet.</p>}
         </div>
+
+        <section className="mt-deadlines">
+          <h2 className="mt-subtitle-deadlines">Deadlines</h2>
+
+          <div className="dl-form">
+            <input
+              className="mt-input"
+              type="date"
+              value={dlDate}
+              onChange={(e) => setDlDate(e.target.value)}
+            />
+            <input
+              className="mt-input"
+              type="text"
+              placeholder="Título del deadline"
+              value={dlTitle}
+              onChange={(e) => setDlTitle(e.target.value)}
+            />
+            <input
+              className="mt-input"
+              type="text"
+              placeholder="Notas (opcional)"
+              value={dlNotes}
+              onChange={(e) => setDlNotes(e.target.value)}
+            />
+            <Button
+              buttonplaceholder="Add deadline"
+              buttonid="mt-btn"
+              onClick={addDeadline}
+            />
+          </div>
+
+          {loadingDeadlines ? (
+            <p>Loading deadlines…</p>
+          ) : sortedDeadlines.length === 0 ? (
+            <p className="mt-empty">No deadlines yet.</p>
+          ) : (
+            <ul className="dl-list">
+              {sortedDeadlines.map(d => (
+                <li key={d.id} className="dl-item">
+                  <input
+                    className="dl-title"
+                    value={d.title}
+                    onChange={(e) => updateDeadline(d.id, { title: e.target.value })}
+                  />
+                  <input
+                    className="dl-date"
+                    type="date"
+                    value={d.due_date ?? ""}
+                    onChange={(e) => updateDeadline(d.id, { due_date: e.target.value })}
+                  />
+                  <input
+                    className="dl-notes"
+                    type="text"
+                    placeholder="Comments"
+                    value={d.notes ?? ""}
+                    onChange={(e) => updateDeadline(d.id, { notes: e.target.value })}
+                  />
+                  <button className="mt-del" onClick={() => deleteDeadline(d.id)}>
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
       </div>
     </div>
   );

@@ -6,7 +6,6 @@ import UploadPost from "./screens/uploadpost/uploadpost";
 import MyProfile from "./screens/myprofile/myprofile";
 import HomePage from "./screens/homepage/homepage";
 import EditProfile from "./screens/editprofile/editprofile";
-// import Loopi from "./screens/loopi/loopi";
 import OtherProfile from "./screens/otherprofile/otherprofile";
 import Login from "./screens/login/login";
 import SearchPage from "./screens/searchpage/searchpage";

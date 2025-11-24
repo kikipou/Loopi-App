@@ -23,7 +23,7 @@ const swipeVariants = {
 
 const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMatch }) => {
   const [index, setIndex] = useState(0);
-  const [dir, setDir] = useState<"left" | "right">("right"); // última dirección
+  const [dir, setDir] = useState<"left" | "right">("right");
 
   useEffect(() => setIndex(0), [projects]);
 
@@ -48,7 +48,6 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
         .from("projects_likes")
         .insert([{ user_id: uid, project_id: project.id, project_owner_id: project.user_post_id }]);
 
-      // ignora duplicado
       if (error && error.code !== "23505") throw error;
       return uid;
     },
@@ -87,9 +86,6 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
           console.error("Error guardando like:", (e as Error).message);
         }
       }
-
-      // dispara exit del card actual (AnimatePresence) y luego muestra el siguiente
-      // pequeño delay para que el exit tome la 'dir' actual antes del cambio de key
       requestAnimationFrame(() => setIndex((i) => i + 1));
     },
     [current, onLikeSaved, onMatch, saveLike, tryFetchMatch]
@@ -103,7 +99,7 @@ const LoopiSwiper: React.FC<Props> = ({ projects, onExhausted, onLikeSaved, onMa
       <div className="ps-stage">
         <AnimatePresence initial={false} custom={dir}>
           <motion.div
-            key={current.id}           // cambia key ⇒ activa exit/enter
+            key={current.id}           
             className="ps-card"
             custom={dir}
             variants={swipeVariants}

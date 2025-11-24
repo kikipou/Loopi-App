@@ -24,7 +24,7 @@ const OtherProfile: React.FC = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loadingPosts, setLoadingPosts] = useState(true);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // --- Perfil del usuario ---
   useEffect(() => {
@@ -109,7 +109,7 @@ const OtherProfile: React.FC = () => {
   return (
     <div className="otherprofile-container">
       <Nav />
-        {coverUrl && (
+      {coverUrl && (
         <div className="otherprofile-cover-container">
           <section className="back-button-editprofile">
             <BackButton />
@@ -120,7 +120,7 @@ const OtherProfile: React.FC = () => {
             className="otherprofile-cover-img"
           />
         </div>
-        )}
+      )}
 
       <div className="otherprofile-header">
         <div className="otherprofile-avatar-wrapper">
@@ -141,9 +141,7 @@ const OtherProfile: React.FC = () => {
           <h1 className="otherprofile-title">{displayName}</h1>
 
           {profile.user_profession && (
-            <p className="otherprofile-profession">
-              {profile.user_profession}
-            </p>
+            <p className="otherprofile-profession">{profile.user_profession}</p>
           )}
 
           {profile.profile_description && (
@@ -155,9 +153,7 @@ const OtherProfile: React.FC = () => {
       </div>
 
       <section className="otherprofile-posts-section">
-        <h2 className="otherprofile-subtitle">
-          {displayName}'s posts
-        </h2>
+        <h2 className="otherprofile-subtitle">{displayName}'s posts</h2>
 
         {loadingPosts ? (
           <p className="otherprofile-no-posts">Loading posts...</p>
@@ -172,45 +168,47 @@ const OtherProfile: React.FC = () => {
                 ? new Date(post.created_at).toLocaleString()
                 : "";
 
-                return (
-                  <div
-                    key={post.id}
-                    className="otherprofile-post-card"
-                    onClick={() => navigate(`/post/${post.id}`)}
-                    role="button"
-                  >
-                    {post.image_url && (
-                      <img
-                        src={post.image_url || undefined}
-                        alt={post.post_name ?? "Post image"}
-                        className="otherprofile-post-image"
-                      />
-                    )}
-              
-                    <div className="otherprofile-post-main">
-                      <div className="otherprofile-post-header">
-                        <h3 className="otherprofile-post-title">{post.post_name}</h3>
-                        {formattedDate && (
-                          <span className="otherprofile-post-date">
-                            {formattedDate}
-                          </span>
-                        )}
-                      </div>
-              
-                      {post.post_description && (
-                        <p className="otherprofile-post-description">
-                          {post.post_description}
-                        </p>
-                      )}
-              
-                      {post.categories && (
-                        <p className="otherprofile-post-meta">
-                          <strong>Category:</strong> {post.categories}
-                        </p>
+              return (
+                <div
+                  key={post.id}
+                  className="otherprofile-post-card"
+                  onClick={() => navigate(`/post/${post.id}`)}
+                  role="button"
+                >
+                  {post.image_url && (
+                    <img
+                      src={post.image_url || undefined}
+                      alt={post.post_name ?? "Post image"}
+                      className="otherprofile-post-image"
+                    />
+                  )}
+
+                  <div className="otherprofile-post-main">
+                    <div className="otherprofile-post-header">
+                      <h3 className="otherprofile-post-title">
+                        {post.post_name}
+                      </h3>
+                      {formattedDate && (
+                        <span className="otherprofile-post-date">
+                          {formattedDate}
+                        </span>
                       )}
                     </div>
+
+                    {post.post_description && (
+                      <p className="otherprofile-post-description">
+                        {post.post_description}
+                      </p>
+                    )}
+
+                    {post.categories && (
+                      <p className="otherprofile-post-meta">
+                        <strong>Category:</strong> {post.categories}
+                      </p>
+                    )}
                   </div>
-                );
+                </div>
+              );
             })}
           </div>
         )}

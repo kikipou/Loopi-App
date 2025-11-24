@@ -79,6 +79,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/edit-profile"
           element={

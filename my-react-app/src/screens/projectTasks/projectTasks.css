@@ -298,7 +298,7 @@
 
 .dl-list {
     display: grid;
-    gap: .6rem;
+    row-gap: 0rem;
     list-style:none;
 }
 

@@ -145,7 +145,23 @@
     margin-top: -3.1rem;
   }
 
-  .myprofile-subtitle {
+  .myprofile-subtitle1 {
+    color: white;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin: 10rem 8rem 1rem;
+    padding: 0;
+  }
+
+  .myprofile-subtitle2 {
+    color: white;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    margin: 10rem 8rem 1rem;
+    padding: 0;
+  }
+
+  .myprofile-subtitle3 {
     color: white;
     font-size: var(--font-size-2xl);
     font-weight: var(--font-weight-bold);
@@ -593,7 +609,24 @@
       font-size: var(--font-size-lg);
     }
 
+    .myprofile-posts-section {
+      margin-top: -5rem;
+    }
+
+    .myprofile-matches-section {
+      margin-top: -8rem;
+    }
+
+    .myprofile-match-actions {
+      width: 90%;
+    }
+
     .myprofile-posts-grid {
+      padding: 1.5rem 3rem;
+      gap: 1rem;
+    }
+
+    .myprofile-matches-grid {
       padding: 1.5rem 3rem;
       gap: 1rem;
     }

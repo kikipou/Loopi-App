@@ -387,7 +387,7 @@ const MyProfile: React.FC = () => {
           </section>
 
         <section className="myprofile-posts-section">
-          <h2 className="myprofile-subtitle">Your projects</h2>
+          <h2 className="myprofile-subtitle1">Your projects</h2>
 
           {loadingPosts ? (
             <p>Loading your projects...</p>
@@ -441,7 +441,7 @@ const MyProfile: React.FC = () => {
           )}
         </section>
         <section className="myprofile-matches-section">
-        <h2 className="myprofile-subtitle">Loopis with your projects</h2>
+        <h2 className="myprofile-subtitle2">Loopis with your projects</h2>
 
         {loadingMatches ? (
           <p>Loading matches…</p>
@@ -505,7 +505,7 @@ const MyProfile: React.FC = () => {
         )}
       </section>
       <section className="myprofile-myloopis-section">
-        <h2 className="myprofile-subtitle">Projects you Loopied</h2>
+        <h2 className="myprofile-subtitle3">Projects you Loopied</h2>
 
         {loadingLikedMatches ? (
           <p className="myprofile-no-posts">Loading your Loopis...</p>
